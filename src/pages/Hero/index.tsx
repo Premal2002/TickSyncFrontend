@@ -14,10 +14,10 @@ const HeroSection = () => {
                 </div>
             </div>
             <div className="text-center mt-20">
-                <p className="text-7xl">
+                <p className="text-7xl text-black pb-6">
                     BOOK  YOUR  TICKETS  NOW!!!
                 </p>
-                <p className="py-6 text-2xl">
+                <p className="py-6 text-black text-2xl">
                     BOOK MOVIES, TRAIN, BUS, FLIGHTS AND MANY MORE!
                 </p>
                 <button className="bg-black text-white px-6 py-3 rounded-md cursor-pointer">Book Now</button>
