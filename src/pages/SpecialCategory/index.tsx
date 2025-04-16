@@ -15,7 +15,7 @@ function SpecialCategoryDisplay(props: any) {
   };
   return (
     <div className={"relative h-150 " + props.bgColor + " pt-5"}>
-      <h1 className="text-center text-white">{props.title.toUpperCase()}</h1>
+      <h1 className="text-center text-white">{props.title != undefined && props.title.toUpperCase()}</h1>
       {5 > 4 && (
           <button
             onClick={() => scroll('left')}
