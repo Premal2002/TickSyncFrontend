@@ -2,7 +2,7 @@
 
 const HeroSection = () => {
     return (
-        <div className="h-150 bg-red-50 pt-15">
+        <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover h-150 pt-15">
             <div className="flex justify-center">
                 <div className="flex border-1 rounded-2xl px-8 py-4 w-1/2">
                     <input type="text" className="outline-0 text-gray-800 w-full" placeholder="search your tickets" />

@@ -7,9 +7,10 @@ function Login() {
   return (
     <div>
         <Navbar />
-        <div className='bg-red-50 py-25'>
-        <div className="mx-110 border border-black px-30 py-25 rounded-3xl bg-white">
+        <div  className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover py-25">
+        <div className="mx-110 border border-black px-30 py-20 rounded-3xl bg-white/40">
             <h1 className='text-center'>Login</h1>
+            <br />
             <form>
                 <div>
                     <label htmlFor="name">Name</label>
