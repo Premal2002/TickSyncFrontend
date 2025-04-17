@@ -39,9 +39,9 @@ function Footer() {
                 </ul>
 
             </div>
-            <div className='grid grid-cols-[2fr_1fr_1fr] mt-5 gap-10 '>
-                <div className='border-white pr-30'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro, aut. Voluptatibus, nulla quam! Vitae ipsam hic impedit similique recusandae accusantium, velit beatae, harum sequi numquam officia culpa magni. At harum a sunt vitae odio iure possimus ullam nisi, magni dignissimos obcaecati expedita omnis? Impedit doloribus ipsum velit vitae vel eveniet, quam magnam, perspiciatis ipsam qui dolores quasi ratione voluptatem atque fugiat, nam magni beatae ex? Quas a dolore minima id, laborum quae molestias assumenda laudantium possimus est rem quisquam soluta.</div>
-                <div className='border-white'>
+            <div className='flex mt-5 gap-10 '>
+                <div className='w-[55%] pr-20'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro, aut. Voluptatibus, nulla quam! Vitae ipsam hic impedit similique recusandae accusantium, velit beatae, harum sequi numquam officia culpa magni. At harum a sunt vitae odio iure possimus ullam nisi, magni dignissimos obcaecati expedita omnis? Impedit doloribus ipsum velit vitae vel eveniet, quam magnam, perspiciatis ipsam qui dolores quasi ratione voluptatem atque fugiat, nam magni beatae ex? Quas a dolore minima id, laborum quae molestias assumenda laudantium possimus est rem quisquam soluta.</div>
+                <div className='px-4'>
                     <ul className='text-lg'>
                         <a href="#" className='hover:text-rose-500'><li>HOME</li></a>
                         <a href="#" className='hover:text-rose-500'><li>ABOUT</li></a>
@@ -49,7 +49,7 @@ function Footer() {
                         <a href="#" className='hover:text-rose-500'><li>CONTACT US</li></a>
                     </ul>
                 </div>
-                <div className='border-white'>
+                <div className='px-4'>
                 <ul className='text-lg'>
                     <a href="#" className='hover:text-rose-500'><li>MOVIES</li></a>
                     <a href="#" className='hover:text-rose-500'><li>BUS</li></a>
