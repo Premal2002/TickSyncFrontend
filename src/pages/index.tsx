@@ -1,5 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import LandingPage from "./LandingPage/index";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +16,7 @@ const geistMono = Geist_Mono({
 export default function Home() {
   return (
     <>
-     <LandingPage /> 
+      <LandingPage /> 
     </>
   );
 }
