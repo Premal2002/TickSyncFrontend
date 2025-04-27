@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 const Navbar = () => {
     return (
@@ -15,7 +16,9 @@ const Navbar = () => {
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Team</a>
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Projects</a>
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Calendar</a>
-                                    <button className="rounded-sm bg-black text-white px-4 cursor-pointer hover:bg-slate-900">Login</button>
+                                    <Link href="/Login">
+                                    <button className="rounded-sm bg-black text-white px-4 py-2 cursor-pointer hover:bg-slate-900">Login</button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
