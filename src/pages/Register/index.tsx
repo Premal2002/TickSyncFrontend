@@ -16,6 +16,10 @@ function Register() {
     setPasswordVisible(!passwordVisible);
   };
 
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible(!confirmPasswordVisible);
+  };
+
   const {
     register,
     handleSubmit,
@@ -28,27 +32,30 @@ function Register() {
     console.log("User Register Data:", data);
   };
 
+  const onError = (formErrors: any) => {
+    console.log("Validation Errors:", formErrors);
+  };
+
   return (
     <div>
       <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover py-25">
         <div className="mx-110 border text-black border-black px-30 py-20 rounded-3xl bg-white/65">
           <h1 className="text-center ">Sign Up</h1>
           <br />
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit, onError)}>
             <div>
               <label htmlFor="name">Name</label>
               <input
-                {...register("fullname")}
+                {...register("fullName")}
                 className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2"
                 type="text"
-                name="name"
                 id="name"
                 placeholder="Enter Your Name"
                 required
               />
-              {errors.fullname && (
+              {errors.fullName && (
                 <p className="text-red-600 text-sm">
-                  {errors.fullname.message}
+                  {errors.fullName.message}
                 </p>
               )}
             </div>
@@ -59,7 +66,6 @@ function Register() {
                 {...register("email")}
                 className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2"
                 type="text"
-                name="email"
                 id="email"
                 placeholder="Enter Your Email"
                 required
@@ -75,7 +81,6 @@ function Register() {
                 {...register("phone")}
                 className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2"
                 type="text"
-                name="phone"
                 id="phone"
                 placeholder="Enter your Phone number"
                 required
@@ -92,32 +97,52 @@ function Register() {
                   {...register("password")}
                   className="w-full outline-0"
                   type={passwordVisible ? "text" : "password"}
-                  name="password"
                   id="password"
                   placeholder="Enter your Password"
                   required
                 />
-                <svg
-                  onClick={togglePasswordVisibility}
-                  className="w-6 h-6 text-gray-800 cursor-pointer"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
+                {passwordVisible ? (
+                  <svg
+                    onClick={togglePasswordVisibility}
+                    className="w-6 h-6 text-gray-800 cursor-pointer"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    onClick={togglePasswordVisibility}
+                    className="w-6 h-6 text-gray-800 cursor-pointer"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                )}
               </div>
 
               {errors.password && (
@@ -134,32 +159,52 @@ function Register() {
                   {...register("confirmPassword")}
                   className="w-full outline-0"
                   type={confirmPasswordVisible ? "text" : "password"}
-                  name="confirmpassword"
-                  id="confirmpassword"
+                  id="confirmPassword"
                   placeholder="Re-Enter above Password"
                   required
                 />
-                <svg
-                  onClick={togglePasswordVisibility}
-                  className="w-6 h-6 text-gray-800 cursor-pointer"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
+                {confirmPasswordVisible ? (
+                  <svg
+                    onClick={toggleConfirmPasswordVisibility}
+                    className="w-6 h-6 text-gray-800 cursor-pointer"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    onClick={toggleConfirmPasswordVisibility}
+                    className="w-6 h-6 text-gray-800 cursor-pointer"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                )}
               </div>
               {errors.confirmPassword && (
                 <p className="text-red-600 text-sm">
