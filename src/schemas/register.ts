@@ -6,12 +6,12 @@ export const registerSchema = z.object({
     phone: z.string()
     .regex(/^[7-9][0-9]{9}$/, { message: "Enter a valid 10-digit phone number starting with 7, 8, or 9." }),
 
-    password: z.string()
+    passwordHash: z.string()
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
       message: "Password must be at least 8 characters long and contain an uppercase letter, lowercase letter, number, and special character.",
     }),
     confirmPassword: z.string(),
-  }).refine((data) => data.password === data.confirmPassword, {
+  }).refine((data) => data.passwordHash === data.confirmPassword, {
     message: "Passwords don't match",
     path: ['confirmPassword'],
   });

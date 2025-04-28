@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
 import { registerSchema, RegisterSchemaType } from "@/schemas/register";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { registerUser } from "@/services/userService";
+import { useRouter } from "next/router";
 
 function Register() {
+  const router = useRouter();
   // State for toggling password visibility
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -30,6 +31,17 @@ function Register() {
 
   const onSubmit = (data: RegisterSchemaType) => {
     console.log("User Register Data:", data);
+    registerUser(data).then(response => {
+      if(response.status == 200){
+        console.log(response.data);      
+        router.push({
+          pathname: "/Login",
+          query: { email: data.email }, // Pass your data as query parameters
+        });
+      }else{
+        console.log(response);
+      }  
+    });
   };
 
   const onError = (formErrors: any) => {
@@ -39,7 +51,7 @@ function Register() {
   return (
     <div>
       <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover py-25">
-        <div className="mx-110 border text-black border-black px-30 py-20 rounded-3xl bg-white/65">
+        <div className="mx-100 border text-black border-black px-30 py-10 rounded-3xl bg-white/65">
           <h1 className="text-center ">Sign Up</h1>
           <br />
           <form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -47,7 +59,7 @@ function Register() {
               <label htmlFor="name">Name</label>
               <input
                 {...register("fullName")}
-                className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2"
+                className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2 outline-none"
                 type="text"
                 id="name"
                 placeholder="Enter Your Name"
@@ -64,7 +76,7 @@ function Register() {
               <label htmlFor="email">Email</label>
               <input
                 {...register("email")}
-                className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2"
+                className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2 outline-none"
                 type="text"
                 id="email"
                 placeholder="Enter Your Email"
@@ -79,7 +91,7 @@ function Register() {
               <label htmlFor="phone">Phone No.</label>
               <input
                 {...register("phone")}
-                className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2"
+                className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2 outline-none"
                 type="text"
                 id="phone"
                 placeholder="Enter your Phone number"
@@ -94,7 +106,7 @@ function Register() {
               <label htmlFor="password">Password</label>
               <div className="flex justify-between w-full border border-gray-500 py-1 rounded-md mt-1 px-2">
                 <input
-                  {...register("password")}
+                  {...register("passwordHash")}
                   className="w-full outline-0"
                   type={passwordVisible ? "text" : "password"}
                   id="password"
@@ -145,9 +157,9 @@ function Register() {
                 )}
               </div>
 
-              {errors.password && (
+              {errors.passwordHash && (
                 <p className="text-red-600 text-sm">
-                  {errors.password.message}
+                  {errors.passwordHash.message}
                 </p>
               )}
             </div>
@@ -216,7 +228,7 @@ function Register() {
             <div className="flex">
               <button
                 type="submit"
-                className="bg-red-500 rounded-md px-8 py-2 m-auto cursor-pointer"
+                className="bg-red-600 hover:bg-red-500 rounded-md px-8 py-2 m-auto cursor-pointer"
               >
                 Register
               </button>
