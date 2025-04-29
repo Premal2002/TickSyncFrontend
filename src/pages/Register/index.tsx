@@ -32,14 +32,12 @@ function Register() {
   const onSubmit = (data: RegisterSchemaType) => {
     console.log("User Register Data:", data);
     registerUser(data).then(response => {
-      if(response.status == 200){
+      if(response){
         console.log(response.data);      
         router.push({
           pathname: "/Login",
           query: { email: data.email }, // Pass your data as query parameters
         });
-      }else{
-        console.log(response);
       }  
     });
   };

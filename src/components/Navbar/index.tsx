@@ -1,6 +1,19 @@
+import { isUserLoggedIn, logOutUser } from "@/HelperFunctions/userFunctions";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
+    const [isLoggedIn,setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        // console.log(localStorage.getItem("authenticatedUser"));
+        setIsLoggedIn(isUserLoggedIn()); 
+    });
+
+    function logOut(){
+        logOutUser();
+        setIsLoggedIn(isUserLoggedIn());
+    }
+    
     return (
         <>
             <nav className="bg-red-500 py-3">
@@ -16,9 +29,10 @@ const Navbar = () => {
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Team</a>
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Projects</a>
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Calendar</a>
-                                    <Link href="/Login">
+                                    {isLoggedIn ? 
+                                    <button onClick={logOut} className="rounded-sm bg-black text-white px-4 py-2 cursor-pointer hover:bg-slate-900">Logout</button>:  <Link href="/Login">
                                     <button className="rounded-sm bg-black text-white px-4 py-2 cursor-pointer hover:bg-slate-900">Login</button>
-                                    </Link>
+                                    </Link>}
                                 </div>
                             </div>
                         </div>

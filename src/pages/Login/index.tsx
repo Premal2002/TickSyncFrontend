@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginSchemaType } from '@/schemas/login';
 import { useRouter } from 'next/router';
 import { LoginUser } from '@/services/userService';
+import { successful } from '@/HelperFunctions/SwalFunctions';
 
 function Login() {
     let router = useRouter()
@@ -28,15 +29,14 @@ function Login() {
 
     const onSubmit = (data: LoginSchemaType) => {
         console.log("User Register Data:", data);
-        LoginUser(data).then(response => {
-            if (response.status == 200) {
-                console.log(response.data);
-                // router.push({
-                //     pathname: "/Login",
-                //     query: { email: data.email }, // Pass your data as query parameters
-                // });
-            } else if(response.status == 401) {
-                console.log(response.data);
+        const response = LoginUser(data).then((response: any) => {
+            if (response) {
+                // console.log(response.data);
+                localStorage.setItem("authenticatedUser",JSON.stringify(response.data))
+                router.push({
+                    pathname: "/"
+                });
+                successful("Login Successful");
             }
         });
     };
