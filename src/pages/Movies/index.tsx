@@ -71,10 +71,10 @@ function Movies() {
                 <div className='w-[80%]'>
                     <h3 className='px-2 mb-3 text-black'>Movies</h3>
                     <div className="flex gap-5 px-2 flex-wrap">
-                        <Card width='[23%]' />
-                        <Card width='[23%]' />
-                        <Card width='[23%]' />
-                        <Card width='[23%]' />
+                        <Card width='w-[23%]' />
+                        <Card width='w-[23%]' />
+                        <Card width='w-[23%]' />
+                        <Card width='w-[23%]' />
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ function SpecialCategoryDisplay(props: any) {
     console.log(scrollRef.current);
     
     if (scrollRef.current) {
-      const scrollAmount = direction === 'left' ? -1266 : 1300;
+      const scrollAmount = direction === 'left' ? -1300 : 1300;
       scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
@@ -27,15 +27,15 @@ function SpecialCategoryDisplay(props: any) {
       <div ref={scrollRef} id='cardHolder' className="flex overflow-x-auto gap-10 py-15 mx-30 pr-10 scroll-smooth hiddenScrollbar">
         {/* Left arrow */}
         
-        <Card width='[23%]' />
-        <Card width='[23%]' />
-        <Card width='[23%]' />
-        <Card width='[23%]' />
-        <Card width='[23%]' />
-        <Card width='[23%]' />
-        <Card width='[23%]' />
-        <Card width='[23%]' />
-        <Card width='[23%]' />
+        <Card width='w-[23%]' />
+        <Card width='w-[23%]' />
+        <Card width='w-[23%]' />
+        <Card width='w-[23%]' />
+        <Card width='w-[23%]' />
+        <Card width='w-[23%]' />
+        <Card width='w-[23%]' />
+        <Card width='w-[23%]' />
+        <Card width='w-[23%]' />
       
       </div>
       {/* Right arrow */}
