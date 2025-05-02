@@ -1,19 +1,9 @@
 // services/userService.js
-import { baseURL } from "@/baseUrl";
+import { baseURL } from "@/HelperData/datavariables";
 import { responseError } from "@/HelperFunctions/SwalFunctions";
 import axios from "axios";
 
 const API_URL = baseURL;
-
-// export const getUserById = async (userId : number) => {
-//   try {
-//     const response = await axios.get(`${API_URL}/users/${userId}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error getting user by ID:', error);
-//     throw error;
-//   }
-// };
 
 export const registerUser = async (userData: any) => {
   try {

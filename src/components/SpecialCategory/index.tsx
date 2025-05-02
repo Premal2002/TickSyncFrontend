@@ -9,12 +9,12 @@ function SpecialCategoryDisplay(props: any) {
     console.log(scrollRef.current);
     
     if (scrollRef.current) {
-      const scrollAmount = direction === 'left' ? -1280 : 1280;
+      const scrollAmount = direction === 'left' ? -1266 : 1300;
       scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
   return (
-    <div className={"relative h-150 " + props.bgColor + " pt-5"}>
+    <div className={"relative  " + props.bgColor + " pt-5"}>
       <h1 className="text-center text-white">{props.title != undefined && props.title.toUpperCase()}</h1>
       {5 > 4 && (
           <button
@@ -24,16 +24,19 @@ function SpecialCategoryDisplay(props: any) {
             &lt;
           </button>
         )}
-      <div ref={scrollRef} id='cardHolder' className="flex overflow-x-auto gap-10 mt-15 mx-35 w-320 scroll-smooth pr-10 hiddenScrollbar">
+      <div ref={scrollRef} id='cardHolder' className="flex overflow-x-auto gap-10 py-15 mx-30 pr-10 scroll-smooth hiddenScrollbar">
         {/* Left arrow */}
         
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Card width='[23%]' />
+        <Card width='[23%]' />
+        <Card width='[23%]' />
+        <Card width='[23%]' />
+        <Card width='[23%]' />
+        <Card width='[23%]' />
+        <Card width='[23%]' />
+        <Card width='[23%]' />
+        <Card width='[23%]' />
+      
       </div>
       {/* Right arrow */}
       {5 > 4 && (

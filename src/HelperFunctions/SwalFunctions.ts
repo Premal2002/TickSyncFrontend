@@ -10,7 +10,7 @@ export function responseError(msg: any) {
 
 export function successful(msg: any) {
   Swal.fire({
-    title: "Drag me!",
+    title: "Success!",
     icon: "success",
     text: msg
   });
