@@ -24,18 +24,19 @@ function SpecialCategoryDisplay(props: any) {
             &lt;
           </button>
         )}
-      <div ref={scrollRef} id='cardHolder' className="flex overflow-x-auto gap-10 py-15 mx-30 pr-10 scroll-smooth hiddenScrollbar">
+      <div ref={scrollRef} id='cardHolder' className="flex overflow-x-auto gap-9 py-15 mx-30 pr-10 scroll-smooth hiddenScrollbar">
         {/* Left arrow */}
         
-        <Card width='w-[23%]' />
-        <Card width='w-[23%]' />
-        <Card width='w-[23%]' />
-        <Card width='w-[23%]' />
-        <Card width='w-[23%]' />
-        <Card width='w-[23%]' />
-        <Card width='w-[23%]' />
-        <Card width='w-[23%]' />
-        <Card width='w-[23%]' />
+        <Card width='w-[18%]' />
+        <Card width='w-[18%]' />
+        <Card width='w-[18%]' />
+        <Card width='w-[18%]' />
+        <Card width='w-[18%]' />
+        <Card width='w-[18%]' />
+        <Card width='w-[18%]' />
+        <Card width='w-[18%]' />
+        <Card width='w-[18%]' />
+        
       
       </div>
       {/* Right arrow */}
