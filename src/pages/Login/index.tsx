@@ -11,7 +11,7 @@ import { successful } from '@/HelperFunctions/SwalFunctions';
 function Login() {
     let router = useRouter()
     const { email } = router.query;
-    console.log(email);
+    //console.log(email);
 
     const [passwordVisible, setPasswordVisible] = useState(false);
     // Toggle visibility function
