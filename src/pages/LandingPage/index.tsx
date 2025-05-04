@@ -24,7 +24,7 @@ const LandingPage = () => {
                         setRecommendedMovies(data);
                     }
                 });
-    },[trendingMovies,recommendedMovies]);
+    },[]);
 
     return <div>
         <SubNavbar />
