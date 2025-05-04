@@ -18,7 +18,7 @@ function Movies(props:any) {
                           setMovies(data);
                       }
                   });
-      },[movies]);
+      },[]);
 
   function onLanguageFilterItemClicked(index: number) {
     // console.log(languageFilter[index].filterApplied);

@@ -9,10 +9,10 @@ const SubNavbar = () => {
                         <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
-                                    <Link href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black " aria-current="page">Movies</Link>
-                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black ">Team</a>
-                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black ">Projects</a>
-                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black ">Calendar</a>
+                                    <Link href="/Movies" className="rounded-md px-3 py-2 text-sm font-medium text-black " aria-current="page">Movies</Link>
+                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black ">Shows</a>
+                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black ">Matches</a>
+                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black ">StandUps</a>
                                </div>
                             </div>
                         </div>

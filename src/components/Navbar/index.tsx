@@ -20,7 +20,9 @@ const Navbar = () => {
                 <div className="mx-auto max-w-8xl px-2 sm:px-14 lg:px-16">
                     <div className="relative flex h-16 items-center justify-center sm:justify-between">
                         <div>
+                            <Link href="/">
                             <h2>TickSync</h2>
+                            </Link>
                         </div>
                         <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-end">
                             <div className="hidden sm:ml-6 sm:block">
