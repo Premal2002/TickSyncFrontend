@@ -7,53 +7,80 @@ import { getMovies } from "@/services/movieService";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-function Movies(props:any) {
+function Movies(props: any) {
+  const [filters, setFilters] = useState<{
+    languages: string[];
+    genres: string[];
+  }>({
+    languages: [],
+    genres: [],
+  });
   const [languageFilter, setLanguageFilter] = useState<any[]>(Languages);
   const [genreFilter, setGenreFilter] = useState<any[]>(Genres);
-   const [movies, setMovies] = useState<Movie[]>();
-      useEffect(()=>{
-          const response = getMovies().then((response: any) => {
-                      if (response) {
-                          const data:Movie[]= response.data;
-                          setMovies(data);
-                      }
-                  });
-      },[]);
+  const [movies, setMovies] = useState<Movie[]>();
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const response = await getMovies(filters); // Pass filters to API
+      if (response) {
+        const data: Movie[] = response.data;
+        setMovies(data);
+      }
+    };
+  
+    fetchMovies();
+  }, [filters]);
 
   function onLanguageFilterItemClicked(index: number) {
-    // console.log(languageFilter[index].filterApplied);
     const updatedLanguages = [...languageFilter];
+    const item = updatedLanguages[index];
+    const isSelected = item.filterApplied;
+
     updatedLanguages[index] = {
-      ...updatedLanguages[index],
-      filterApplied: !updatedLanguages[index].filterApplied,
+      ...item,
+      filterApplied: !isSelected,
     };
     setLanguageFilter(updatedLanguages);
-    //remaining
-    // const strArray = langFilterObj.split('|');
-    // if(strArray.includes(updatedLanguages[index].languageName)){
-    //     updatedLanguages[index] = { ...updatedLanguages[index], filterApplied: false };
-    // }else{
-    //     updatedLanguages[index] = { ...updatedLanguages[index], filterApplied: true };
-    //     langFilterObj.
-    // }
+
+    setFilters((prev) => {
+      const updated = isSelected
+        ? prev.languages.filter((lang) => lang !== item.languageName)
+        : [...prev.languages, item.languageIsoCode];
+      return { ...prev, languages: updated };
+    });
   }
 
   function onGenreFilterItemClicked(index: number) {
-    // console.log(languageFilter[index].filterApplied);
     const updatedGenres = [...genreFilter];
+    const item = updatedGenres[index];
+    const isSelected = item.filterApplied;
+
     updatedGenres[index] = {
-      ...updatedGenres[index],
-      filterApplied: !updatedGenres[index].filterApplied,
+      ...item,
+      filterApplied: !isSelected,
     };
     setGenreFilter(updatedGenres);
+
+    setFilters((prev) => {
+      const updated = isSelected
+        ? prev.genres.filter((genre) => genre !== item.genreName)
+        : [...prev.genres, item.genreName];
+      return { ...prev, genres: updated };
+    });
   }
 
   function clearLanguageFilter() {
-    setLanguageFilter(Languages);
+    const cleared = Languages.map((lang) => ({
+      ...lang,
+      filterApplied: false,
+    }));
+    setLanguageFilter(cleared);
+    setFilters((prev) => ({ ...prev, languages: [] }));
   }
 
   function clearGenreFilter() {
-    setGenreFilter(Genres);
+    const cleared = Genres.map((genre) => ({ ...genre, filterApplied: false }));
+    setGenreFilter(cleared);
+    setFilters((prev) => ({ ...prev, genres: [] }));
   }
 
   return (
@@ -109,7 +136,8 @@ function Movies(props:any) {
         <div className="w-[80%]">
           <h3 className="px-2 mb-3 text-black">Movies</h3>
           <div className="flex gap-5 px-2 flex-wrap">
-            {movies && movies.map((item: Movie) => (
+            {movies &&
+              movies.map((item: Movie) => (
                 <Card width="w-[18%]" data={item} key={item.movieId} />
               ))}
           </div>
