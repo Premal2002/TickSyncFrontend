@@ -1,0 +1,39 @@
+export class Movie{
+    movieId?:number;
+    title?:string;
+    description?:string;
+    language?:string;
+    duration?:number;
+    genre?:string;
+    releaseDate?:string;
+    popularity?:string;
+    posterUrl?:string;
+    backdropUrl?:string;
+    rating?:number;
+    
+    constructor(
+        movieId?:number,
+        title?:string,
+        description?:string,
+        language?:string,
+        duration?:number,
+        genre?:string,
+        releaseDate?:string,
+        popularity?:string,
+        posterUrl?:string,
+        backdropUrl?:string,
+        rating?:number
+    ){
+        this.title=title;
+        this.releaseDate=releaseDate;
+        this.rating=rating;
+        this.posterUrl=posterUrl;
+        this.popularity=popularity;
+        this.movieId=movieId;
+        this.language=language;
+        this.genre=genre;
+        this.duration=duration;
+        this.description=description;
+        this.backdropUrl=backdropUrl;
+    }
+}

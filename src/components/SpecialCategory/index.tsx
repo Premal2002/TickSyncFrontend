@@ -1,12 +1,12 @@
 
 import React, { useRef } from 'react'
 import Card from '../Card';
+import { Movie } from '@/models/movie';
 
 function SpecialCategoryDisplay(props: any) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
-    console.log(scrollRef.current);
     
     if (scrollRef.current) {
       const scrollAmount = direction === 'left' ? -1300 : 1300;
@@ -27,15 +27,9 @@ function SpecialCategoryDisplay(props: any) {
       <div ref={scrollRef} id='cardHolder' className="flex overflow-x-auto gap-9 py-15 mx-30 pr-10 scroll-smooth hiddenScrollbar">
         {/* Left arrow */}
         
-        <Card width='w-[18%]' />
-        <Card width='w-[18%]' />
-        <Card width='w-[18%]' />
-        <Card width='w-[18%]' />
-        <Card width='w-[18%]' />
-        <Card width='w-[18%]' />
-        <Card width='w-[18%]' />
-        <Card width='w-[18%]' />
-        <Card width='w-[18%]' />
+        {props.data && props.data.map((item:Movie) => (
+          <Card width='w-[18%]' data={item} key={item.movieId}/>
+      ))}
         
       
       </div>
