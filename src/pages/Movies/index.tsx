@@ -43,7 +43,7 @@ function Movies(props: any) {
 
     setFilters((prev) => {
       const updated = isSelected
-        ? prev.languages.filter((lang) => lang !== item.languageName)
+        ? prev.languages.filter((lang) => lang !== item.languageIsoCode)
         : [...prev.languages, item.languageIsoCode];
       return { ...prev, languages: updated };
     });
