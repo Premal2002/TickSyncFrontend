@@ -5,14 +5,14 @@ export const baseURL = "https://localhost:7028";
 //Languages to filter movies
 export const Languages : any[] = 
 [
-  {id : 0, languageName : "English", filterApplied : false},
-  {id : 1, languageName : "Hindi", filterApplied : false},
-  {id : 2, languageName : "Marathi", filterApplied : false},
-  {id : 3, languageName : "Gujarati", filterApplied : false},
-  {id : 4, languageName : "Tamil", filterApplied : false},
-  {id : 5, languageName : "Malayalam", filterApplied : false},
-  {id : 6, languageName : "Punjabi", filterApplied : false},
-  {id : 7, languageName : "Telugu", filterApplied : false},
+  {id : 0, languageIsoCode : "en", languageName : "English", filterApplied : false},
+  {id : 1, languageIsoCode : "hi", languageName : "Hindi", filterApplied : false},
+  {id : 2, languageIsoCode : "mr", languageName : "Marathi", filterApplied : false},
+  {id : 3, languageIsoCode : "gu", languageName : "Gujarati", filterApplied : false},
+  {id : 4, languageIsoCode : "ta", languageName : "Tamil", filterApplied : false},
+  {id : 5, languageIsoCode : "ml", languageName : "Malayalam", filterApplied : false},
+  {id : 6, languageIsoCode : "pa", languageName : "Punjabi", filterApplied : false},
+  {id : 7, languageIsoCode : "te", languageName : "Telugu", filterApplied : false},
 ];
 
 
