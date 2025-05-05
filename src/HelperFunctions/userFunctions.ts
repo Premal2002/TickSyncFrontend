@@ -1,13 +1,14 @@
-
+import Cookies from 'js-cookie';
 
 export function isUserLoggedIn() : boolean{
-    const authenticatedUser = localStorage.getItem("authenticatedUser");
-    if(authenticatedUser != null && authenticatedUser != undefined)
+    const authenticatedUser = JSON.parse(Cookies.get('authenticatedUser') || '{}');
+    if (authenticatedUser && authenticatedUser.jwtToken) {
         return true;
+    }
     return false;
 }
 
 export function logOutUser() {
-    localStorage.removeItem("authenticatedUser")
+    Cookies.remove('authenticatedUser', { path: '/' });    
 }
 

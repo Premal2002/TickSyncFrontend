@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 
 const HeroSection = () => {
@@ -20,8 +21,10 @@ const HeroSection = () => {
                 <p className="py-6 text-black text-2xl">
                     BOOK MOVIES, TRAIN, BUS, FLIGHTS AND MANY MORE!
                 </p>
+                <Link href="/Movies">
                 <button className="bg-black text-white px-6 py-3 rounded-md cursor-pointer">Book Now</button>
-            </div>
+                </Link>
+                </div>
         </div>
     );
 }

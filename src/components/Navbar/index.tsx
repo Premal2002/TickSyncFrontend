@@ -1,9 +1,11 @@
 import { isUserLoggedIn, logOutUser } from "@/HelperFunctions/userFunctions";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
     const [isLoggedIn,setIsLoggedIn] = useState(false);
+    const router = useRouter();
     useEffect(() => {
         // console.log(localStorage.getItem("authenticatedUser"));
         setIsLoggedIn(isUserLoggedIn()); 
@@ -12,6 +14,7 @@ const Navbar = () => {
     function logOut(){
         logOutUser();
         setIsLoggedIn(isUserLoggedIn());
+        router.reload();
     }
     
     return (

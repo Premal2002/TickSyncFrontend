@@ -1,4 +1,4 @@
-
+import Cookies from 'js-cookie';
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form';
@@ -28,14 +28,13 @@ function Login() {
     });
 
     const onSubmit = (data: LoginSchemaType) => {
-        console.log("User Register Data:", data);
-        const response = LoginUser(data).then((response: any) => {
+        // console.log("User Register Data:", data);
+        LoginUser(data).then((response: any) => {
             if (response) {
-                // console.log(response.data);
-                localStorage.setItem("authenticatedUser",JSON.stringify(response.data))
-                router.push({
-                    pathname: "/"
-                });
+                const authUser = response.data;
+                // ✅ Set token in a cookie (accessible by middleware)
+                Cookies.set('authenticatedUser', JSON.stringify(authUser), { path: '/', expires: 1 }); // expires in 1 day
+                router.push({ pathname: "/" });
                 successful("Login Successful");
             }
         });
