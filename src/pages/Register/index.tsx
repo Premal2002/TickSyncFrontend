@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { registerUser } from "@/services/userService";
 import { useRouter } from "next/router";
+import { successful } from "@/HelperFunctions/SwalFunctions";
 
 function Register() {
   const router = useRouter();
@@ -38,6 +39,7 @@ function Register() {
           pathname: "/Login",
           query: { email: data.email }, // Pass your data as query parameters
         });
+        successful("Login Successful");
       }  
     });
   };
