@@ -105,7 +105,7 @@ function Movies(props: any) {
                                             onClick={() => onLanguageFilterItemClicked(language.id)}
                                             className={`${language.filterApplied
                                                     ? "border border-red-500 bg-red-500 text-white"
-                                                    : "text-red-500 border border-gray-300"
+                                                    : "text-red-500 border border-gray-300 rounded-3xl"
                                                 } py-1 px-3 text-sm cursor-pointer select-none`}
                                         >
                                             {language.languageName}
@@ -126,7 +126,7 @@ function Movies(props: any) {
                                             }}
                                             className={`${genre.filterApplied
                                                     ? "border border-red-500 bg-red-500 text-white"
-                                                    : "text-red-500 border border-gray-300"
+                                                    : "text-red-500 border border-gray-300 rounded-3xl"
                                                 } py-1 px-3 text-sm cursor-pointer select-none`}
                                         >
                                             {genre.genreName}
@@ -141,7 +141,7 @@ function Movies(props: any) {
                     <h3 className="px-2 mb-3 text-black">Movies</h3>
                     <div className="flex gap-5 px-2 flex-wrap">
                         {load ? <h4 className="text-black">Loading...</h4> : movies ? movies && movies.map((item: Movie) => (
-                            <Card width='w-[18%]' data={item} key={item.movieId} />
+                            <Card width='w-[23%]' data={item} key={item.movieId} />
                         )) : <h4 className="text-black">Movies data is empty!</h4>}
                     </div>
                 </div>

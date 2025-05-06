@@ -19,7 +19,7 @@ const Navbar = () => {
     
     return (
         <>
-            <nav className="bg-red-500 py-3">
+            <nav className="bg-red-500 py-3 font-serif">
                 <div className="mx-auto max-w-8xl px-2 sm:px-14 lg:px-16">
                     <div className="relative flex h-16 items-center justify-center sm:justify-between">
                         <div>
@@ -35,8 +35,8 @@ const Navbar = () => {
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Projects</a>
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Calendar</a>
                                     {isLoggedIn ? 
-                                    <button onClick={logOut} className="rounded-sm bg-black text-white px-4 py-2 cursor-pointer hover:bg-slate-900">Logout</button>:  <Link href="/Login">
-                                    <button className="rounded-sm bg-black text-white px-4 py-2 cursor-pointer hover:bg-slate-900">Login</button>
+                                    <button onClick={logOut} className="rounded-sm bg-black text-white px-4 py-2 cursor-pointer hover:drop-shadow-2xl">Logout</button>:  <Link href="/Login">
+                                    <button className="rounded-md bg-black text-white px-4 py-2 cursor-pointer hover:drop-shadow-2xl">Login</button>
                                     </Link>}
                                 </div>
                             </div>

@@ -11,7 +11,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, clearFilter, children }) =
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-full max-w-md mx-auto border border-gray-300 rounded mb-2">
+    <div className="w-full max-w-md mx-auto border border-gray-300 hover:shadow-2xl mb-2">
       <div
         // onClick={() => setIsOpen(!isOpen)}
         className="w-full text-left  font-semibold bg-gray-100 flex"

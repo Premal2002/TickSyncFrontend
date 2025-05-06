@@ -8,11 +8,11 @@ const SubNavbar = () => {
                     <div className="relative flex h-12 items-center justify-center sm:justify-between">
                         <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                             <div className="hidden sm:ml-6 sm:block">
-                                <div className="flex space-x-4">
-                                    <Link href="/Movies" className="rounded-md px-3 py-2 text-sm font-medium text-black " aria-current="page">Movies</Link>
-                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black ">Shows</a>
-                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black ">Matches</a>
-                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black ">StandUps</a>
+                                <div className="flex text-black text-md space-x-4">
+                                    <Link href="/Movies" className="rounded-md px-3 py-2 " aria-current="page">Movies</Link>
+                                    <a href="#" className="rounded-md px-3 py-2  ">Shows</a>
+                                    <a href="#" className="rounded-md px-3 py-2 ">Matches</a>
+                                    <a href="#" className="rounded-md px-3 py-2 ">StandUps</a>
                                </div>
                             </div>
                         </div>
