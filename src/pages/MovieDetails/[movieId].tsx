@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { formatDate } from '@/HelperFunctions/dateFunctions';
 import { ShowVenueGroup } from "@/models/showVenueGroup";
 import Card from "@/components/Card";
+import { Languages } from "@/HelperData/datavariables";
 
 interface Props {
     movieId: string;
@@ -69,7 +70,7 @@ function MovieDetails({ movieId }: Props) {
             <SubNavbar />
             <div className="bg-gray-100 min-h-screen p-4 md:p-8">
                 {/* Movie Info Section */}
-                <div style={{ backgroundImage: `url(${movie?.posterUrl})` }} className="relative bg-cover h-100 rounded-xl shadow-md p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div style={{ backgroundImage: `url(${movie?.backdropUrl})` }} className="relative bg-cover h-100 rounded-xl shadow-md p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div className="absolute inset-0 bg-black opacity-50 rounded-xl"></div>
                     <div className="z-10 flex flex-col md:flex-row items-start gap-4">
                         <img
@@ -88,7 +89,7 @@ function MovieDetails({ movieId }: Props) {
                             <p className="mt-2 text-gray-200 text-md">
                                 Release Date: {movie?.releaseDate && formatDate(movie?.releaseDate, { year: 'numeric', month: 'long', day: 'numeric' }).toString()}
                             </p>
-                            <p className="mt-2 text-gray-300 text-md">Language: {movie?.language}</p>
+                            <p className="mt-2 text-gray-300 text-md">Language: {Languages.find(l => l.languageIsoCode == movie?.language)?.languageName}</p>
                             <p className="mt-2 text-gray-300 text-md">Duration: 2h 19m</p>
                             <p className="mt-2 text-gray-300 text-md">Popularity: {movie?.popularity}</p>
                         </div>
