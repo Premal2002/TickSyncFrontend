@@ -1,6 +1,7 @@
 // services/userService.js
 import { baseURL } from "@/HelperData/datavariables";
 import { responseError } from "@/HelperFunctions/SwalFunctions";
+import { Movie } from "@/models/movie";
 import axios from "axios";
 
 const API_URL = baseURL;
@@ -43,6 +44,56 @@ export const getMovies = async (filters: {
 }) => {
   try {
     const response = await axios.post(`${API_URL}/api/Movies/getMovies`, filters);
+    return response;
+  } catch (error: any) {
+    if (error.response) {
+      responseError(error.response.data);
+    } else if (error.request) {
+      // console.log('No response received:', error.request);
+      responseError("No response received from server!");
+    } else {
+      console.log("Error", error.message);
+    }
+  }
+};
+
+export const getMovieById = async (movieId : any) => {
+  try {
+    const response = await axios.get(`${API_URL}/api/Movies/${movieId}`);
+    return response;
+  } catch (error: any) {
+    if (error.response) {
+      responseError(error.response.data);
+    } else if (error.request) {
+      // console.log('No response received:', error.request);
+      responseError("No response received from server!");
+    } else {
+      console.log("Error", error.message);
+    }
+  }
+};
+
+
+export const getMovieShows = async (movieId : any) => {
+  try {
+    const response = await axios.get(`${API_URL}/api/Movies/getMovieShows/${movieId}`);
+    return response;
+  } catch (error: any) {
+    if (error.response) {
+      responseError(error.response.data);
+    } else if (error.request) {
+      // console.log('No response received:', error.request);
+      responseError("No response received from server!");
+    } else {
+      console.log("Error", error.message);
+    }
+  }
+};
+
+
+export const getRelatedMovies = async (movieId : any) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/Movies/getRelatedMovies/${movieId}`);
     return response;
   } catch (error: any) {
     if (error.response) {

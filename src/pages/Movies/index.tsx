@@ -141,9 +141,7 @@ function Movies(props: any) {
                     <h3 className="px-2 mb-3 text-black">Movies</h3>
                     <div className="flex gap-5 px-2 flex-wrap">
                         {load ? <h4 className="text-black">Loading...</h4> : movies ? movies && movies.map((item: Movie) => (
-                            <Link className="cursor-pointer w-[23%]" href="/MovieDetails">
-                            <Card data={item} key={item.movieId} />
-                            </Link>
+                            <Card width='w-[23%]' data={item} key={item.movieId} />
                         )) : <h4 className="text-black">Movies data is empty!</h4>}
                     </div>
                 </div>

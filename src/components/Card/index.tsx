@@ -1,9 +1,10 @@
+import Link from "next/link";
 import React from "react";
 
 function Card(props: any) {
   return (
     <>
-      <div className={`${props.width} flex-shrink-0 relative rounded-xl overflow-hidden bg-white hover:drop-shadow-2xl hover:scale-105 `}>
+      <Link href={`/MovieDetails/${props.data.movieId}`} className={`${props.width} flex-shrink-0 relative rounded-xl overflow-hidden bg-white hover:drop-shadow-2xl hover:scale-105 `}>
         <div
           className="flex-shrink-0 relative rounded-xl overflow-hidden bg-white shadow-lg "
           style={{
@@ -28,8 +29,7 @@ function Card(props: any) {
               {props.data.genre}
             </p>
           </div>
-
-      </div>
+      </Link>
     </>
   );
 }

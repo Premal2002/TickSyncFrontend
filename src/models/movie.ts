@@ -5,7 +5,7 @@ export class Movie{
     language?:string;
     duration?:number;
     genre?:string;
-    releaseDate?:string;
+    releaseDate?:Date;
     popularity?:number;
     posterUrl?:string;
     backdropUrl?:string;
@@ -18,7 +18,7 @@ export class Movie{
         language?:string,
         duration?:number,
         genre?:string,
-        releaseDate?:string,
+        releaseDate?:Date,
         popularity?:number,
         posterUrl?:string,
         backdropUrl?:string,
