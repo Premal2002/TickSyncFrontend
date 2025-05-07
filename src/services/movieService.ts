@@ -55,3 +55,19 @@ export const getMovies = async (filters: {
     }
   }
 };
+
+export const getMovieById = async (movieId : any) => {
+  try {
+    const response = await axios.get(`${API_URL}/api/Movies/${movieId}`);
+    return response;
+  } catch (error: any) {
+    if (error.response) {
+      responseError(error.response.data);
+    } else if (error.request) {
+      // console.log('No response received:', error.request);
+      responseError("No response received from server!");
+    } else {
+      console.log("Error", error.message);
+    }
+  }
+};

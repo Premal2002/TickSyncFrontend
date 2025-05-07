@@ -2,6 +2,7 @@
 import React, { useRef, useState } from 'react'
 import Card from '../Card';
 import { Movie } from '@/models/movie';
+import Link from 'next/link';
 
 function SpecialCategoryDisplay(props: any) {
   const scrollRef = useRef<HTMLDivElement>(null);
