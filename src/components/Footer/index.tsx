@@ -3,8 +3,8 @@ import React from 'react'
 
 function Footer() {
     return (
-        <div className='p-15 pb-2 bg-black text-white'>
-            <div className='flex '>
+        <div className='p-15 pb-0 bg-black text-white'>
+            <div className='flex'>
                 <span className='text-3xl'>TickSync</span>
                 <ul className='flex gap-3 ml-auto'>
                     <li>
@@ -59,8 +59,8 @@ function Footer() {
                 </ul>
                 </div>
             </div>
-            <div className='mt-30 text-center'>
-                <span className='text-[10rem]'>TICKSYNC</span>
+            <div className='text-center p-0 m-0'>
+                <span className='text-[16vw] font-semibold antialiased'>TICKSYNC</span>
             </div>
         </div>
     )

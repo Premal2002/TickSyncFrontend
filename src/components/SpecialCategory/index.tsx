@@ -28,7 +28,8 @@ function SpecialCategoryDisplay(props: any) {
         {/* Left arrow */}
         {props.load ? <h4 className="text-black">Loading...</h4> : props.data ? props.data && props.data.map((item: Movie) => (
           <Card width='w-[18%]' data={item} key={item.movieId} />
-        )) : <h4 className="text-black">Movies data is empty!</h4>}
+          
+        )) : <h4 className="text-white">Movies data is empty!</h4>}
 
 
       </div>
