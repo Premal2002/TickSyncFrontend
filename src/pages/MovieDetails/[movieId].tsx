@@ -1,10 +1,12 @@
 import Show from "@/components/Show";
 import SubNavbar from "@/components/SubNavbar";
 import { Movie } from "@/models/movie";
-import { getMovieById } from "@/services/movieService";
+import { getMovieById, getMovieShows, getRelatedMovies } from "@/services/movieService";
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import { formatDate } from '@/HelperFunctions/dateFunctions';
+import { ShowVenueGroup } from "@/models/showVenueGroup";
+import Card from "@/components/Card";
 
 interface Props {
     movieId: string;
@@ -24,12 +26,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 function MovieDetails({ movieId }: Props) {
-
+    const [movies, setMovies] = useState<Movie[]>();
     const [movie, setMovie] = useState<Movie>();
     const [genres, setGenres] = useState<string[]>();
+    const [movieShows, setMovieShows] = useState<ShowVenueGroup[]>();
 
     useEffect(() => {
-        const fetchMovies = async () => {
+        const fetchMovie = async () => {
             const response = await getMovieById(movieId);
             if (response) {
                 const data: Movie = response.data;
@@ -38,8 +41,28 @@ function MovieDetails({ movieId }: Props) {
                 setMovie(data);
             }
         };
-        fetchMovies();
+
+        const fetchMoviesShows = async () => {
+            const response = await getMovieShows(movieId);
+            if (response) {
+                const data: ShowVenueGroup[] = response.data;
+                setMovieShows(data);
+            }
+        };
+
+        const fetchRelatedMovies = async () => {
+            const response = await getRelatedMovies(movieId); // Pass filters to API
+            if (response) {
+                const data: Movie[] = response.data;
+                setMovies(data);
+            }
+        };
+
+        fetchMovie();
+        fetchMoviesShows();
+        fetchRelatedMovies();
     }, []);
+
 
     return (
         <>
@@ -78,7 +101,26 @@ function MovieDetails({ movieId }: Props) {
                     </div>
                 </div>
 
-                <Show />
+                <div className="mt-4 px-2 py-6">
+                    <h3 className="text-black">Shows : </h3>
+                    {movieShows && movieShows.map((movieShow: ShowVenueGroup) => (
+                        <Show key={movieShow.venueId} movieShow={movieShow} />
+                    ))}
+                </div>
+
+                {(movies && movies.length > 0) &&
+                    (<div className="px-2 ">
+                        <h3 className="text-black py-5">You May Like : </h3>
+                        <div className="">
+                            <div className="flex gap-5 px-2 flex-wrap">
+                                {movies && movies && movies.map((item: Movie) => (
+                                    <Card width='w-[18%]' data={item} key={item.movieId} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>)
+                }
+
             </div>
         </>
     );
