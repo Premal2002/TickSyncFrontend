@@ -118,7 +118,7 @@ function Login() {
                         </div>
                         <br />
                         <div className='flex'>
-                            <a className='m-auto hover:text-blue-700' href="#">Forgot Password?</a>
+                            <a className='m-auto hover:text-blue-700' href="/ForgotPassword">Forgot Password?</a>
                         </div>
                         <br />
                         <div className='flex'>

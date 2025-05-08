@@ -8,11 +8,24 @@ export function responseError(msg: any) {
   });
 }
 
-export function successful(msg: any) {
+export function successful(message: string) {
   Swal.fire({
-    title: "Success!",
-    icon: "success",
-    text: msg
+    icon: 'success',
+    title: 'Success',
+    text: message,
+    timer: 2000,
+    showConfirmButton: false,
   });
 }
+
+export function error(message: string) {
+  Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: message,
+    timer: 2500,
+    showConfirmButton: false,
+  });
+}
+
 
