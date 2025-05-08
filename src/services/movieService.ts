@@ -1,4 +1,4 @@
-// services/userService.js
+// services/movieService.js
 import { baseURL } from "@/HelperData/datavariables";
 import { responseError } from "@/HelperFunctions/SwalFunctions";
 import { Movie } from "@/models/movie";
@@ -38,24 +38,29 @@ export const getRecommendedMovies = async () => {
   }
 };
 
-export const getMovies = async (filters: {
-  languages: string[];
-  genres: string[];
-}) => {
+export const getMovies = async (
+  filters: { languages: string[]; genres: string[] },
+  page: number = 1,
+  limit: number = 8
+) => {
   try {
-    const response = await axios.post(`${API_URL}/api/Movies/getMovies`, filters);
+    const response = await axios.post(`${API_URL}/api/Movies/getMovies`, {
+      ...filters,
+      page,
+      limit,
+    });
     return response;
   } catch (error: any) {
     if (error.response) {
       responseError(error.response.data);
     } else if (error.request) {
-      // console.log('No response received:', error.request);
       responseError("No response received from server!");
     } else {
       console.log("Error", error.message);
     }
   }
 };
+
 
 export const getMovieById = async (movieId : any) => {
   try {
