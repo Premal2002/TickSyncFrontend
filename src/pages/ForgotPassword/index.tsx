@@ -29,25 +29,30 @@ function ForgotPassword() {
           setConfirmPasswordVisible(!confirmPasswordVisible);
       };
 
-  const sendOtp = async () => {
+  const sendOtp = async (event:any) => {
+    event.preventDefault();
       forgotPassword({email}).then((response : any) => {
         if(response){
           successful(response.data);
           setStep('otp');
+          console.log("aniket nub");
         }
       }); 
-  };
-
-  const verifyOtp = async () => {
-    verifyOtpApi({ email, secretCode: otp }).then((response : any) => {
-      if(response && response.data.verified){
-        successful("OTP verified");
-        setStep('reset');
+    };
+    
+    const verifyOtp = async (event:any) => {
+      event.preventDefault();
+      verifyOtpApi({ email, secretCode: otp }).then((response : any) => {
+        if(response && response.data.verified){
+          successful("OTP verified");
+          setStep('reset');
+          console.log("aniket nub");
       }
     });
   };
 
-  const resetPassword = async () => {
+  const resetPassword = async (event:any) => {
+    event.preventDefault();
     resetPasswordApi({ email, secretCode: otp, newPassword, confirmPassword }).then((response : any) => {
       if(response){
         successful(response.data.message);
@@ -64,7 +69,9 @@ function ForgotPassword() {
   
         {step === 'email' && (
           <>
+          <form onSubmit={sendOtp}>
             <label className="block mb-2">Email:</label>
+            
             <input
               className="w-full border rounded p-2 mb-4 text-black"
               value={email}
@@ -72,15 +79,18 @@ function ForgotPassword() {
               type="email"
               placeholder="Enter your registered email"
               required
-            />
-            <button onClick={sendOtp} className="w-full bg-gray-700 text-white py-2 rounded">
+              />
+            <button type='submit' className="w-full bg-gray-700 text-white py-2 rounded">
               Send OTP
             </button>
+              </form>
           </>
         )}
   
         {step === 'otp' && (
           <>
+          <form onSubmit={verifyOtp}>
+
             <label className="block mb-2">Enter OTP</label>
             <input
               className="w-full border rounded p-2 mb-4"
@@ -89,15 +99,18 @@ function ForgotPassword() {
               type="text"
               placeholder="6-digit code"
               required
-            />
-            <button onClick={verifyOtp} className="w-full bg-red-500 text-white py-2 rounded">
+              />
+            <button type='submit' className="w-full bg-red-500 text-white py-2 rounded">
               Verify OTP
             </button>
+              </form>
           </>
         )}
   
         {step === 'reset' && (
-          <>
+        <>
+          <form onSubmit={resetPassword}>
+
             <label className="block mb-2">New Password</label>
             <div className="flex items-center border border-gray-500 py-2 rounded-md mb-4 px-4">
               <input
@@ -107,11 +120,11 @@ function ForgotPassword() {
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Enter new password"
                 required
-              />
+                />
             {passwordVisible ? (
                                     <svg
-                                        onClick={togglePasswordVisibility}
-                                        className="w-6 h-6 text-gray-800 cursor-pointer"
+                                    onClick={togglePasswordVisibility}
+                                    className="w-6 h-6 text-gray-800 cursor-pointer"
                                         aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -131,8 +144,8 @@ function ForgotPassword() {
                                         />
                                     </svg>
                                 ) : (
-                                    <svg
-                                        onClick={togglePasswordVisibility}
+                                  <svg
+                                  onClick={togglePasswordVisibility}
                                         className="w-6 h-6 text-gray-800 cursor-pointer"
                                         aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +153,7 @@ function ForgotPassword() {
                                         height="24"
                                         fill="none"
                                         viewBox="0 0 24 24"
-                                    >
+                                        >
                                         <path
                                             stroke="currentColor"
                                             strokeLinecap="round"
@@ -161,7 +174,7 @@ function ForgotPassword() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm new password"
               required
-            />
+              />
             {confirmPasswordVisible ? (
                                     <svg
                                         onClick={toggleConfirmPasswordVisibility}
@@ -206,9 +219,10 @@ function ForgotPassword() {
                                 )}
           </div>
 
-          <button onClick={resetPassword} className="w-full bg-black text-white py-2 rounded mt-4">
+          <button type='submit' className="w-full bg-black text-white py-2 rounded mt-4">
             Reset Password
           </button>
+          </form>
         </>
       )}
 
