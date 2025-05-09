@@ -12,20 +12,9 @@ export function successful(message: string) {
   Swal.fire({
     icon: 'success',
     title: 'Success',
-    text: message,
-    timer: 2000,
-    showConfirmButton: false,
+    text: message
   });
 }
 
-export function error(message: string) {
-  Swal.fire({
-    icon: 'error',
-    title: 'Error',
-    text: message,
-    timer: 2500,
-    showConfirmButton: false,
-  });
-}
 
 

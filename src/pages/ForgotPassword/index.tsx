@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { successful, error } from '@/HelperFunctions/SwalFunctions';
+import { successful, responseError } from '@/HelperFunctions/SwalFunctions';
 
 import { baseURL } from "@/HelperData/datavariables";
 const API_URL = baseURL;
@@ -16,11 +16,16 @@ function ForgotPassword() {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
+  
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
       // Toggle visibility function
       const togglePasswordVisibility = () => {
           setPasswordVisible(!passwordVisible);
+      };
+      const toggleConfirmPasswordVisibility = () => {
+          setConfirmPasswordVisible(!confirmPasswordVisible);
       };
 
   const sendOtp = async () => {
@@ -31,13 +36,13 @@ function ForgotPassword() {
         body: JSON.stringify({ email })
       });
       if (res.ok) {
-        successful("OTP sent to your email");
+        successful(``);
         setStep('otp');
       } else {
-        error("Failed to send OTP");
+        responseError("Failed to send OTP");
       }
     } catch (err) {
-      error("Network error");
+      responseError("Network error");
     }
   };
 
@@ -53,16 +58,16 @@ function ForgotPassword() {
         successful("OTP verified");
         setStep('reset');
       } else {
-        error("Invalid or expired OTP");
+        responseError("Invalid or expired OTP");
       }
     } catch {
-      error("Verification failed");
+      responseError("Verification failed");
     }
   };
 
   const resetPassword = async () => {
     if (newPassword !== confirmPassword) {
-      error("Passwords do not match");
+      responseError("Passwords do not match");
       return;
     }
 
@@ -78,10 +83,10 @@ function ForgotPassword() {
         setStep('done');
         setTimeout(() => router.push('/Login'), 1500);
       } else {
-        error("Password reset failed");
+        responseError("Password reset failed");
       }
     } catch {
-      error("Server error");
+      responseError("Server error");
     }
   };
 
@@ -184,15 +189,15 @@ function ForgotPassword() {
           <div className="flex items-center border border-gray-500 py-2 rounded-md mb-4 px-4">
             <input
               className="w-full outline-none"
-              type={passwordVisible ? "text" : "password"}
+              type={confirmPasswordVisible ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm new password"
               required
             />
-            {passwordVisible ? (
+            {confirmPasswordVisible ? (
                                     <svg
-                                        onClick={togglePasswordVisibility}
+                                        onClick={toggleConfirmPasswordVisibility}
                                         className="w-6 h-6 text-gray-800 cursor-pointer"
                                         aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +219,7 @@ function ForgotPassword() {
                                     </svg>
                                 ) : (
                                     <svg
-                                        onClick={togglePasswordVisibility}
+                                        onClick={toggleConfirmPasswordVisibility}
                                         className="w-6 h-6 text-gray-800 cursor-pointer"
                                         aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg"
