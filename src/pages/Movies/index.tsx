@@ -17,34 +17,34 @@ function Movies(props: any) {
     languages: [],
     genres: [],
   });
-  
+
   const [languageFilter, setLanguageFilter] = useState<any[]>(Languages);
   const [genreFilter, setGenreFilter] = useState<any[]>(Genres);
   const [movies, setMovies] = useState<Movie[]>();
 
   const [currentPage, setCurrentPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
-    const MOVIES_PER_PAGE = 8;
+  const MOVIES_PER_PAGE = 8;
 
 
-    useEffect(() => {
-      const fetchMovies = async () => {
-          setLoad(true);
-          const response = await getMovies(filters, currentPage + 1, MOVIES_PER_PAGE); // Note: page is 1-based
-          if (response && response.data) {
-              const { movies, total } = response.data;
-              setMovies(movies);
-              setTotalPages(Math.ceil(total / MOVIES_PER_PAGE));
-          }
-          setLoad(false);
-      };
-      fetchMovies();
+  useEffect(() => {
+    const fetchMovies = async () => {
+      setLoad(true);
+      const response = await getMovies(filters, currentPage + 1, MOVIES_PER_PAGE); // Note: page is 1-based
+      if (response && response.data) {
+        const { movies, total } = response.data;
+        setMovies(movies);
+        setTotalPages(Math.ceil(total / MOVIES_PER_PAGE));
+      }
+      setLoad(false);
+    };
+    fetchMovies();
   }, [filters, currentPage]);
 
   const handlePageClick = (selectedItem: { selected: number }) => {
     setCurrentPage(selectedItem.selected);
-};
+  };
 
   function onLanguageFilterItemClicked(index: number) {
     const updatedLanguages = [...languageFilter];
@@ -113,11 +113,10 @@ function Movies(props: any) {
                     <li
                       key={language.id}
                       onClick={() => onLanguageFilterItemClicked(language.id)}
-                      className={`${
-                        language.filterApplied
+                      className={`${language.filterApplied
                           ? "border border-red-500 bg-red-500 text-white rounded-3xl"
                           : "text-red-500 border border-gray-300 rounded-3xl"
-                      } py-1 px-3 text-sm cursor-pointer select-none`}
+                        } py-1 px-3 text-sm cursor-pointer select-none`}
                     >
                       {language.languageName}
                     </li>
@@ -135,11 +134,10 @@ function Movies(props: any) {
                       onClick={() => {
                         onGenreFilterItemClicked(genre.id);
                       }}
-                      className={`${
-                        genre.filterApplied
+                      className={`${genre.filterApplied
                           ? "border border-red-500 bg-red-500 text-white rounded-3xl"
                           : "text-red-500 border border-gray-300 rounded-3xl"
-                      } py-1 px-3 text-sm cursor-pointer select-none`}
+                        } py-1 px-3 text-sm cursor-pointer select-none`}
                     >
                       {genre.genreName}
                     </li>
@@ -166,24 +164,23 @@ function Movies(props: any) {
 
           {/* Pagination */}
           <div className="mt-6 py-2 flex justify-center text-black">
-                        <ReactPaginate
-                            previousLabel={'← Previous'}
-                            nextLabel={'Next →'}
-                            breakLabel={'...'}
-                            breakClassName={'break-me'}
-                            pageCount={totalPages}
-                            marginPagesDisplayed={2}
-                            pageRangeDisplayed={3}
-                            onPageChange={handlePageClick}
-                            containerClassName={'flex gap-2 text-md cursor-pointer'}
-                            pageClassName={'px-3 py-2 border border-gray-400 rounded'}
-                            activeClassName={'bg-red-500 text-white'}
-                            previousClassName={'px-3 py-2 border border-gray-400 rounded'}
-                            nextClassName={'px-3 py-2 border border-gray-400 rounded'}
-                            disabledClassName={'opacity-60 cursor-not-allowed'}
-                        />
-                    </div>
-
+            <ReactPaginate
+              previousLabel={'← Previous'}
+              nextLabel={'Next →'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={totalPages}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClick}
+              containerClassName={'flex gap-2 text-md cursor-pointer'}
+              pageClassName={'px-3 py-2 border border-gray-400 rounded'}
+              activeClassName={'bg-red-500 text-white'}
+              previousClassName={'px-3 py-2 border border-gray-400 rounded'}
+              nextClassName={'px-3 py-2 border border-gray-400 rounded'}
+              disabledClassName={'opacity-60 cursor-not-allowed'}
+            />
+          </div>
         </div>
       </div>
     </div>

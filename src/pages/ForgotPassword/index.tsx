@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { successful, responseError } from '@/HelperFunctions/SwalFunctions';
 
 import { baseURL } from "@/HelperData/datavariables";
+import { forgotPassword, resetPasswordApi, verifyOtpApi } from '@/services/userService';
 const API_URL = baseURL;
 
 
@@ -29,65 +30,31 @@ function ForgotPassword() {
       };
 
   const sendOtp = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/auth/forgot-password`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      if (res.ok) {
-        successful(``);
-        setStep('otp');
-      } else {
-        responseError("Failed to send OTP");
-      }
-    } catch (err) {
-      responseError("Network error");
-    }
+      forgotPassword({email}).then((response : any) => {
+        if(response){
+          successful(response.data);
+          setStep('otp');
+        }
+      }); 
   };
 
   const verifyOtp = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/auth/verify-reset-code`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, secretCode: otp })
-      });
-      const data = await res.json();
-      if (res.ok && data.verified) {
+    verifyOtpApi({ email, secretCode: otp }).then((response : any) => {
+      if(response && response.data.verified){
         successful("OTP verified");
         setStep('reset');
-      } else {
-        responseError("Invalid or expired OTP");
       }
-    } catch {
-      responseError("Verification failed");
-    }
+    });
   };
 
   const resetPassword = async () => {
-    if (newPassword !== confirmPassword) {
-      responseError("Passwords do not match");
-      return;
-    }
-
-    try {
-      const res = await fetch(`${API_URL}/api/auth/reset-password`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, secretCode: otp, newPassword, confirmPassword })
-      });
-
-      if (res.ok) {
-        successful("Password reset successful");
+    resetPasswordApi({ email, secretCode: otp, newPassword, confirmPassword }).then((response : any) => {
+      if(response){
+        successful(response.data.message);
+        router.push('/Login');
         setStep('done');
-        setTimeout(() => router.push('/Login'), 1500);
-      } else {
-        responseError("Password reset failed");
       }
-    } catch {
-      responseError("Server error");
-    }
+    });
   };
 
   return (

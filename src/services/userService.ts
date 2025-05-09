@@ -22,7 +22,7 @@ export const registerUser = async (userData: any) => {
   }
 };
 
-export const LoginUser = async (userLoginData: any) => {
+export const loginUser = async (userLoginData: any) => {
   try {
     const response = await axios.post(`${API_URL}/api/Auth/login`, userLoginData);
     return response;
@@ -31,6 +31,52 @@ export const LoginUser = async (userLoginData: any) => {
       responseError(error.response.data);
     } else if (error.request) {
       // console.log('No response received:', error.request);
+      responseError("No response received from server!")
+    } else {
+      console.log('Error', error.message);
+    }
+  }
+};
+
+
+export const forgotPassword = async (email: any) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/Auth/forgot-password`, email);
+    return response;
+  } catch (error : any) {
+    if (error.response) {
+      responseError(error.response.data);
+    } else if (error.request) {
+      responseError("No response received from server!")
+    } else {
+      console.log('Error', error.message);
+    }
+  }
+};
+
+export const verifyOtpApi = async (verifyOtpObj : any) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/Auth/verify-reset-code`, verifyOtpObj);
+    return response;
+  } catch (error : any) {
+    if (error.response) {
+      responseError(error.response.data);
+    } else if (error.request) {
+      responseError("No response received from server!")
+    } else {
+      console.log('Error', error.message);
+    }
+  }
+};
+
+export const resetPasswordApi = async (resetPasswordObj : any) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/Auth/reset-password`, resetPasswordObj);
+    return response;
+  } catch (error : any) {
+    if (error.response) {
+      responseError(error.response.data);
+    } else if (error.request) {
       responseError("No response received from server!")
     } else {
       console.log('Error', error.message);
