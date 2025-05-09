@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginSchemaType } from '@/schemas/login';
 import { useRouter } from 'next/router';
-import { LoginUser } from '@/services/userService';
+import { loginUser } from '@/services/userService';
 import { successful } from '@/HelperFunctions/SwalFunctions';
 
 function Login() {
@@ -29,7 +29,7 @@ function Login() {
 
     const onSubmit = (data: LoginSchemaType) => {
         // console.log("User Register Data:", data);
-        LoginUser(data).then((response: any) => {
+        loginUser(data).then((response: any) => {
             if (response) {
                 const authUser = response.data;
                 // ✅ Set token in a cookie (accessible by middleware)
