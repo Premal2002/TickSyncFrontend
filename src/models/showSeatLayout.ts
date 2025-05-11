@@ -1,4 +1,4 @@
-import { SeatTypeGroup } from "./SeatTypeGroup";
+import { SeatTypeGroup } from "./seatTypeGroup";
 
 export class ShowSeatLayout {
   showId: number;
