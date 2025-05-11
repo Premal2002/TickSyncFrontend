@@ -1,7 +1,6 @@
 // services/movieService.js
 import { baseURL } from "@/HelperData/datavariables";
 import { responseError } from "@/HelperFunctions/SwalFunctions";
-import { Movie } from "@/models/movie";
 import axios from "axios";
 
 const API_URL = baseURL;
