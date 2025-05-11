@@ -153,7 +153,7 @@ function MovieDetails({ movieId }: Props) {
               >
                 <div
                   className={`text-sm ${
-                    isActive ? "text-white" : "text-gray-900"
+                    isActive ? "text-white" : "text-black"
                   }`}
                 >
                   {day}
@@ -161,7 +161,7 @@ function MovieDetails({ movieId }: Props) {
                 <div className="text-xl font-bold">{date}</div>
                 <div
                   className={`text-sm ${
-                    isActive ? "text-white" : "text-gray-900"
+                    isActive ? "text-white" : "text-black"
                   }`}
                 >
                   {month}
