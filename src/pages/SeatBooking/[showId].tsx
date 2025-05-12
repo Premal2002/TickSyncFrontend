@@ -25,6 +25,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function SeatBooking({ showId }: Props) {
   const [seatLayout, setSeatLayout] = useState<ShowSeatLayout>();
 
+  //state used to count ticket/seats
+  const [ticketCount, setTicketCount] = useState<number>(0);
+
   useEffect(() => {
     const fetchSeatLayout = async () => {
       const response = await getLatestSeatsLayout(showId);
@@ -45,15 +48,29 @@ export default function SeatBooking({ showId }: Props) {
               Venue: {seatLayout?.venueName} | {seatLayout?.venueLocation}
             </p>
             <p className="text-md text-gray-600">
-              Show: {seatLayout?.showDate && formatDate(seatLayout.showDate , {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "numeric",
-                                }).toString()} | {seatLayout?.showTime.slice(0, 5)}
+              Show:{" "}
+              {seatLayout?.showDate &&
+                formatDate(seatLayout.showDate, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }).toString()}{" "}
+              | {seatLayout?.showTime.slice(0, 5)}
             </p>
           </div>
           <div className="bg-white flex align-middle">
-            <button className="p-4 rounded-lg border-2">Select Tickets</button>
+            <select
+              className="border p-2 rounded"
+              value={ticketCount}
+              onChange={(e) => setTicketCount(Number(e.target.value))}
+            >
+              <option value={0}>Select tickets</option>
+              {[...Array(10)].map((_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -62,7 +79,7 @@ export default function SeatBooking({ showId }: Props) {
           Select Your Seats
         </h1>
         <div className="p-4 px-8 flex justify-center">
-          {seatLayout ? <SeatLayout data={seatLayout} /> :null}
+          {seatLayout ? <SeatLayout data={seatLayout} ticketCount={ticketCount} /> : null}
         </div>
       </div>
 
