@@ -65,7 +65,7 @@ export default function SeatBooking({ showId }: Props) {
               onChange={(e) => setTicketCount(Number(e.target.value))}
             >
               <option value={0}>Select tickets</option>
-              {[...Array(10)].map((_, i) => (
+              {[...Array(5)].map((_, i) => (
                 <option key={i + 1} value={i + 1}>
                   {i + 1}
                 </option>

@@ -19,10 +19,10 @@ const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats }: any) => 
         key: seatKey,
         rowNumber: row.rowNumber,
         index: seatIndex,
-        price: row.seatPrice || 200, // Customize or pass seatPrice from row
+        price: row.price || 150, // Customize or pass seatPrice from row
       });
     }
-
+    console.log(row.price)
     setSelectedSeats(updated);
   };
 

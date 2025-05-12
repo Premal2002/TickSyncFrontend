@@ -14,7 +14,7 @@ export default function SeatLayout(props: any) {
       {props.data?.seatTypeGroup ? (
         props.data.seatTypeGroup.map((layoutData: any, index: number) => (
           <div key={index} className="space-y-2 mb-8">
-            <p className="text-black text-lg">{layoutData.seatType}</p>
+            <p className="text-black text-lg">{layoutData.seatType} - {layoutData.price} Rs</p>
             <hr className="text-gray-500 mb-4" />
             {layoutData.rows.map((rowData: any, rowIndex: number) => (
               <SeatRow
