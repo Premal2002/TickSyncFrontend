@@ -1,6 +1,6 @@
 import Seat from "../Seat";
 
-const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats }: any) => {
+const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats, setSeatLockRequest }: any) => {
   const toggleSeat = (seatObj: any, seatIndex: number) => {
     const seatKey = `${row.rowNumber}-${seatIndex}`;
     const isAlreadySelected = selectedSeats.find(
@@ -19,12 +19,19 @@ const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats }: any) => 
         key: seatKey,
         rowNumber: row.rowNumber,
         index: seatIndex,
-        price: row.price || 150, // Customize or pass seatPrice from row
+        price: row.price || 150,
       });
     }
-    console.log(row.price)
+
+    // Prepare seatLockRequest in expected format
+    const updatedSeatIds = updated.map((s: any) => s.seatId); // assumes seatObj has a unique .id
     setSelectedSeats(updated);
+    setSeatLockRequest((prev:any) => ({
+      ...prev,
+      SeatIds: updatedSeatIds,
+    }));
   };
+
 
   return (
     <div className="flex items-center gap-6 justify-center">
@@ -37,6 +44,7 @@ const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats }: any) => 
           <Seat
             key={index}
             index={index}
+            isLocked={seat.status === "Locked"}
             isAvailable={seat.status === "Available"}
             isSelected={isSelected}
             onClick={() => toggleSeat(seat, index)}

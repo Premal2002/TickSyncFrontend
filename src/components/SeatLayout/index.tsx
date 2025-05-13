@@ -1,13 +1,43 @@
 import { useState } from "react";
 import SeatRow from "../SeatRow";
+import { confirmBooking, initiateBooking, lockSeats } from "@/services/bookingService";
+import { successful } from "@/HelperFunctions/SwalFunctions";
 
 export default function SeatLayout(props: any) {
   const [selectedSeats, setSelectedSeats] = useState<any[]>([]);
+  const [seatLockRequest, setSeatLockRequest] = useState({
+    ShowId: props.showId,
+    UserId: props.userId,
+    SeatIds: [] as number[],
+  });
 
   const totalPrice = selectedSeats.reduce(
     (total, seat) => total + (seat.price || 0),
     0
   );
+
+  const initiateBookingFlow = () => {
+    lockSeats(seatLockRequest).then((res: any) => {
+      if (res) {
+        const initiateBookingRequest = {
+          ...seatLockRequest,
+          TotalAmount : totalPrice
+        };
+        initiateBooking(initiateBookingRequest).then((res1:any) => {
+          if(res1){
+            const {bookingId} = res1.data;
+            confirmBooking({bookingId}).then((res3 : any) => {
+              if(res3){
+                // props.setRefetchSeats(!props.refetchSeats)
+                props.setRefetchSeats();
+                successful("Booking Successful for selected seats");
+              }
+            });
+          }
+        });
+      }
+    });
+  };
 
   return (
     <div className="space-y-2">
@@ -23,6 +53,7 @@ export default function SeatLayout(props: any) {
                 ticketCount={props.ticketCount}
                 selectedSeats={selectedSeats}
                 setSelectedSeats={setSelectedSeats}
+                setSeatLockRequest={setSeatLockRequest}
               />
             ))}
           </div>
@@ -34,7 +65,7 @@ export default function SeatLayout(props: any) {
       {/* Payment Button */}
       {props.ticketCount > 0 && selectedSeats.length === props.ticketCount && (
         <div className="flex justify-center mt-6">
-          <button className="bg-red-500 w-2/3 text-white px-6 py-3 rounded-lg shadow-lg">
+          <button onClick={initiateBookingFlow} className="bg-red-500 w-2/3 text-white px-6 py-3 rounded-lg shadow-lg">
             Proceed to Pay ₹{totalPrice}
           </button>
         </div>

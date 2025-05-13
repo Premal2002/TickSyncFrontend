@@ -1,6 +1,7 @@
 // middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { responseError } from './HelperFunctions/SwalFunctions';
 
 export function middleware(request: NextRequest) {
   const cookie = request.cookies.get('authenticatedUser')?.value || '{}';
@@ -14,13 +15,13 @@ export function middleware(request: NextRequest) {
   }
 
   if (!token) {
-    return NextResponse.redirect(new URL('/Login', request.url));
+    return NextResponse.redirect(new URL('/Login?fromMiddleware=Login Required', request.url));
   }
 
   // Decode JWT payload
   const payloadBase64 = token.split('.')[1];
   if (!payloadBase64) {
-    return NextResponse.redirect(new URL('/Login', request.url));
+    return NextResponse.redirect(new URL('/Login?fromMiddleware=Token Invalid! Login again', request.url));
   }
 
   let payload: any;
@@ -28,7 +29,7 @@ export function middleware(request: NextRequest) {
     const jsonPayload = atob(payloadBase64);
     payload = JSON.parse(jsonPayload);
   } catch (error) {
-    return NextResponse.redirect(new URL('/Login', request.url));
+    return NextResponse.redirect(new URL('/Login?fromMiddleware=Token validation failed! Login again', request.url));
   }
 
   const roles: string[] = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || [];
@@ -48,5 +49,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/Movies2/:path*'], 
+  matcher: ['/SeatBooking/:path*'], 
 };
