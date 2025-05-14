@@ -4,11 +4,21 @@ interface SeatProps {
   index: number;
   isAvailable: boolean;
   isSelected: boolean;
+  isLocked:boolean;
   onClick: () => void;
 }
 
-const Seat = ({ index, isAvailable, isSelected, onClick }: SeatProps) => {
+const Seat = ({ index, isLocked, isAvailable, isSelected, onClick }: SeatProps) => {
   const baseClasses = "w-10 h-10 rounded border-2 transition";
+
+  if (isLocked) {
+    return (
+      <div
+        key={index}
+        className={`${baseClasses} bg-yellow-300 border-gray-500 cursor-not-allowed`}
+      />
+    );
+  }
 
   if (!isAvailable) {
     return (

@@ -4,6 +4,8 @@ import { ShowSeatLayout } from "@/models/showSeatLayout";
 import { getLatestSeatsLayout } from "@/services/bookingService";
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
+import Cookies from 'js-cookie';
+import { responseError } from "@/HelperFunctions/SwalFunctions";
 
 interface Props {
   showId: string;
@@ -11,22 +13,23 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const showId = context.query.showId;
-
+  
   // Handle case where it's an array
   const id = Array.isArray(showId) ? showId[0] : showId;
 
   return {
     props: {
-      showId: id || "",
+      showId: id || ""
     },
   };
 };
 
 export default function SeatBooking({ showId }: Props) {
   const [seatLayout, setSeatLayout] = useState<ShowSeatLayout>();
-
+  const [userId, setUserId] = useState<number>(0);
   //state used to count ticket/seats
   const [ticketCount, setTicketCount] = useState<number>(0);
+  const [refetchSeatLayout, setRefetchSeatLayout] = useState(true);
 
   useEffect(() => {
     const fetchSeatLayout = async () => {
@@ -37,6 +40,24 @@ export default function SeatBooking({ showId }: Props) {
     };
     fetchSeatLayout();
   }, []);
+
+  const refetchSeatsData = () => {
+    window.location.reload();
+  }
+
+  useEffect(()=>{
+    const authUser = Cookies.get('authenticatedUser');
+    if(authUser){
+      try{
+        const parsedUser = JSON.parse(authUser);
+        const{ userId } = parsedUser;
+        setUserId(userId || 0);
+      }
+      catch(error:any){
+        responseError(error)
+      }
+    }
+  },[]);
 
   return (
     <div className="w-full flex-col justify-between text-black bg-white h-auto p-4">
@@ -79,7 +100,7 @@ export default function SeatBooking({ showId }: Props) {
           Select Your Seats
         </h1>
         <div className="p-4 px-8 flex justify-center">
-          {seatLayout ? <SeatLayout data={seatLayout} ticketCount={ticketCount} /> : null}
+          {seatLayout ? <SeatLayout refetchSeats = {refetchSeatLayout} setRefetchSeats = {refetchSeatsData} data={seatLayout} showId={showId} userId={userId} ticketCount={ticketCount} /> : null}
         </div>
       </div>
 

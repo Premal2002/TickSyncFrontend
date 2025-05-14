@@ -1,16 +1,23 @@
 import Cookies from 'js-cookie';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginSchemaType } from '@/schemas/login';
 import { useRouter } from 'next/router';
 import { loginUser } from '@/services/userService';
-import { successful } from '@/HelperFunctions/SwalFunctions';
+import { responseError, successful } from '@/HelperFunctions/SwalFunctions';
 
 function Login() {
     let router = useRouter()
     const { email } = router.query;
+    const { fromMiddleware } = router.query;
+
+    if(fromMiddleware){
+        responseError(fromMiddleware);
+        router.replace('/Login', undefined, { shallow: true });
+    }
+
     //console.log(email);
 
     const [passwordVisible, setPasswordVisible] = useState(false);
