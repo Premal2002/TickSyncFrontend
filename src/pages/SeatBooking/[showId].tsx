@@ -6,6 +6,7 @@ import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import { responseError } from "@/HelperFunctions/SwalFunctions";
+import { useRouter } from "next/router";
 
 interface Props {
   showId: string;
@@ -30,19 +31,21 @@ export default function SeatBooking({ showId }: Props) {
   //state used to count ticket/seats
   const [ticketCount, setTicketCount] = useState<number>(0);
   const [refetchSeatLayout, setRefetchSeatLayout] = useState(true);
+  const router = useRouter();
+
 
   useEffect(() => {
     const fetchSeatLayout = async () => {
       const response = await getLatestSeatsLayout(showId);
       if (response && response.data) {
-        setSeatLayout(response.data as ShowSeatLayout);
+        setSeatLayout({...response.data as ShowSeatLayout});
       }
     };
     fetchSeatLayout();
-  }, []);
+  }, [refetchSeatLayout]);
 
   const refetchSeatsData = () => {
-    window.location.reload();
+    setRefetchSeatLayout(prev => !prev);
   }
 
   useEffect(()=>{

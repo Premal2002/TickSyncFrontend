@@ -1,7 +1,8 @@
 import { useState } from "react";
 import SeatRow from "../SeatRow";
-import { confirmBooking, initiateBooking, lockSeats } from "@/services/bookingService";
-import { successful } from "@/HelperFunctions/SwalFunctions";
+import { cancelBooking, createRazorpayOrder, initiateBooking, lockSeats, paymentCallback } from "@/services/bookingService";
+import { responseError, successful } from "@/HelperFunctions/SwalFunctions";
+import { loadRazorpayScript } from "@/HelperFunctions/loadRazorpayScript";
 
 export default function SeatLayout(props: any) {
   const [selectedSeats, setSelectedSeats] = useState<any[]>([]);
@@ -16,28 +17,109 @@ export default function SeatLayout(props: any) {
     0
   );
 
-  const initiateBookingFlow = () => {
-    lockSeats(seatLockRequest).then((res: any) => {
-      if (res) {
-        const initiateBookingRequest = {
-          ...seatLockRequest,
-          TotalAmount : totalPrice
-        };
-        initiateBooking(initiateBookingRequest).then((res1:any) => {
-          if(res1){
-            const {bookingId} = res1.data;
-            confirmBooking({bookingId}).then((res3 : any) => {
-              if(res3){
-                // props.setRefetchSeats(!props.refetchSeats)
-                props.setRefetchSeats();
-                successful("Booking Successful for selected seats");
-              }
+  const initiateBookingFlow = async () => {
+    let tempBookingId = 0;
+    try {
+      // 1. Lock Seats
+      const seatLockRes = await lockSeats(seatLockRequest);
+      if (!seatLockRes) {
+        props.setRefetchSeats();
+        responseError("Failed to lock seats.");
+        return;
+      }
+
+      // 2. Initiate Booking
+      const initiateBookingRequest = {
+        ...seatLockRequest,
+        TotalAmount: totalPrice
+      };
+      const bookingRes = await initiateBooking(initiateBookingRequest);
+      if (!bookingRes || !bookingRes.data?.bookingId) {
+        props.setRefetchSeats();
+        responseError("Booking initiation failed.");
+        return;
+      }
+
+      const { bookingId, totalAmount } = bookingRes.data;
+      tempBookingId = bookingId;
+      // 3. Create Razorpay Order
+      const razorpayOrderReq = {
+        BookingId: bookingId,
+        Amount: totalAmount
+      };
+      const razorpayOrderRes = await createRazorpayOrder(razorpayOrderReq);
+      if (!razorpayOrderRes || !razorpayOrderRes.data?.orderId) {
+        responseError("Razorpay order creation failed.");
+        return;
+      }
+
+      const { orderId } = razorpayOrderRes.data;
+
+      // 4. Load Razorpay SDK
+      const razorpayLoaded = await loadRazorpayScript();
+      if (!razorpayLoaded)
+        responseError("Razorpay SDK failed to load.");
+
+      const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY!;
+      if (!razorpayKey)
+        responseError("Razorpay Key missing. Check .env file.");
+
+      // 5. Launch Razorpay
+      const options = {
+        key: razorpayKey,
+        amount: totalAmount * 100,
+        currency: "INR",
+        name: "TickSync",
+        description: "Ticket Booking",
+        order_id: orderId,
+        handler: async function (response: any) {
+          try {
+            const callbackRes = await paymentCallback({
+              bookingId,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpaySignature: response.razorpay_signature
             });
+
+            if (callbackRes) {
+              props.setRefetchSeats();
+              successful("Booking successful!");
+            }
+          } catch (err: any) {
+            console.error("Callback error:", err);
+            responseError("Payment verified, but booking confirmation failed.");
           }
-        });
+        },
+        prefill: {
+          name: "", // Optional: pull from logged-in user or form
+          email: "",
+          contact: ""
+        },
+        theme: { color: "#de212e" },
+        modal: {
+          ondismiss: function () {
+            cancelBookingfn({ bookingId: tempBookingId });
+            responseError("Payment popup closed by user.");
+          }
+        }
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    } catch (err: any) {
+      console.error("Booking Flow Error:", err);
+      cancelBookingfn({ bookingId: tempBookingId });
+      responseError(err?.message || "Something went wrong during booking.");
+    }
+  };
+
+  const cancelBookingfn = (cancelBookingreq: any) => {
+    cancelBooking(cancelBookingreq).then((res: any) => {
+      if (res && res.data) {
+        props.setRefetchSeats();
       }
     });
-  };
+  }
 
   return (
     <div className="space-y-2">

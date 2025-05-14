@@ -53,21 +53,21 @@ export const initiateBooking = async (initiateBookingRequest:any) => {
   }
 };
 
-export const confirmBooking = async (confirmBookingRequest:any) => {  
-  try {
-    const response = await axios.post(`${API_URL}/api/Booking/confirmBooking`,confirmBookingRequest);
-    return response;
-  } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
-  }
-};
+// export const confirmBooking = async (confirmBookingRequest:any) => {  
+//   try {
+//     const response = await axios.post(`${API_URL}/api/Booking/confirmBooking`,confirmBookingRequest);
+//     return response;
+//   } catch (error: any) {
+//     if (error.response) {
+//       responseError(error.response.data);
+//     } else if (error.request) {
+//       // console.log('No response received:', error.request);
+//       responseError("No response received from server!");
+//     } else {
+//       console.log("Error", error.message);
+//     }
+//   }
+// };
 
 
 export const cancelBooking = async (cancelBookingRequest:any) => {  
@@ -104,6 +104,7 @@ export const createRazorpayOrder = async (createRazorpayOrderReq:any) => {
 
 export const paymentCallback = async (paymentCallback:any) => {  
   try {
+    // console.log(paymentCallback);
     const response = await axios.post(`${API_URL}/api/Booking/paymentCallback`,paymentCallback);
     return response;
   } catch (error: any) {
