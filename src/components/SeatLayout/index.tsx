@@ -25,7 +25,7 @@ export default function SeatLayout(props: any) {
       // 1. Lock Seats
       const seatLockRes = await lockSeats(seatLockRequest);
       if (!seatLockRes) {
-        props.setRefetchSeats();
+        //props.setRefetchSeats();
         responseError("Failed to lock seats.");
         setDisablePaymentButton(false);
         return;
@@ -38,7 +38,7 @@ export default function SeatLayout(props: any) {
       };
       const bookingRes = await initiateBooking(initiateBookingRequest);
       if (!bookingRes || !bookingRes.data?.bookingId) {
-        props.setRefetchSeats();
+        //props.setRefetchSeats();
         responseError("Booking initiation failed.");
          setDisablePaymentButton(false);
         return;
@@ -93,7 +93,7 @@ export default function SeatLayout(props: any) {
             });
 
             if (callbackRes) {
-              props.setRefetchSeats();
+              //props.setRefetchSeats();
               successful("Booking successful!");
               setDisablePaymentButton(false);
             }
@@ -130,7 +130,7 @@ export default function SeatLayout(props: any) {
   const cancelBookingfn = (cancelBookingreq: any) => {
     cancelBooking(cancelBookingreq).then((res: any) => {
       if (res && res.data) {
-        props.setRefetchSeats();
+        //props.setRefetchSeats();
       }
     });
   }

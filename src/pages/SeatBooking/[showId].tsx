@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import { responseError } from "@/HelperFunctions/SwalFunctions";
 import { useRouter } from "next/router";
+import { useWebSocket } from "@/hooks/useWebSockets";
 
 interface Props {
   showId: string;
@@ -44,7 +45,6 @@ export default function SeatBooking({ showId }: Props) {
 
   const refetchSeatsData = () => {
     setResetKey(prevKey => prevKey + 1); // Increment key to trigger remount
-    setTicketCount(0);
   }
 
   useEffect(()=>{
@@ -60,6 +60,15 @@ export default function SeatBooking({ showId }: Props) {
       }
     }
   },[]);
+
+  //websocket
+   useWebSocket({
+    showId,
+    onMessage: (msg) => {
+      console.log(msg);
+      refetchSeatsData();
+    }
+  });
 
   return (
     <div className="w-full flex-col justify-between text-black bg-white h-auto p-4">
