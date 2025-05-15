@@ -6,6 +6,7 @@ import { loadRazorpayScript } from "@/HelperFunctions/loadRazorpayScript";
 
 export default function SeatLayout(props: any) {
   const [selectedSeats, setSelectedSeats] = useState<any[]>([]);
+  const[disablePaymentButton, setDisablePaymentButton] = useState(false);
   const [seatLockRequest, setSeatLockRequest] = useState({
     ShowId: props.showId,
     UserId: props.userId,
@@ -18,6 +19,7 @@ export default function SeatLayout(props: any) {
   );
 
   const initiateBookingFlow = async () => {
+    setDisablePaymentButton(true);
     let tempBookingId = 0;
     try {
       // 1. Lock Seats
@@ -25,6 +27,7 @@ export default function SeatLayout(props: any) {
       if (!seatLockRes) {
         props.setRefetchSeats();
         responseError("Failed to lock seats.");
+        setDisablePaymentButton(false);
         return;
       }
 
@@ -37,6 +40,7 @@ export default function SeatLayout(props: any) {
       if (!bookingRes || !bookingRes.data?.bookingId) {
         props.setRefetchSeats();
         responseError("Booking initiation failed.");
+         setDisablePaymentButton(false);
         return;
       }
 
@@ -50,6 +54,7 @@ export default function SeatLayout(props: any) {
       const razorpayOrderRes = await createRazorpayOrder(razorpayOrderReq);
       if (!razorpayOrderRes || !razorpayOrderRes.data?.orderId) {
         responseError("Razorpay order creation failed.");
+        setDisablePaymentButton(false);
         return;
       }
 
@@ -57,12 +62,18 @@ export default function SeatLayout(props: any) {
 
       // 4. Load Razorpay SDK
       const razorpayLoaded = await loadRazorpayScript();
-      if (!razorpayLoaded)
+      if (!razorpayLoaded){
         responseError("Razorpay SDK failed to load.");
+        setDisablePaymentButton(false);
+        return;
+      }
 
       const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY!;
-      if (!razorpayKey)
+      if (!razorpayKey){
         responseError("Razorpay Key missing. Check .env file.");
+        setDisablePaymentButton(false);
+        return;
+      }
 
       // 5. Launch Razorpay
       const options = {
@@ -84,10 +95,12 @@ export default function SeatLayout(props: any) {
             if (callbackRes) {
               props.setRefetchSeats();
               successful("Booking successful!");
+              setDisablePaymentButton(false);
             }
           } catch (err: any) {
             console.error("Callback error:", err);
             responseError("Payment verified, but booking confirmation failed.");
+            setDisablePaymentButton(false);
           }
         },
         prefill: {
@@ -99,7 +112,7 @@ export default function SeatLayout(props: any) {
         modal: {
           ondismiss: function () {
             cancelBookingfn({ bookingId: tempBookingId });
-            responseError("Payment popup closed by user.");
+            setDisablePaymentButton(false);
           }
         }
       };
@@ -110,6 +123,7 @@ export default function SeatLayout(props: any) {
       console.error("Booking Flow Error:", err);
       cancelBookingfn({ bookingId: tempBookingId });
       responseError(err?.message || "Something went wrong during booking.");
+      setDisablePaymentButton(false);
     }
   };
 
@@ -147,7 +161,7 @@ export default function SeatLayout(props: any) {
       {/* Payment Button */}
       {props.ticketCount > 0 && selectedSeats.length === props.ticketCount && (
         <div className="flex justify-center mt-6">
-          <button onClick={initiateBookingFlow} className="bg-red-500 w-2/3 text-white px-6 py-3 rounded-lg shadow-lg">
+          <button onClick={initiateBookingFlow} disabled={disablePaymentButton} className="bg-red-500 w-2/3 text-white px-6 py-3 rounded-lg shadow-lg">
             Proceed to Pay ₹{totalPrice}
           </button>
         </div>

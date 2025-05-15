@@ -30,9 +30,7 @@ export default function SeatBooking({ showId }: Props) {
   const [userId, setUserId] = useState<number>(0);
   //state used to count ticket/seats
   const [ticketCount, setTicketCount] = useState<number>(0);
-  const [refetchSeatLayout, setRefetchSeatLayout] = useState(true);
-  const router = useRouter();
-
+  const [resetKey, setResetKey] = useState(0);
 
   useEffect(() => {
     const fetchSeatLayout = async () => {
@@ -42,10 +40,11 @@ export default function SeatBooking({ showId }: Props) {
       }
     };
     fetchSeatLayout();
-  }, [refetchSeatLayout]);
+  }, [resetKey]);
 
   const refetchSeatsData = () => {
-    setRefetchSeatLayout(prev => !prev);
+    setResetKey(prevKey => prevKey + 1); // Increment key to trigger remount
+    setTicketCount(0);
   }
 
   useEffect(()=>{
@@ -103,7 +102,7 @@ export default function SeatBooking({ showId }: Props) {
           Select Your Seats
         </h1>
         <div className="p-4 px-8 flex justify-center">
-          {seatLayout ? <SeatLayout refetchSeats = {refetchSeatLayout} setRefetchSeats = {refetchSeatsData} data={seatLayout} showId={showId} userId={userId} ticketCount={ticketCount} /> : null}
+          {seatLayout ? <SeatLayout key={resetKey} setRefetchSeats = {refetchSeatsData} data={seatLayout} showId={showId} userId={userId} ticketCount={ticketCount} /> : null}
         </div>
       </div>
 
