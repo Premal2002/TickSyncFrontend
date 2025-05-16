@@ -42,4 +42,4 @@ const Seat = ({ index, isLocked, isAvailable, isSelected, onClick }: SeatProps) 
   );
 };
 
-export default Seat;
+export default React.memo(Seat);
