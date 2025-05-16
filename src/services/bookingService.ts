@@ -1,120 +1,96 @@
 // services/movieService.js
-import { baseURL } from "@/HelperData/datavariables";
+
+import axiosInstance from "@/HelperFunctions/axiosInstance";
 import { responseError } from "@/HelperFunctions/SwalFunctions";
-import axios from "axios";
 
-const API_URL = baseURL;
-
-export const getLatestSeatsLayout = async (showId:any) => {  
+export const getLatestSeatsLayout = async (showId: any) => {
   try {
-    const response = await axios.get(`${API_URL}/api/Booking/getLatestSeatsLayout/${showId}`);
+    const response = await axiosInstance.get(
+      `/api/Booking/getLatestSeatsLayout/${showId}`
+    );
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
   }
 };
 
-export const lockSeats = async (seatLockRequest:any) => {  
+export const lockSeats = async (seatLockRequest: any) => {
   try {
-    const response = await axios.post(`${API_URL}/api/Booking/lockSeats`,seatLockRequest);
+    const response = await axiosInstance.post(
+      `/api/Booking/lockSeats`,
+      seatLockRequest
+    );
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
   }
 };
 
-export const initiateBooking = async (initiateBookingRequest:any) => {  
+export const initiateBooking = async (initiateBookingRequest: any) => {
   try {
-    const response = await axios.post(`${API_URL}/api/Booking/initiateBooking`,initiateBookingRequest);
+    const response = await axiosInstance.post(
+      `/api/Booking/initiateBooking`,
+      initiateBookingRequest
+    );
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
   }
 };
 
-// export const confirmBooking = async (confirmBookingRequest:any) => {  
+// Optional booking confirmation function
+// export const confirmBooking = async (confirmBookingRequest: any) => {
 //   try {
-//     const response = await axios.post(`${API_URL}/api/Booking/confirmBooking`,confirmBookingRequest);
-//     return response;
+//     const response = await axiosInstance.post(`/api/Booking/confirmBooking`, confirmBookingRequest)
+//     return response
 //   } catch (error: any) {
-//     if (error.response) {
-//       responseError(error.response.data);
-//     } else if (error.request) {
-//       // console.log('No response received:', error.request);
-//       responseError("No response received from server!");
-//     } else {
-//       console.log("Error", error.message);
-//     }
+//     handleError(error)
 //   }
-// };
+// }
 
-
-export const cancelBooking = async (cancelBookingRequest:any) => {  
+export const cancelBooking = async (cancelBookingRequest: any) => {
   try {
-    const response = await axios.post(`${API_URL}/api/Booking/cancelBooking`,cancelBookingRequest);
+    const response = await axiosInstance.post(
+      `/api/Booking/cancelBooking`,
+      cancelBookingRequest
+    );
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
   }
 };
 
-export const createRazorpayOrder = async (createRazorpayOrderReq:any) => {  
+export const createRazorpayOrder = async (createRazorpayOrderReq: any) => {
   try {
-    const response = await axios.post(`${API_URL}/api/Booking/createRazorpayOrder`,createRazorpayOrderReq);
+    const response = await axiosInstance.post(
+      `/api/Booking/createRazorpayOrder`,
+      createRazorpayOrderReq
+    );
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
   }
 };
 
-export const paymentCallback = async (paymentCallback:any) => {  
+export const paymentCallback = async (paymentCallback: any) => {
   try {
-    // console.log(paymentCallback);
-    const response = await axios.post(`${API_URL}/api/Booking/paymentCallback`,paymentCallback);
+    const response = await axiosInstance.post(
+      `/api/Booking/paymentCallback`,
+      paymentCallback
+    );
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
+  }
+};
+
+// Reusable error handler
+const handleError = (error: any) => {
+  if (error.response) {
+    responseError(error.response.data);
+  } else if (error.request) {
+    responseError("No response received from server!");
+  } else {
+    console.log("Error", error.message);
   }
 };

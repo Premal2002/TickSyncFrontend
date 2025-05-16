@@ -10,14 +10,7 @@ export const getTrendingMovies = async () => {
     const response = await axios.get(`${API_URL}/api/Movies/Trending`);
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
   }
 };
 
@@ -26,14 +19,7 @@ export const getRecommendedMovies = async () => {
     const response = await axios.get(`${API_URL}/api/Movies/Recommended`);
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
   }
 };
 
@@ -50,13 +36,7 @@ export const getMovies = async (
     });
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
   }
 };
 
@@ -66,14 +46,7 @@ export const getMovieById = async (movieId : any) => {
     const response = await axios.get(`${API_URL}/api/Movies/${movieId}`);
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
   }
 };
 
@@ -83,14 +56,7 @@ export const getMovieShows = async (movieId : any) => {
     const response = await axios.get(`${API_URL}/api/Movies/getMovieShows/${movieId}`);
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
   }
 };
 
@@ -100,13 +66,17 @@ export const getRelatedMovies = async (movieId : any) => {
     const response = await axios.post(`${API_URL}/api/Movies/getRelatedMovies/${movieId}`);
     return response;
   } catch (error: any) {
-    if (error.response) {
-      responseError(error.response.data);
-    } else if (error.request) {
-      // console.log('No response received:', error.request);
-      responseError("No response received from server!");
-    } else {
-      console.log("Error", error.message);
-    }
+    handleError(error);
+  }
+};
+
+// Reusable error handler
+const handleError = (error: any) => {
+  if (error.response) {
+    responseError(error.response.data);
+  } else if (error.request) {
+    responseError("No response received from server!");
+  } else {
+    console.log("Error", error.message);
   }
 };

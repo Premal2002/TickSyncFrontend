@@ -4,31 +4,53 @@ import { ShowSeatLayout } from "@/models/showSeatLayout";
 import { getLatestSeatsLayout } from "@/services/bookingService";
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
-import Cookies from 'js-cookie';
-import { responseError } from "@/HelperFunctions/SwalFunctions";
-import { useRouter } from "next/router";
 import { useWebSocket } from "@/hooks/useWebSockets";
+import cookie from 'cookie';
 
 interface Props {
   showId: string;
+  userId: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const showId = context.query.showId;
-  
+
   // Handle case where it's an array
   const id = Array.isArray(showId) ? showId[0] : showId;
+  const cookies = context.req.headers.cookie;
+  let userId = 0;
+
+  if (cookies) {
+    const parsedCookies = cookie.parse(cookies);
+    const authUser = parsedCookies.authenticatedUser;
+
+    if (authUser) {
+      try {
+        const parsedUser = JSON.parse(authUser);
+        userId = parsedUser.userId || 0;
+      } catch (error) {
+        console.error("Error parsing authenticatedUser cookie:", error);
+        // optionally handle error, e.g., redirect or set a flag
+      }
+    }
+  }
 
   return {
     props: {
-      showId: id || ""
+      showId: id || "",
+      userId: userId || 0
     },
   };
 };
 
-export default function SeatBooking({ showId }: Props) {
+export default function SeatBooking({ showId, userId }: Props) {
+  const [selectedSeats, setSelectedSeats] = useState<any[]>([]);
+  const [seatLockRequest, setSeatLockRequest] = useState({
+    ShowId: showId,
+    UserId: userId,
+    SeatIds: [] as number[],
+  });
   const [seatLayout, setSeatLayout] = useState<ShowSeatLayout>();
-  const [userId, setUserId] = useState<number>(0);
   //state used to count ticket/seats
   const [ticketCount, setTicketCount] = useState<number>(0);
   const [resetKey, setResetKey] = useState(0);
@@ -37,7 +59,7 @@ export default function SeatBooking({ showId }: Props) {
     const fetchSeatLayout = async () => {
       const response = await getLatestSeatsLayout(showId);
       if (response && response.data) {
-        setSeatLayout({...response.data as ShowSeatLayout});
+        setSeatLayout({ ...response.data as ShowSeatLayout });
       }
     };
     fetchSeatLayout();
@@ -47,28 +69,56 @@ export default function SeatBooking({ showId }: Props) {
     setResetKey(prevKey => prevKey + 1); // Increment key to trigger remount
   }
 
-  useEffect(()=>{
-    const authUser = Cookies.get('authenticatedUser');
-    if(authUser){
-      try{
-        const parsedUser = JSON.parse(authUser);
-        const{ userId } = parsedUser;
-        setUserId(userId || 0);
-      }
-      catch(error:any){
-        responseError(error)
-      }
-    }
-  },[]);
 
-  //websocket
-   useWebSocket({
+  const updateSeatStatuses = (seatIds: number[], newStatus: string) => {
+    setSeatLayout((prevLayout) => {
+      if (!prevLayout) return prevLayout;
+
+      const updated = {
+        ...prevLayout,
+        seatTypeGroup: prevLayout.seatTypeGroup.map((group) => ({
+          ...group,
+          rows: group.rows.map((row) => {
+            let seatChanged = false;
+
+            const newSeats = row.seats.map((seat) => {
+              if (seatIds.includes(seat.seatId) && seat.status !== newStatus) {
+                seatChanged = true;
+                return { ...seat, status: newStatus };
+              }
+              return seat;
+            });
+
+            return seatChanged ? { ...row, seats: newSeats } : row;
+          }),
+        })),
+      };
+
+      return updated;
+    });
+  };
+
+  useWebSocket({
     showId,
-    onMessage: (msg) => {
-      console.log(msg);
-      refetchSeatsData();
+    onMessage: (data) => {
+      const { status, seatIds } = JSON.parse(data);
+      updateSeatStatuses(seatIds, status);
+
+      if (status === "Locked" || status === "Booked") {
+        // 2. Remove those seatIds from selectedSeats
+        setSelectedSeats((prevSeats) =>
+          prevSeats.filter((seat) => !seatIds.includes(seat.seatId))
+        );
+
+        // 3. Remove those seatIds from seatLockRequest
+        setSeatLockRequest((prevRequest) => ({
+          ...prevRequest,
+          SeatIds: prevRequest.SeatIds.filter((id) => !seatIds.includes(id)),
+        }));
+      }
     }
   });
+
 
   return (
     <div className="w-full flex-col justify-between text-black bg-white h-auto p-4">
@@ -111,7 +161,7 @@ export default function SeatBooking({ showId }: Props) {
           Select Your Seats
         </h1>
         <div className="p-4 px-8 flex justify-center">
-          {seatLayout ? <SeatLayout key={resetKey} setRefetchSeats = {refetchSeatsData} data={seatLayout} showId={showId} userId={userId} ticketCount={ticketCount} /> : null}
+          {seatLayout ? <SeatLayout key={resetKey} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} seatLockRequest={seatLockRequest} setSeatLockRequest={setSeatLockRequest} setRefetchSeats={refetchSeatsData} data={seatLayout} showId={showId} userId={userId} ticketCount={ticketCount} /> : null}
         </div>
       </div>
 

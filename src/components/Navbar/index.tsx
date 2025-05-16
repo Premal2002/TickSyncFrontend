@@ -1,22 +1,22 @@
-import { isUserLoggedIn, logOutUser } from "@/HelperFunctions/userFunctions";
+import { getUserFromToken, logOutUser } from "@/HelperFunctions/userFunctions";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
-    const [isLoggedIn,setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const router = useRouter();
     useEffect(() => {
-        // console.log(localStorage.getItem("authenticatedUser"));
-        setIsLoggedIn(isUserLoggedIn()); 
-    });
+        const user = getUserFromToken();
+        setIsLoggedIn(!!user) // true if user is not null
+    })
 
-    function logOut(){
+    function logOut() {
         logOutUser();
-        setIsLoggedIn(isUserLoggedIn());
+        setIsLoggedIn(false);
         router.reload();
     }
-    
+
     return (
         <>
             <nav className="bg-red-500 py-3 font-serif">
@@ -24,7 +24,7 @@ const Navbar = () => {
                     <div className="relative flex h-16 items-center justify-center sm:justify-between">
                         <div>
                             <Link href="/">
-                            <h2>TickSync</h2>
+                                <h2>TickSync</h2>
                             </Link>
                         </div>
                         <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-end">
@@ -34,10 +34,10 @@ const Navbar = () => {
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Team</a>
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Projects</a>
                                     <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Calendar</a>
-                                    {isLoggedIn ? 
-                                    <button onClick={logOut} className="rounded-sm bg-black text-white px-4 py-2 cursor-pointer hover:drop-shadow-2xl">Logout</button>:  <Link href="/Login">
-                                    <button className="rounded-md bg-black text-white px-4 py-2 cursor-pointer hover:drop-shadow-2xl">Login</button>
-                                    </Link>}
+                                    {isLoggedIn ?
+                                        <button onClick={logOut} className="rounded-sm bg-black text-white px-4 py-2 cursor-pointer hover:drop-shadow-2xl">Logout</button> : <Link href="/Login">
+                                            <button className="rounded-md bg-black text-white px-4 py-2 cursor-pointer hover:drop-shadow-2xl">Login</button>
+                                        </Link>}
                                 </div>
                             </div>
                         </div>
