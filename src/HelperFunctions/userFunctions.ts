@@ -12,3 +12,4 @@ export function logOutUser() {
     Cookies.remove('authenticatedUser', { path: '/' });    
 }
 
+
