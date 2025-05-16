@@ -34,6 +34,8 @@ function Login() {
         resolver: zodResolver(loginSchema),
     });
 
+    
+
     const onSubmit = (data: LoginSchemaType) => {
         // console.log("User Register Data:", data);
         loginUser(data).then((response: any) => {
@@ -42,6 +44,7 @@ function Login() {
                 // ✅ Set token in a cookie (accessible by middleware)
                 Cookies.set('authenticatedUser', JSON.stringify(authUser), { path: '/', expires: 1 }); // expires in 1 day
                 router.push({ pathname: "/" });
+                
                 successful("Login Successful");
             }
         });
