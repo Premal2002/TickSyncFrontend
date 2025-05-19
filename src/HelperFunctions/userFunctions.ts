@@ -6,6 +6,8 @@ export function logOutUser() {
     Cookies.remove('authenticatedUser', { path: '/' });    
 }
 
+
+
 export interface JwtPayload {
   id: string
   email: string
@@ -33,3 +35,4 @@ export function getUserFromToken(): JwtPayload | null {
     return null
   }
 }
+
