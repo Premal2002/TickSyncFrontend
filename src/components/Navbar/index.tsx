@@ -14,16 +14,15 @@ const Navbar = () => {
 
   useEffect(() => {
     const user = getUserFromToken();
-const user = {
 setIsLoggedIn(!!user) // true if user is not null
 
     // Fetch user details from storage/local/session (mock data here)
-    const user = {
+    const user1 = {
       name: "Aniket Shelar",
       email: "aniketshelar2212002@gmail.com",
       phone: "+91 9876543210",
     };
-    setUserDetails(user);
+    setUserDetails(user1);
 
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
