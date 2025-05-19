@@ -1,37 +1,39 @@
+import React, { useCallback } from "react";
 import Seat from "../Seat";
 
 const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats, setSeatLockRequest }: any) => {
-  const toggleSeat = (seatObj: any, seatIndex: number) => {
-    const seatKey = `${row.rowNumber}-${seatIndex}`;
-    const isAlreadySelected = selectedSeats.find(
-      (s: any) => s.key === seatKey
-    );
+  
+  const toggleSeat = useCallback(
+    (seatObj: any, seatIndex: number) => {
+      
+      const seatKey = `${row.rowNumber}-${seatIndex}`;
+      const isAlreadySelected = selectedSeats.find((s: any) => s.key === seatKey);
 
-    let updated = [...selectedSeats];
+      let updated = [...selectedSeats];
+      
+      if (isAlreadySelected) {
+        updated = updated.filter((s: any) => s.key !== seatKey);
+      } else {        
+        if (selectedSeats.length >= ticketCount) return;
 
-    if (isAlreadySelected) {
-      updated = updated.filter((s: any) => s.key !== seatKey);
-    } else {
-      if (selectedSeats.length >= ticketCount) return;
+        updated.push({
+          ...seatObj,
+          key: seatKey,
+          rowNumber: row.rowNumber,
+          index: seatIndex,
+          price: row.price || 150,
+        });
+      }
 
-      updated.push({
-        ...seatObj,
-        key: seatKey,
-        rowNumber: row.rowNumber,
-        index: seatIndex,
-        price: row.price || 150,
-      });
-    }
-
-    // Prepare seatLockRequest in expected format
-    const updatedSeatIds = updated.map((s: any) => s.seatId); // assumes seatObj has a unique .id
-    setSelectedSeats(updated);
-    setSeatLockRequest((prev:any) => ({
-      ...prev,
-      SeatIds: updatedSeatIds,
-    }));
-  };
-
+      const updatedSeatIds = updated.map((s: any) => s.seatId);
+      setSelectedSeats(updated);
+      setSeatLockRequest((prev: any) => ({
+        ...prev,
+        SeatIds: updatedSeatIds,
+      }));
+    },
+    [row.rowNumber, row.price, selectedSeats, ticketCount, setSelectedSeats, setSeatLockRequest]
+  );
 
   return (
     <div className="flex items-center gap-6 justify-center">
@@ -42,7 +44,7 @@ const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats, setSeatLoc
 
         return (
           <Seat
-            key={index}
+            key={seat.seatId}
             index={index}
             isLocked={seat.status === "Locked"}
             isAvailable={seat.status === "Available"}
@@ -54,5 +56,46 @@ const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats, setSeatLoc
     </div>
   );
 };
+
+
+// const areEqual = (prevProps: any, nextProps: any) => {
+//   if (prevProps.row.rowNumber !== nextProps.row.rowNumber) return false;
+
+//   // Compare each seat's status
+//   const prevSeats = prevProps.row.seats;
+//   const nextSeats = nextProps.row.seats;
+
+//   if (prevSeats.length !== nextSeats.length) return false;
+
+//   for (let i = 0; i < prevSeats.length; i++) {
+//     if (
+//       prevSeats[i].seatId !== nextSeats[i].seatId ||
+//       prevSeats[i].status !== nextSeats[i].status
+//     ) {
+//       return false;
+//     }
+//   }
+
+//   // Compare selectedSeats for this row
+//   const prevSelected = prevProps.selectedSeats.filter(
+//     (s: any) => s.rowNumber === prevProps.row.rowNumber
+//   );
+//   const nextSelected = nextProps.selectedSeats.filter(
+//     (s: any) => s.rowNumber === nextProps.row.rowNumber
+//   );
+
+//   if (prevSelected.length !== nextSelected.length) return false;
+
+//   for (let i = 0; i < prevSelected.length; i++) {
+//     if (prevSelected[i].key !== nextSelected[i].key) {
+//       return false;
+//     }
+//   }
+
+//   return true;
+// };
+
+// export default React.memo(SeatRow, areEqual);
+
 
 export default SeatRow;

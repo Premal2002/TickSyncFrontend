@@ -5,16 +5,10 @@ import { responseError, successful } from "@/HelperFunctions/SwalFunctions";
 import { loadRazorpayScript } from "@/HelperFunctions/loadRazorpayScript";
 
 export default function SeatLayout(props: any) {
-  const [selectedSeats, setSelectedSeats] = useState<any[]>([]);
   const[disablePaymentButton, setDisablePaymentButton] = useState(false);
-  const [seatLockRequest, setSeatLockRequest] = useState({
-    ShowId: props.showId,
-    UserId: props.userId,
-    SeatIds: [] as number[],
-  });
 
-  const totalPrice = selectedSeats.reduce(
-    (total, seat) => total + (seat.price || 0),
+  const totalPrice = props.selectedSeats.reduce(
+    (total:any, seat:any) => total + (seat.price || 0),
     0
   );
 
@@ -23,7 +17,7 @@ export default function SeatLayout(props: any) {
     let tempBookingId = 0;
     try {
       // 1. Lock Seats
-      const seatLockRes = await lockSeats(seatLockRequest);
+      const seatLockRes = await lockSeats(props.seatLockRequest);
       if (!seatLockRes) {
         //props.setRefetchSeats();
         responseError("Failed to lock seats.");
@@ -31,9 +25,10 @@ export default function SeatLayout(props: any) {
         return;
       }
 
+      const data = seatLockRes.data;
       // 2. Initiate Booking
       const initiateBookingRequest = {
-        ...seatLockRequest,
+        ...data,
         TotalAmount: totalPrice
       };
       const bookingRes = await initiateBooking(initiateBookingRequest);
@@ -147,9 +142,9 @@ export default function SeatLayout(props: any) {
                 key={rowIndex}
                 row={rowData}
                 ticketCount={props.ticketCount}
-                selectedSeats={selectedSeats}
-                setSelectedSeats={setSelectedSeats}
-                setSeatLockRequest={setSeatLockRequest}
+                selectedSeats={props.selectedSeats}
+                setSelectedSeats={props.setSelectedSeats}
+                setSeatLockRequest={props.setSeatLockRequest}
               />
             ))}
           </div>
@@ -159,7 +154,7 @@ export default function SeatLayout(props: any) {
       )}
 
       {/* Payment Button */}
-      {props.ticketCount > 0 && selectedSeats.length === props.ticketCount && (
+      {props.ticketCount > 0 && props.selectedSeats.length === props.ticketCount && (
         <div className="flex justify-center mt-6">
           <button onClick={initiateBookingFlow} disabled={disablePaymentButton} className="bg-red-500 w-2/3 text-white px-6 py-3 rounded-lg shadow-lg">
             Proceed to Pay ₹{totalPrice}
