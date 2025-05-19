@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { FaUserCircle } from "react-icons/fa"; // Profile icon
 
 const Navbar = () => {
-
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState({ name: "", email: "", phone: "" });
@@ -15,7 +14,6 @@ const Navbar = () => {
   useEffect(() => {
     const user = getUserFromToken();
 setIsLoggedIn(!!user) // true if user is not null
-
     // Fetch user details from storage/local/session (mock data here)
     const user1 = {
       name: "Aniket Shelar",
@@ -70,45 +68,6 @@ setIsLoggedIn(!!user) // true if user is not null
                       <p className="font-semibold text-gray-800">{userDetails.name}</p>
                       <p className="text-sm text-gray-600">{userDetails.email}</p>
                       <p className="text-sm text-gray-600">{userDetails.phone}</p>
-
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const router = useRouter();
-    useEffect(() => {
-        const user = getUserFromToken();
-        setIsLoggedIn(!!user) // true if user is not null
-    })
-
-    function logOut() {
-        logOutUser();
-        setIsLoggedIn(false);
-        router.reload();
-    }
-
-    return (
-        <>
-            <nav className="bg-red-500 py-3 font-serif">
-                <div className="mx-auto max-w-8xl px-2 sm:px-14 lg:px-16">
-                    <div className="relative flex h-16 items-center justify-center sm:justify-between">
-                        <div>
-                            <Link href="/">
-                                <h2>TickSync</h2>
-                            </Link>
-                        </div>
-                        <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-end">
-                            <div className="hidden sm:ml-6 sm:block">
-                                <div className="flex space-x-4">
-                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200" aria-current="page">Dashboard</a>
-                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Team</a>
-                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Projects</a>
-                                    <a href="#" className="rounded-md px-3 py-2 text-sm font-medium text-black hover:text-gray-200">Calendar</a>
-                                    {isLoggedIn ?
-                                        <button onClick={logOut} className="rounded-sm bg-black text-white px-4 py-2 cursor-pointer hover:drop-shadow-2xl">Logout</button> : <Link href="/Login">
-                                            <button className="rounded-md bg-black text-white px-4 py-2 cursor-pointer hover:drop-shadow-2xl">Login</button>
-                                        </Link>}
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                     <hr className="my-2" />
                     <Link href="/bookings">
