@@ -1,26 +1,15 @@
-import { getUserFromToken, logOutUser } from "@/HelperFunctions/userFunctions";
+import { useAuth } from "@/HelperFunctions/AuthContext";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { FaUserCircle } from "react-icons/fa"; // Profile icon
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-  const [userDetails, setUserDetails] = useState({ name: "", email: "", phone: "" });
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
+
+  const { isLoggedIn, logout, userDetails } = useAuth();
 
   useEffect(() => {
-    const user = getUserFromToken();
-setIsLoggedIn(!!user) // true if user is not null
-    // Fetch user details from storage/local/session (mock data here)
-    const user1 = {
-      name: "Aniket Shelar",
-      email: "aniketshelar2212002@gmail.com",
-      phone: "+91 9876543210",
-    };
-    setUserDetails(user1);
 
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -32,13 +21,7 @@ setIsLoggedIn(!!user) // true if user is not null
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
-
-  const logOut = () => {
-    logOutUser();
-    setIsLoggedIn(false);
-    router.reload();
-  };
+  },[]);
 
   return (
     <nav className="bg-red-500 py-3 font-serif">
@@ -67,16 +50,15 @@ setIsLoggedIn(!!user) // true if user is not null
                     <div className="mb-3">
                       <p className="font-semibold text-gray-800">{userDetails.name}</p>
                       <p className="text-sm text-gray-600">{userDetails.email}</p>
-                      <p className="text-sm text-gray-600">{userDetails.phone}</p>
                     </div>
                     <hr className="my-2" />
-                    <Link href="/bookings">
+                    <Link href="/BookingHistory">
                       <div className="block px-4 py-2 text-black hover:bg-gray-100 cursor-pointer rounded-md">
                         Booking History
                       </div>
                     </Link>
                     <div
-                      onClick={logOut}
+                      onClick={logout}
                       className="block px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer rounded-md"
                     >
                       Logout
