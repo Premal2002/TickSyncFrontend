@@ -31,7 +31,7 @@ function Movies(props: any) {
   useEffect(() => {
     const fetchMovies = async () => {
       setLoad(true);
-      const response = await getMovies(filters, currentPage + 1, MOVIES_PER_PAGE); // Note: page is 1-based
+      const response = await getMovies(filters, currentPage + 1, MOVIES_PER_PAGE);
       if (response && response.data) {
         const { movies, total } = response.data;
         setMovies(movies);
