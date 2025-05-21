@@ -11,6 +11,7 @@ export function logOutUser() {
 export interface JwtPayload {
   id: string
   email: string
+  name: string
   exp: number
   // add more fields if needed
 }

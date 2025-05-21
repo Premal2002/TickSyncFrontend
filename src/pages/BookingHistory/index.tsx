@@ -76,14 +76,14 @@ const BookingHistory = () => {
           {bookings.map((booking) => (
             <div
               key={booking.id}
-              className="bg-yellow-300 rounded-2xl shadow-xl p-4 flex flex-col md:flex-row items-center md:items-start gap-4"
+              className="bg-rose-900/20 rounded-2xl shadow-xl p-4 flex flex-col md:flex-row items-center md:items-start gap-4"
             >
               {/* Image section */}
               <div className="w-full md:w-1/3">
                 <img
                   src={booking.image}
                   alt={booking.title}
-                  className="w-full h-48 object-contain bg-white rounded-xl p-2"
+                  className="w-full h-48 object-contain bg-none rounded-xl p-2"
                 />
               </div>
 

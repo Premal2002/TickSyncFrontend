@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import HeroSection from "../Hero/index";
 import SpecialCategoryDisplay from "../SpecialCategory";
@@ -6,8 +5,8 @@ import SubNavbar from "../SubNavbar/index";
 import { Movie } from "@/models/movie";
 import { getRecommendedMovies, getTrendingMovies } from "@/services/movieService";
 
-
 const LandingPage = () => {
+    
     const [load, setLoad] = useState(true);
     const [trendingMovies, setTrendingMovies] = useState<Movie[]>();
     const [recommendedMovies, setRecommendedMovies] = useState<Movie[]>();
