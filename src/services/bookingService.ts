@@ -38,16 +38,6 @@ export const initiateBooking = async (initiateBookingRequest: any) => {
   }
 };
 
-// Optional booking confirmation function
-// export const confirmBooking = async (confirmBookingRequest: any) => {
-//   try {
-//     const response = await axiosInstance.post(`/api/Booking/confirmBooking`, confirmBookingRequest)
-//     return response
-//   } catch (error: any) {
-//     handleError(error)
-//   }
-// }
-
 export const cancelBooking = async (cancelBookingRequest: any) => {
   try {
     const response = await axiosInstance.post(
@@ -92,5 +82,16 @@ const handleError = (error: any) => {
     responseError("No response received from server!");
   } else {
     console.log("Error", error.message);
+  }
+};
+
+export const getBookingHistory = async (userId:any) => {
+  try {
+    const response = await axiosInstance.get(
+      `/api/Booking/getBookingHistory/${userId}`
+    );
+    return response;
+  } catch (error: any) {
+    handleError(error);
   }
 };

@@ -12,13 +12,14 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [userDetails, setUserDetails] = useState({ name: "", email: "" });
+  const [userDetails, setUserDetails] = useState({id:"", name: "", email: "" });
 
   useEffect(() => {
     const storedLogin = getUserFromToken();
     if (storedLogin) {
       setIsLoggedIn(true);
       const user1 = {
+      id: storedLogin?.id ?? "",
       name: storedLogin?.name ?? "",
       email: storedLogin?.email ?? ""
     };
@@ -28,8 +29,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = () => {
-    setIsLoggedIn(true);
-    
+    //setIsLoggedIn(true);
+    const storedLogin = getUserFromToken();
+    if (storedLogin) {
+      setIsLoggedIn(true);
+      const user1 = {
+      id: storedLogin?.id ?? "",
+      name: storedLogin?.name ?? "",
+      email: storedLogin?.email ?? ""
+    };
+    console.log(user1);
+    setUserDetails(user1);
+    }
   };
 
   const logout = () => {

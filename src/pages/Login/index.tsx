@@ -35,7 +35,6 @@ function Login() {
   });
 
   const onSubmit = (data: LoginSchemaType) => {
-    // console.log("User Register Data:", data);
     loginUser(data).then((response: any) => {
       if (response) {
         const authUser = response.data;
@@ -44,14 +43,10 @@ function Login() {
           path: "/",
           expires: 1,
         }); // expires in 1 day
-
         login();
-
         router.push({
           pathname: "/",
-          query: { fromLogin: "true" },
         });
-
         successful("Login Successful");
       }
     });

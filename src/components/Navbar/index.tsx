@@ -8,7 +8,7 @@ const Navbar = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { isLoggedIn, logout, userDetails } = useAuth();
-
+  
   useEffect(() => {
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -41,7 +41,7 @@ const Navbar = () => {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="text-white text-2xl"
+                  className="text-black hover:text-white align-middle text-4xl"
                 >
                   <FaUserCircle />
                 </button>
@@ -52,7 +52,7 @@ const Navbar = () => {
                       <p className="text-sm text-gray-600">{userDetails.email}</p>
                     </div>
                     <hr className="my-2" />
-                    <Link href="/BookingHistory">
+                    <Link href={`/BookingHistory/${userDetails.id}`}>
                       <div className="block px-4 py-2 text-black hover:bg-gray-100 cursor-pointer rounded-md">
                         Booking History
                       </div>
