@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { getUserFromToken, logOutUser } from './userFunctions';
+import { useRouter } from 'next/router';
 
 type AuthContextType = {
   isLoggedIn: boolean;
@@ -13,6 +14,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [userDetails, setUserDetails] = useState({id:"", name: "", email: "" });
+  const router = useRouter();
 
   useEffect(() => {
     const storedLogin = getUserFromToken();
@@ -46,7 +48,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     logOutUser();
     setIsLoggedIn(false);
-    
+    router.reload();
   };
 
   return (
