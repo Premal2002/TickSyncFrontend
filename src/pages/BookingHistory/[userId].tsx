@@ -1,6 +1,8 @@
 // pages/booking-history.tsx
+import { formatDate } from "@/HelperFunctions/dateFunctions";
 import { getBookingHistory } from "@/services/bookingService";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 interface Props {
@@ -43,67 +45,81 @@ const BookingHistory = ({ userId }: Props) => {
 
         <div className="space-y-8 max-h-[70vh] overflow-y-auto pr-2">
           {bookingHistory
-            ? bookingHistory.length > 0 &&
-              bookingHistory.map((booking: any) => (
-                <div
-                  key={booking.bookingId}
-                  className="bg-rose-900/20 rounded-2xl shadow-xl p-4 flex flex-col md:flex-row items-center md:items-start gap-4"
-                >
-                  {/* Image section */}
-                  <div className="w-full md:w-1/3">
+            ? bookingHistory.length > 0 ?
+            bookingHistory.map((booking: any) => (
+              <div
+                key={booking.bookingId}
+                className="bg-rose-900/20 rounded-2xl shadow-xl p-4 flex flex-col md:flex-row items-center md:items-start gap-4"
+              >
+                {/* Image section */}
+                <div className="w-full md:w-1/3">
+                  <img
+                    src={booking.moviePosterUrl}
+                    className="w-full h-48 object-contain bg-none rounded-xl p-2"
+                  />
+                </div>
+
+                {/* Info section */}
+                <div className="w-full md:w-2/3 flex flex-col justify-between">
+                  <h2 className="text-xl font-bold text-gray-800 mb-2 text-center md:text-left">
+                    {booking.movieName}
+                  </h2>
+
+                  <div className="grid grid-cols-2 gap-2 text-sm font-medium text-gray-800">
+                    <div className="flex justify-between">
+                      <span>Date : {booking.showDate &&
+                        formatDate(booking.showDate, {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }).toString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Time : {booking.showTime.slice(0, 5)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>
+                        Total Amount : {booking.totalAmount}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>
+                        Venue : {booking.venueName} | {booking.venueLocation}
+                      </span>
+                    </div>
+                    <div className="flex justify-between col-span-2">
+                      <span>
+                        Tickets : {Object.entries(
+                          booking.seats.reduce((acc: any, seat: any) => {
+                            acc[seat.rowNumber] = acc[seat.rowNumber] || [];
+                            acc[seat.rowNumber].push(seat.seatNumber);
+                            return acc;
+                          }, {})
+                        )
+                          .map(([row, seats]: any) => `${row}: ${seats.join(", ")}`)
+                          .join(" | ")}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-4">
                     <img
-                      src={booking.moviePosterUrl}
-                      className="w-full h-48 object-contain bg-none rounded-xl p-2"
+                      src="/images/barcode.png"
+                      alt="Barcode"
+                      className="h-12 object-contain mx-auto md:mx-0"
                     />
                   </div>
-
-                  {/* Info section */}
-                  <div className="w-full md:w-2/3 flex flex-col justify-between">
-                    <h2 className="text-xl font-bold text-gray-800 mb-2 text-center md:text-left">
-                      {booking.movieName}
-                    </h2>
-
-                    <div className="grid grid-cols-2 gap-2 text-sm font-medium text-gray-800">
-                      <div className="flex justify-between">
-                        <span>Date:{booking.createdAt}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Time:{booking.createdAt}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>
-                          Total Amount:
-                          {booking.totalAmount}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>
-                          Venue:
-                          {booking.venueName} | {booking.venueLocation}
-                        </span>
-                      </div>
-                      <div className="flex justify-between col-span-2">
-                        <span>
-                          Tickets:{" "}
-                          {booking.seats
-                            .map((seat: any) => seat.seatNumber)
-                            .join(", ")}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="mt-4">
-                      <img
-                        src="/images/barcode.png"
-                        alt="Barcode"
-                        className="h-12 object-contain mx-auto md:mx-0"
-                      />
-                    </div>
-                  </div>
                 </div>
-              ))
-            : null} 
-            {/* need to add a design to display a msg for NO BOOKINGS. can add recommended movies component */}
+              </div>
+            )): (<div className="text-center">
+              <h2 className="text-center text-blue-500 mb-3">No Bookings Yet !</h2>
+              <Link href="/" className="text-black hover:text-blue-600">Go to Dashboard</Link>
+            </div>)
+            : (<div>
+              <h2 className="text-center text-blue-500">No Bookings Yet !</h2>
+              <Link className="text-black" href="/">Go to Dashboard</Link>
+            </div>)}
+          {/* need to add a design to display a msg for NO BOOKINGS. can add recommended movies component */}
         </div>
       </div>
     </div>

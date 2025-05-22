@@ -32,6 +32,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/Login?fromMiddleware=Token validation failed! Login again', request.url));
   }
 
+  // Check for token expiry
+  const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+  if (payload.exp && currentTimeInSeconds >= payload.exp) {
+    return NextResponse.redirect(new URL('/Login?fromMiddleware=Token expired! Please login again', request.url));
+  }
+
   const roles: string[] = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || [];
   const pathname = request.nextUrl.pathname;
 
@@ -47,7 +53,7 @@ export function middleware(request: NextRequest) {
   // Allow access and render the requested page
   return NextResponse.next();
 }
-
+  
 export const config = {
-  matcher: ['/SeatBooking/:path*'],
+  matcher: ['/SeatBooking/:path*','/BookingHistory/:path*'],
 };

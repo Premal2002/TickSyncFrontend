@@ -13,11 +13,11 @@ function Login() {
   let router = useRouter();
   const { email } = router.query;
   const { fromMiddleware } = router.query;
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
 
   if (fromMiddleware) {
     responseError(fromMiddleware);
-    router.replace("/Login", undefined, { shallow: true });
+    router.push("/Login");
   }
 
   const [passwordVisible, setPasswordVisible] = useState(false);

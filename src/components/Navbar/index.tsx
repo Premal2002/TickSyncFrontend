@@ -32,7 +32,7 @@ const Navbar = () => {
           </Link>
 
           <div className="flex space-x-4 items-center">
-            <a href="#" className="text-black hover:text-gray-200">Dashboard</a>
+            <Link href="/" className="text-black hover:text-gray-200">Dashboard</Link>
             <a href="#" className="text-black hover:text-gray-200">Team</a>
             <a href="#" className="text-black hover:text-gray-200">Projects</a>
             <a href="#" className="text-black hover:text-gray-200">Calendar</a>
