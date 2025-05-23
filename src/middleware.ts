@@ -42,7 +42,7 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Role-based access control
-  if (pathname.startsWith('/Movies') && !roles.includes('admin')) {
+  if (pathname.startsWith('/AdminDashboard') && !roles.includes('admin')) {
     return NextResponse.redirect(new URL('/Unauthorized', request.url));
   }
 
@@ -55,5 +55,5 @@ export function middleware(request: NextRequest) {
 }
   
 export const config = {
-  matcher: ['/SeatBooking/:path*','/BookingHistory/:path*'],
+  matcher: ['/SeatBooking/:path*','/BookingHistory/:path*', '/AdminDashboard/:path*'],
 };
