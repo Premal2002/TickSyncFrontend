@@ -50,19 +50,20 @@ function Register() {
 
   return (
     <div>
-      <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover py-25">
-        <div className="mx-100 border text-black border-black px-30 py-10 rounded-3xl bg-white/15" 
+      <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover">
+      <div className="bg-white/5 backdrop-blur-[1px] font-bold w-full h-full py-20">
+        <div className="mx-92 text-black px-30 py-10 rounded-3xl bg-white/8" 
         style={{
           boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
         }}>
           <h1 className="text-center ">Sign Up</h1>
           <br />
-          <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <form className="font-bold" onSubmit={handleSubmit(onSubmit, onError)}>
             <div>
               <label htmlFor="name">Name</label>
               <input
                 {...register("fullName")}
-                className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2 outline-none"
+                className="w-full border border-gray-900 py-2 rounded-md mt-1 px-2 outline-none"
                 type="text"
                 id="name"
                 placeholder="Enter Your Name"
@@ -79,7 +80,7 @@ function Register() {
               <label htmlFor="email">Email</label>
               <input
                 {...register("email")}
-                className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2 outline-none"
+                className="w-full border border-gray-900 py-2 rounded-md mt-1 px-2 outline-none"
                 type="text"
                 id="email"
                 placeholder="Enter Your Email"
@@ -94,7 +95,7 @@ function Register() {
               <label htmlFor="phone">Phone No.</label>
               <input
                 {...register("phone")}
-                className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2 outline-none"
+                className="w-full border border-gray-900 py-2 rounded-md mt-1 px-2 outline-none"
                 type="text"
                 id="phone"
                 placeholder="Enter your Phone number"
@@ -107,7 +108,7 @@ function Register() {
             <br />
             <div>
               <label htmlFor="password">Password</label>
-              <div className="flex justify-between w-full border border-gray-500 py-1 rounded-md mt-1 px-2">
+              <div className="flex justify-between w-full border border-gray-900 py-2 rounded-md mt-1 px-2">
                 <input
                   {...register("passwordHash")}
                   className="w-full outline-0"
@@ -169,7 +170,7 @@ function Register() {
             <br />
             <div>
               <label htmlFor="confirmpassword">Confirm Password</label>
-              <div className="flex justify-between w-full border border-gray-500 py-1 rounded-md mt-1 px-2">
+              <div className="flex justify-between w-full border border-gray-900 py-2 rounded-md mt-1 px-2">
                 <input
                   {...register("confirmPassword")}
                   className="w-full outline-0"
@@ -244,6 +245,7 @@ function Register() {
             </div>
           </form>
         </div>
+      </div>
       </div>
     </div>
   );

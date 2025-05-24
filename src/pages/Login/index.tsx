@@ -57,20 +57,21 @@ function Login() {
   };
   return (
     <div>
-      <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover py-25">
-        <div className="mx-110 border text-black border-black px-30 py-20 rounded-3xl bg-white/15"
+      <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover">
+      <div className="bg-white/5 backdrop-blur-[1px] font-bold w-full h-full py-20">
+        <div className="mx-110 text-black px-30 py-20 rounded-3xl bg-white/8"
         style={{
           boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
         }}>
           <h1 className="text-center">Login</h1>
           <br />
-          <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <form className="font-bold" onSubmit={handleSubmit(onSubmit, onError)}>
             <div>
               <label htmlFor="email">Email</label>
               <input
                 defaultValue={email == undefined ? "" : email}
                 {...register("email")}
-                className="w-full border border-gray-500 py-1 rounded-md mt-1 px-2 outline-none"
+                className="w-full border border-gray-900 py-2 rounded-md mt-1 px-2 outline-none"
                 type="text"
                 name="email"
                 id="email"
@@ -84,7 +85,7 @@ function Login() {
             <br />
             <div>
               <label htmlFor="password">Password</label>
-              <div className="flex justify-between w-full border border-gray-500 py-1 rounded-md mt-1 px-2">
+              <div className="flex justify-between w-full border border-gray-900 py-2 rounded-md mt-1 px-2">
                 <input
                   {...register("password")}
                   className="w-full outline-0"
@@ -165,6 +166,7 @@ function Login() {
             </div>
           </form>
         </div>
+      </div>
       </div>
     </div>
   );

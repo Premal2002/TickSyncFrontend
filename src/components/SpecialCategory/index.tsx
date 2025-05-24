@@ -20,7 +20,7 @@ function SpecialCategoryDisplay(props: any) {
       {5 > 4 && (
         <button
           onClick={() => scroll('left')}
-          className="absolute cursor-pointer left-10 top-1/2 hover:bg-black text-white -translate-y-1/2 z-10 border-white border-2 text-2xl py-1 px-3 rounded-full shadow"
+          className="absolute cursor-pointer left-10 top-1/2 hover:bg-black text-white -translate-y-1/2 border-white border-2 text-2xl py-1 px-3 rounded-full shadow"
         >
           &lt;
         </button>
@@ -38,7 +38,7 @@ function SpecialCategoryDisplay(props: any) {
       {5 > 4 && (
         <button
           onClick={() => scroll('right')}
-          className="absolute right-15 cursor-pointer top-1/2 hover:bg-black text-white -translate-y-1/2 z-10 border-white border-2 text-2xl py-1 px-3 rounded-full shadow"
+          className="absolute right-15 cursor-pointer top-1/2 hover:bg-black text-white -translate-y-1/2 border-white border-2 text-2xl py-1 px-3 rounded-full shadow"
         >
           &gt;
         </button>

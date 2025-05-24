@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import Seat from "../Seat";
 
-const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats, setSeatLockRequest }: any) => {
+const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats, setSeatLockRequest, onInvalidSeatSelect }: any) => {
   
   const toggleSeat = useCallback(
     (seatObj: any, seatIndex: number) => {
@@ -14,7 +14,10 @@ const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats, setSeatLoc
       if (isAlreadySelected) {
         updated = updated.filter((s: any) => s.key !== seatKey);
       } else {        
-        if (selectedSeats.length >= ticketCount) return;
+        if (selectedSeats.length >= ticketCount){
+          onInvalidSeatSelect();
+          return;
+        } 
 
         updated.push({
           ...seatObj,
