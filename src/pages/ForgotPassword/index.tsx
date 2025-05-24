@@ -114,7 +114,10 @@ function ForgotPassword() {
       className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat text-black"
       style={{ backgroundImage: "url('/homePageBgImage.jpg')" }}
     >
-      <div className="w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[33%] bg-white/65 border border-black px-6 py-8 rounded-3xl shadow-md">
+      <div className="w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[35%] bg-white/15 border border-black px-6 py-8 rounded-3xl"
+        style={{
+          boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
+        }}>
         <h2 className="text-2xl font-bold mb-6 text-center">Forgot Password</h2>
 
         {step === "email" && (

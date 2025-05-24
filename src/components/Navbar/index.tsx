@@ -41,7 +41,7 @@ const Navbar = () => {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="text-black hover:text-white align-middle text-4xl"
+                  className="cursor-pointer text-black hover:text-white align-middle text-4xl"
                 >
                   <FaUserCircle />
                 </button>
