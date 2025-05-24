@@ -3,9 +3,9 @@ import { formatDate } from "@/HelperFunctions/dateFunctions";
 import { ShowSeatLayout } from "@/models/showSeatLayout";
 import { getLatestSeatsLayout } from "@/services/bookingService";
 import { GetServerSideProps } from "next";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useWebSocket } from "@/hooks/useWebSockets";
-import cookie from 'cookie';
+import cookie from "cookie";
 
 interface Props {
   showId: string;
@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       showId: id || "",
-      userId: userId || 0
+      userId: userId || 0,
     },
   };
 };
@@ -54,21 +54,21 @@ export default function SeatBooking({ showId, userId }: Props) {
   //state used to count ticket/seats
   const [ticketCount, setTicketCount] = useState<number>(0);
   const [resetKey, setResetKey] = useState(0);
+  const ticketSelectRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchSeatLayout = async () => {
       const response = await getLatestSeatsLayout(showId);
       if (response && response.data) {
-        setSeatLayout({ ...response.data as ShowSeatLayout });
+        setSeatLayout({ ...(response.data as ShowSeatLayout) });
       }
     };
     fetchSeatLayout();
   }, [resetKey]);
 
   const refetchSeatsData = () => {
-    setResetKey(prevKey => prevKey + 1); // Increment key to trigger remount
-  }
-
+    setResetKey((prevKey) => prevKey + 1); // Increment key to trigger remount
+  };
 
   const updateSeatStatuses = (seatIds: number[], newStatus: string) => {
     setSeatLayout((prevLayout) => {
@@ -116,12 +116,37 @@ export default function SeatBooking({ showId, userId }: Props) {
           SeatIds: prevRequest.SeatIds.filter((id) => !seatIds.includes(id)),
         }));
       }
-    }
+    },
   });
 
+  const highlightTicketSelect = useCallback(() => {
+    const div = ticketSelectRef.current;
+    if (div) {
+      div.classList.add("border-red-500", "border-2");
+
+      // Scroll into view smoothly
+      div.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // Optional: focus the select inside for accessibility
+      const select = div.querySelector("select");
+      // if (select) (select as HTMLSelectElement).focus();
+      if (select) {
+        select.classList.add("ring-2", "ring-red-400", "rounded");
+        (select as HTMLSelectElement).focus();
+      }
+
+      // Remove the highlight after 1 second
+      setTimeout(() => {
+        div.classList.remove("border-red-500", "border-2");
+        if (select) {
+          select.classList.remove("ring-2", "ring-red-400", "rounded");
+        }
+      }, 1000);
+    }
+  }, []);
 
   return (
-    <div className="w-full flex-col justify-between text-black bg-white h-auto p-4">
+    <div className="w-full flex-col justify-between text-black bg-gray-100 h-auto p-4">
       <div>
         <div className="w-full flex justify-between p-4 px-8 bg-white rounded-lg shadow">
           <div>
@@ -140,11 +165,19 @@ export default function SeatBooking({ showId, userId }: Props) {
               | {seatLayout?.showTime.slice(0, 5)}
             </p>
           </div>
-          <div className="bg-white flex align-middle">
+          <div
+            ref={ticketSelectRef}
+            id="ticket-select-wrapper"
+            className="bg-white flex align-middle rounded border p-2"
+          >
             <select
-              className="border p-2 rounded"
+              className="outline-none"
               value={ticketCount}
-              onChange={(e) => setTicketCount(Number(e.target.value))}
+              onChange={(e) => setTicketCount((prev) => {
+                const curr = Number(e.target.value);
+                if(prev > curr) setSelectedSeats([]);
+                  return curr;
+                })}
             >
               <option value={0}>Select tickets</option>
               {[...Array(5)].map((_, i) => (
@@ -161,12 +194,26 @@ export default function SeatBooking({ showId, userId }: Props) {
           Select Your Seats
         </h1>
         <div className="p-4 px-8 flex justify-center">
-          {seatLayout ? <SeatLayout key={resetKey} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} seatLockRequest={seatLockRequest} setSeatLockRequest={setSeatLockRequest} setRefetchSeats={refetchSeatsData} data={seatLayout} showId={showId} userId={userId} ticketCount={ticketCount} /> : null}
+          {seatLayout ? (
+            <SeatLayout
+              key={resetKey}
+              selectedSeats={selectedSeats}
+              setSelectedSeats={setSelectedSeats}
+              seatLockRequest={seatLockRequest}
+              setSeatLockRequest={setSeatLockRequest}
+              setRefetchSeats={refetchSeatsData}
+              onInvalidSeatSelect={highlightTicketSelect}
+              data={seatLayout}
+              showId={showId}
+              userId={userId}
+              ticketCount={ticketCount}
+            />
+          ) : null}
         </div>
       </div>
 
       {/* Status legend */}
-      <div className="w-full bg-white text-black p-2 mt-4 rounded">
+      <div className="w-full text-black p-2 mt-4 rounded">
         <div className="flex justify-center gap-6 text-sm">
           <span className="flex items-center gap-1">
             <span className="w-5 h-5 rounded bg-white border"></span>Available

@@ -19,6 +19,10 @@
   }
 }
 
+html{
+  @apply scroll-smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -28,6 +32,15 @@ body {
 .hiddenScrollbar::-webkit-scrollbar {
   width: 0px;
   background: transparent; /* make scrollbar transparent */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important; /* or use your bg color */
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 @layer base {
