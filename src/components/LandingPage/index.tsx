@@ -35,7 +35,7 @@ const LandingPage = () => {
     return <div>
         <SubNavbar />
         <HeroSection />
-        <SpecialCategoryDisplay title="Trending" bgColor = "bg-zinc-500" data={trendingMovies} load={load}/>
+        <SpecialCategoryDisplay title="Trending" bgColor = "bg-slate-500" data={trendingMovies} load={load}/>
         <SpecialCategoryDisplay title="Recommended Movies" bgColor = "bg-slate-800 " data={recommendedMovies} load={load}/>
     </div>
 };

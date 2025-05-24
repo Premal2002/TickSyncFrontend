@@ -111,10 +111,11 @@ function ForgotPassword() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat text-black"
+      className="flex items-center justify-center bg-cover bg-center bg-no-repeat text-black"
       style={{ backgroundImage: "url('/homePageBgImage.jpg')" }}
     >
-      <div className="w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[35%] bg-white/15 border border-black px-6 py-8 rounded-3xl"
+    <div className="bg-white/5 backdrop-blur-[1px] font-bold w-full h-full py-30">
+      <div className="mx-110 bg-white/8 px-14 py-12 rounded-3xl"
         style={{
           boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
         }}>
@@ -122,7 +123,7 @@ function ForgotPassword() {
 
         {step === "email" && (
           <>
-            <form onSubmit={handleForgotSubmit(sendOtp, onError)}>
+            <form className="font-bold" onSubmit={handleForgotSubmit(sendOtp, onError)}>
               <div>
                 <label htmlFor="email" className="block mb-2">
                   Email:
@@ -154,7 +155,7 @@ function ForgotPassword() {
 
         {step === "otp" && (
           <>
-            <form onSubmit={handleVerifyOtpSubmit(verifyOtp, onError)}>
+            <form className="font-bold" onSubmit={handleVerifyOtpSubmit(verifyOtp, onError)}>
               <div>
                 <label htmlFor="otp" className="block mb-2">
                   Enter OTP
@@ -194,7 +195,7 @@ function ForgotPassword() {
 
         {step === "reset" && (
           <>
-            <form onSubmit={handleResetPasswordSubmit(resetPassword, onError)}>
+            <form className="font-bold" onSubmit={handleResetPasswordSubmit(resetPassword, onError)}>
               <div>
                 <label htmlFor="password" className="block mb-2">New Password</label>
                 <div id="password" className="flex items-center border border-gray-500 py-2 rounded-md mb-4 px-4">
@@ -330,7 +331,8 @@ function ForgotPassword() {
             Your password has been reset. Redirecting to login...
           </div>
         )}
-      </div>
+      </div>    
+    </div>
     </div>
   );
 }

@@ -24,7 +24,7 @@ const Navbar = () => {
   },[]);
 
   return (
-    <nav className="bg-red-500 py-3 font-serif">
+    <nav className="bg-red-500 py-2 font-serif">
       <div className="mx-auto max-w-8xl px-2 sm:px-14 lg:px-16">
         <div className="relative flex h-16 items-center justify-center sm:justify-between">
           <Link href="/" className="text-xl font-bold text-white">
@@ -68,7 +68,7 @@ const Navbar = () => {
               </div>
             ) : (
               <Link href="/Login">
-                <button className="bg-black text-white px-4 py-2 rounded hover:drop-shadow-xl">
+                <button className="bg-black cursor-pointer text-white px-4 py-2 rounded hover:drop-shadow-xl">
                   Login
                 </button>
               </Link>
