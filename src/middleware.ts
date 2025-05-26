@@ -46,14 +46,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/Unauthorized', request.url));
   }
 
-  // if (pathname.startsWith('/') && !roles.includes('user')) {
-  //   return NextResponse.redirect(new URL('/Unauthorized', request.url));
-  // }
-
   // Allow access and render the requested page
   return NextResponse.next();
 }
   
 export const config = {
-  matcher: ['/SeatBooking/:path*','/BookingHistory/:path*', '/AdminDashboard/:path*'],
+  matcher: ['/SeatBooking/:path*','/BookingHistory/:path*', '/AdminDashboard/:path*','/UserBooking/:path*'],
 };

@@ -3,9 +3,11 @@ import SeatRow from "../SeatRow";
 import { cancelBooking, createRazorpayOrder, initiateBooking, lockSeats, paymentCallback } from "@/services/bookingService";
 import { responseError, successful } from "@/HelperFunctions/SwalFunctions";
 import { loadRazorpayScript } from "@/HelperFunctions/loadRazorpayScript";
+import { useRouter } from "next/router";
 
 export default function SeatLayout(props: any) {
   const[disablePaymentButton, setDisablePaymentButton] = useState(false);
+  const router = useRouter();
 
   const totalPrice = props.selectedSeats.reduce(
     (total:any, seat:any) => total + (seat.price || 0),
@@ -89,8 +91,9 @@ export default function SeatLayout(props: any) {
 
             if (callbackRes) {
               //props.setRefetchSeats();
-              successful("Booking successful!");
               setDisablePaymentButton(false);
+              router.push(`/UserBooking/${bookingId}`);
+              successful("Booking successful!");
             }
           } catch (err: any) {
             console.error("Callback error:", err);
