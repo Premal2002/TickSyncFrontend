@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { X } from "lucide-react";
 import Link from "next/link";
 import { getBookingData } from "@/services/bookingService";
 import { formatDate } from "@/HelperFunctions/dateFunctions";
@@ -13,7 +12,6 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const bookingId = context.query.bookingId;
-    console.log(bookingId)
 
     // Handle case where it's an array
     const id = Array.isArray(bookingId) ? bookingId[0] : bookingId;

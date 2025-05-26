@@ -19,7 +19,6 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const movieId = context.query.movieId;
-  console.log(movieId)
 
   // Handle case where it's an array
   const id = Array.isArray(movieId) ? movieId[0] : movieId;

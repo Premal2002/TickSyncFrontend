@@ -60,45 +60,4 @@ const SeatRow = ({ row, ticketCount, selectedSeats, setSelectedSeats, setSeatLoc
   );
 };
 
-
-// const areEqual = (prevProps: any, nextProps: any) => {
-//   if (prevProps.row.rowNumber !== nextProps.row.rowNumber) return false;
-
-//   // Compare each seat's status
-//   const prevSeats = prevProps.row.seats;
-//   const nextSeats = nextProps.row.seats;
-
-//   if (prevSeats.length !== nextSeats.length) return false;
-
-//   for (let i = 0; i < prevSeats.length; i++) {
-//     if (
-//       prevSeats[i].seatId !== nextSeats[i].seatId ||
-//       prevSeats[i].status !== nextSeats[i].status
-//     ) {
-//       return false;
-//     }
-//   }
-
-//   // Compare selectedSeats for this row
-//   const prevSelected = prevProps.selectedSeats.filter(
-//     (s: any) => s.rowNumber === prevProps.row.rowNumber
-//   );
-//   const nextSelected = nextProps.selectedSeats.filter(
-//     (s: any) => s.rowNumber === nextProps.row.rowNumber
-//   );
-
-//   if (prevSelected.length !== nextSelected.length) return false;
-
-//   for (let i = 0; i < prevSelected.length; i++) {
-//     if (prevSelected[i].key !== nextSelected[i].key) {
-//       return false;
-//     }
-//   }
-
-//   return true;
-// };
-
-// export default React.memo(SeatRow, areEqual);
-
-
 export default SeatRow;

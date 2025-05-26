@@ -1,4 +1,4 @@
-'use client';
+import { formatDate } from '@/HelperFunctions/dateFunctions';
 import { useRouter } from 'next/navigation';
 
 function Show(props: any) {
@@ -21,9 +21,13 @@ function Show(props: any) {
                             <button
                                 key={show.showId}
                                 onClick={() => handleShowClick(show.showId)}
-                                className="border border-green-600 text-green-600 px-4 py-1 rounded-full hover:bg-green-100 transition text-sm"
+                                className="cursor-pointer border border-green-600 text-green-600 px-4 py-1 rounded-full hover:bg-green-100 transition text-sm"
                             >
-                                {show.showTime.slice(0, 5)}
+                                {show.showTime.slice(0, 5)} | {show?.showDate &&
+                                    formatDate(show.showDate, {
+                                        month: "short",
+                                        day: "numeric",
+                                    }).toString()}{" "}
                             </button>
                         ))}
                     </div>

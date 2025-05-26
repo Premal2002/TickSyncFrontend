@@ -68,7 +68,6 @@ const AdminDashboard: React.FC = () => {
 
   const renderTable = () => {
     const data = tableData.entityData;
-    console.log(data);
     
     if (!data || data.length === 0) return <p className="text-gray-500">No data available</p>;
 

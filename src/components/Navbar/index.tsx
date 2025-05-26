@@ -8,9 +8,12 @@ const Navbar = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { isLoggedIn, logout, userDetails } = useAuth();
+  const [isOnlyAdmin, setIsOnlyAdmin]= useState(false);
   
   useEffect(() => {
-
+    // if(userDetails.roles.length == 1 && userDetails.roles.includes("admin")){
+    //   setIsOnlyAdmin(true);
+    // }
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownOpen(false);
@@ -24,18 +27,18 @@ const Navbar = () => {
   },[]);
 
   return (
-    <nav className="bg-red-500 py-2 font-serif">
+    <nav className="bg-red-500 py-2 font-serif w-full">
       <div className="mx-auto max-w-8xl px-2 sm:px-14 lg:px-16">
         <div className="relative flex h-16 items-center justify-center sm:justify-between">
           <Link href="/" className="text-xl font-bold text-white">
             TickSync
           </Link>
-
+          {!isOnlyAdmin && (
           <div className="flex space-x-4 items-center">
             <Link href="/" className="text-black hover:text-gray-200">Dashboard</Link>
             <a href="#" className="text-black hover:text-gray-200">Team</a>
-            <a href="#" className="text-black hover:text-gray-200">Projects</a>
-            <a href="#" className="text-black hover:text-gray-200">Calendar</a>
+            <a href="#" className="text-black hover:text-gray-200">About</a>
+            <a href="#" className="text-black hover:text-gray-200">Contact</a>
 
             {isLoggedIn ? (
               <div className="relative" ref={dropdownRef}>
@@ -74,6 +77,7 @@ const Navbar = () => {
               </Link>
             )}
           </div>
+          )}
         </div>
       </div>
     </nav>

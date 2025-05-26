@@ -21,7 +21,6 @@ export default function SeatLayout(props: any) {
       // 1. Lock Seats
       const seatLockRes = await lockSeats(props.seatLockRequest);
       if (!seatLockRes) {
-        //props.setRefetchSeats();
         responseError("Failed to lock seats.");
         setDisablePaymentButton(false);
         return;
@@ -35,7 +34,6 @@ export default function SeatLayout(props: any) {
       };
       const bookingRes = await initiateBooking(initiateBookingRequest);
       if (!bookingRes || !bookingRes.data?.bookingId) {
-        //props.setRefetchSeats();
         responseError("Booking initiation failed.");
          setDisablePaymentButton(false);
         return;
@@ -90,7 +88,6 @@ export default function SeatLayout(props: any) {
             });
 
             if (callbackRes) {
-              //props.setRefetchSeats();
               setDisablePaymentButton(false);
               router.push(`/UserBooking/${bookingId}`);
               successful("Booking successful!");
@@ -102,7 +99,7 @@ export default function SeatLayout(props: any) {
           }
         },
         prefill: {
-          name: "", // Optional: pull from logged-in user or form
+          name: "", 
           email: "",
           contact: ""
         },

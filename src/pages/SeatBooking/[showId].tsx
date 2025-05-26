@@ -131,7 +131,7 @@ export default function SeatBooking({ showId, userId }: Props) {
       const select = div.querySelector("select");
       // if (select) (select as HTMLSelectElement).focus();
       if (select) {
-        select.classList.add("ring-2", "ring-red-400", "rounded");
+        select.classList.add("ring-2", "ring-black", "rounded");
         (select as HTMLSelectElement).focus();
       }
 
@@ -139,7 +139,7 @@ export default function SeatBooking({ showId, userId }: Props) {
       setTimeout(() => {
         div.classList.remove("border-red-500", "border-2");
         if (select) {
-          select.classList.remove("ring-2", "ring-red-400", "rounded");
+          select.classList.remove("ring-2", "ring-black", "rounded");
         }
       }, 1000);
     }

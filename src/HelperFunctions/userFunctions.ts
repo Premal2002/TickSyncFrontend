@@ -11,19 +11,23 @@ export interface JwtPayload {
   email: string
   name: string
   exp: number
+  roles : []
   // add more fields if needed
 }
 
 export function getUserFromToken(): JwtPayload | null {
   const data = Cookies.get('authenticatedUser')
+  
   const {jwtToken} = JSON.parse(data??"{}");
   
   if (!jwtToken) return null
 
   try {
-    const decoded = jwtDecode<JwtPayload>(jwtToken)
+    const decoded = jwtDecode<any>(jwtToken)
+    const userObj = <JwtPayload>decoded;
     if (decoded.exp * 1000 > Date.now()) {
-      return decoded
+      userObj.roles = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || [];
+      return userObj
     } else {
       Cookies.remove('authenticatedUser')
       return null
