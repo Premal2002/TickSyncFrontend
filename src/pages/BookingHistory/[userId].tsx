@@ -48,9 +48,10 @@ const BookingHistory = ({ userId }: Props) => {
             {bookingHistory ? (
               bookingHistory.length > 0 ? (
                 bookingHistory.map((booking: any) => (
+                  // <div className="flex flex-col md:flex-row items-center md:items-start gap-4 w-full">
+                  <Link className="bg-white rounded-2xl shadow-xl hover:bg-gray-100 flex flex-col gap-4" key={booking.bookingId} href={`/UserBooking/${booking.bookingId}`}>
                   <div
-                    key={booking.bookingId}
-                    className="bg-white rounded-2xl shadow-xl p-4 flex flex-col md:flex-row items-center md:items-start gap-4"
+                    className="p-4 flex"
                   >
                     {/* Image section */}
                     <div className="w-full md:w-1/3">
@@ -118,6 +119,8 @@ const BookingHistory = ({ userId }: Props) => {
                       </div>
                     </div>
                   </div>
+                  </Link>
+                  // </div>
                 ))
               ) : (
                 <div className="text-center">

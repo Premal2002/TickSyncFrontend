@@ -95,3 +95,14 @@ export const getBookingHistory = async (userId:any) => {
     handleError(error);
   }
 };
+
+export const getBookingData = async (bookingId:any) => {
+  try {
+    const response = await axiosInstance.get(
+      `/api/Booking/getBookingData/${bookingId}`
+    );
+    return response;
+  } catch (error: any) {
+    handleError(error);
+  }
+};
