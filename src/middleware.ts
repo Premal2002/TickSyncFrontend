@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server';
 import { responseError } from './HelperFunctions/SwalFunctions';
 
 export function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
   const cookie = request.cookies.get('authenticatedUser')?.value || '{}';
   let token = '';
 
@@ -12,6 +13,21 @@ export function middleware(request: NextRequest) {
     token = parsedUser.jwtToken;
   } catch (e) {
     console.error('Invalid cookie format');
+  }
+
+  //checking if user already logged in
+  if (pathname.startsWith('/Login')) {
+    if(token)
+    return NextResponse.redirect(new URL('/', request.url));
+    else
+    return;
+  }
+
+  if (pathname.startsWith('/AdminLogin')) {
+    if(token)
+    return NextResponse.redirect(new URL('/AdminDashboard', request.url));
+    else
+    return;
   }
 
   if (!token) {
@@ -39,7 +55,6 @@ export function middleware(request: NextRequest) {
   }
 
   const roles: string[] = payload["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] || [];
-  const pathname = request.nextUrl.pathname;
 
   // Role-based access control
   if (pathname.startsWith('/AdminDashboard') && !roles.includes('admin')) {
@@ -51,5 +66,5 @@ export function middleware(request: NextRequest) {
 }
   
 export const config = {
-  matcher: ['/SeatBooking/:path*','/BookingHistory/:path*', '/AdminDashboard/:path*','/UserBooking/:path*'],
+  matcher: ['/Login/:path*', '/AdminLogin/:path*', '/SeatBooking/:path*','/BookingHistory/:path*', '/AdminDashboard/:path*','/UserBooking/:path*'],
 };

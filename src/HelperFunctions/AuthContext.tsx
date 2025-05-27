@@ -34,12 +34,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = () => {
     //setIsLoggedIn(true);
     const storedLogin = getUserFromToken();
+    
     if (storedLogin) {
       setIsLoggedIn(true);
       const user1 = {
       id: storedLogin?.id ?? "",
       name: storedLogin?.name ?? "",
-      email: storedLogin?.email ?? ""
+      email: storedLogin?.email ?? "",
+      roles: storedLogin?.roles ?? []
     };
     setUserDetails(user1);
     }

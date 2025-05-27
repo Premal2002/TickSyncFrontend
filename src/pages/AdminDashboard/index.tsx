@@ -1,6 +1,8 @@
 import { useAuth } from '@/HelperFunctions/AuthContext';
 import { capitalizeFirstLetter } from '@/HelperFunctions/userFunctions';
 import { getAllCounts, getEntityData } from '@/services/adminService';
+import { AgGridReact } from 'ag-grid-react';
+import { ColDef } from 'ag-grid-community';
 import React, { useEffect, useState } from 'react';
 import {
   FiMenu,
@@ -11,6 +13,9 @@ import {
   FiCalendar,
   FiGrid,
 } from 'react-icons/fi';
+import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
+
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 const mockData = {
   Users: [
@@ -67,40 +72,37 @@ const AdminDashboard: React.FC = () => {
   },[selectedData]);
 
   const renderTable = () => {
-    const data = tableData.entityData;
-    
-    if (!data || data.length === 0) return <p className="text-gray-500">No data available</p>;
+  const data: Record<string, any>[] = tableData.entityData;
 
-    const headers = Object.keys(data[0]);
+  if (!data || data.length === 0) {
+    return <p className="text-gray-500">No data available</p>;
+  }
 
-    return (
-      <table className="w-full text-left border rounded-xl border-gray-300">
-        <thead className="bg-gray-700 text-white">
-          <tr>
-            {headers.map((header) => (
-              <th key={header} className="p-3 border-b border-gray-300">
-                {header.charAt(0).toUpperCase() + header.slice(1)}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((row, idx) => (
-            <tr key={idx} className="hover:bg-gray-50">
-              {headers.map((key) => (
-                <td key={key} className="p-3 border-b border-gray-300">
-                  {row[key as keyof typeof row]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
+  const columnDefs: ColDef<Record<string, any>>[] = Object.keys(data[0]).map((key) => ({
+    headerName: capitalizeFirstLetter(key),
+    field: key,
+    sortable: true,
+    filter: true,
+    resizable: true
+  }));
 
   return (
-    <div className="flex h-screen bg-white text-black">
+    <div className="ag-theme-alpine" style={{ width: '100%', minHeight: '400px' }}>
+      <AgGridReact<Record<string, any>>
+        rowData={data}
+        columnDefs={columnDefs}
+        pagination={true}
+        paginationPageSize={6}
+        paginationPageSizeSelector={[4,5,6,7]}
+        domLayout="autoHeight"
+      />
+    </div>
+  );
+};
+
+
+  return (
+    <div className="flex bg-white text-black">
       {/* Sidebar */}
       <div
         className={`fixed md:static z-10 bg-slate-800 text-white w-64 p-4 space-y-6 transition-transform transform ${
@@ -122,7 +124,7 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-6 ml-0 md:ml-10 overflow-auto  h-screen hiddenScrollbar">
+      <div className="flex-1 p-6 ml-0 md:ml-10 overflow-auto  hiddenScrollbar">
         <h2 className='py-4'>Admin Dashboard</h2>
         <button className="md:hidden text-2xl mb-4" onClick={() => setSidebarOpen(!isSidebarOpen)}>
           <FiMenu />

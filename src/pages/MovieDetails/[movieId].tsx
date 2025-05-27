@@ -125,7 +125,7 @@ function MovieDetails({ movieId }: Props) {
           <div className="z-10 mt-4 md:mt-0">
             <div className="text-center">
               <p className="text-yellow-500 font-bold text-2xl">
-                {movie?.rating} ⭐
+                {movie?.rating?.toFixed(1)} ⭐
               </p>
               <p className="text-md text-gray-100">Rating</p>
             </div>
@@ -210,7 +210,7 @@ function MovieDetails({ movieId }: Props) {
                 {movies &&
                   movies &&
                   movies.map((item: Movie) => (
-                    <Card width="w-[18%]" data={item} key={item.movieId} />
+                    <Card width="w-[15%]" data={item} key={item.movieId} />
                   ))}
               </div>
             </div>
