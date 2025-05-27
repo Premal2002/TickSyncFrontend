@@ -18,14 +18,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const storedLogin = getUserFromToken();
+       
     if (storedLogin) {
       setIsLoggedIn(true);
       const user1 = {
       id: storedLogin?.id ?? "",
       name: storedLogin?.name ?? "",
-      email: storedLogin?.email ?? ""
+      email: storedLogin?.email ?? "",
+      roles: storedLogin?.roles ?? []
     };
-    console.log(user1);
     setUserDetails(user1);
     }
   }, []);
@@ -40,7 +41,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       name: storedLogin?.name ?? "",
       email: storedLogin?.email ?? ""
     };
-    console.log(user1);
     setUserDetails(user1);
     }
   };

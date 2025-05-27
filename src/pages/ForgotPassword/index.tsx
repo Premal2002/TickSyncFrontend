@@ -18,6 +18,7 @@ import {
   VerifyOtpSchemaType,
 } from "@/schemas/forgotpassword";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 const API_URL = baseURL;
 
 function ForgotPassword() {
@@ -114,225 +115,163 @@ function ForgotPassword() {
       className="flex items-center justify-center bg-cover bg-center bg-no-repeat text-black"
       style={{ backgroundImage: "url('/homePageBgImage.jpg')" }}
     >
-    <div className="bg-white/5 backdrop-blur-[1px] font-bold w-full h-full py-30">
-      <div className="mx-110 bg-white/8 px-14 py-12 rounded-3xl"
-        style={{
-          boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
-        }}>
-        <h2 className="text-2xl font-bold mb-6 text-center">Forgot Password</h2>
+      <div className="bg-white/5 backdrop-blur-[1px] font-bold w-full h-full py-30">
+        <div className="mx-110 bg-white/8 px-14 py-12 rounded-3xl"
+          style={{
+            boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
+          }}>
+          <h2 className="text-2xl font-bold mb-6 text-center">Forgot Password</h2>
 
-        {step === "email" && (
-          <>
-            <form className="font-bold" onSubmit={handleForgotSubmit(sendOtp, onError)}>
-              <div>
-                <label htmlFor="email" className="block mb-2">
-                  Email:
-                </label>
-                <input
-                  {...registerForgot("email")}
-                  id="email"
-                  className="w-full border rounded p-2 mb-4 text-black"
-                  type="text"
-                  placeholder="Enter your registered email"
-                  required
-                />{" "}
-                {errorsForgot.email && (
-                  <p className="text-red-600 text-sm">
-                    {errorsForgot.email.message}
-                  </p>
-                )}
-              </div>
+          {step === "email" && (
+            <>
+              <form className="font-bold" onSubmit={handleForgotSubmit(sendOtp, onError)}>
+                <div>
+                  <label htmlFor="email" className="block mb-2">
+                    Email:
+                  </label>
+                  <input
+                    {...registerForgot("email")}
+                    id="email"
+                    className="w-full border rounded p-2 mb-4 text-black"
+                    type="text"
+                    placeholder="Enter your registered email"
+                    required
+                  />{" "}
+                  {errorsForgot.email && (
+                    <p className="text-red-600 text-sm">
+                      {errorsForgot.email.message}
+                    </p>
+                  )}
+                </div>
 
-              <button
-                type="submit"
-                className="w-full bg-gray-700 text-white py-2 rounded"
-              >
-                Send OTP
-              </button>
-            </form>
-          </>
-        )}
-
-        {step === "otp" && (
-          <>
-            <form className="font-bold" onSubmit={handleVerifyOtpSubmit(verifyOtp, onError)}>
-              <div>
-                <label htmlFor="otp" className="block mb-2">
-                  Enter OTP
-                </label>
-                <input
-                  {...verifyOtpRegister("otp")}
-                  id="otp"
-                  className="w-full border rounded p-2 mb-4"
-                  type="text"
-                  placeholder="6-digit code"
-                  required
-                />
-                {errorsVerifyOtp.otp && (
-                  <p className="text-red-600 text-sm">
-                    {errorsVerifyOtp.otp.message}
-                  </p>
-                )}
-              </div>
-              <div className="flex py-2">
-                <a
-                  className="m-auto hover:text-blue-700"
-                  href="#"
-                  onClick={setInitialStep}
+                <button
+                  type="submit"
+                  className="w-full bg-gray-700 text-white py-2 rounded"
                 >
-                  Want to resend Otp?
-                </a>
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-red-500 text-white py-2 rounded"
-              >
-                Verify OTP
-              </button>
-            </form>
-          </>
-        )}
+                  Send OTP
+                </button>
+              </form>
+            </>
+          )}
 
-        {step === "reset" && (
-          <>
-            <form className="font-bold" onSubmit={handleResetPasswordSubmit(resetPassword, onError)}>
-              <div>
-                <label htmlFor="password" className="block mb-2">New Password</label>
-                <div id="password" className="flex items-center border border-gray-500 py-2 rounded-md mb-4 px-4">
+          {step === "otp" && (
+            <>
+              <form className="font-bold" onSubmit={handleVerifyOtpSubmit(verifyOtp, onError)}>
+                <div>
+                  <label htmlFor="otp" className="block mb-2">
+                    Enter OTP
+                  </label>
                   <input
-                    {...resetPasswordRegister('password')}
-                    className="w-full outline-none"
-                    type={passwordVisible ? "text" : "password"}
-                    placeholder="Enter new password"
+                    {...verifyOtpRegister("otp")}
+                    id="otp"
+                    className="w-full border rounded p-2 mb-4"
+                    type="text"
+                    placeholder="6-digit code"
                     required
                   />
-                  {passwordVisible ? (
-                    <svg
-                      onClick={togglePasswordVisibility}
-                      className="w-6 h-6 text-gray-800 cursor-pointer"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
-                      />
-                      <path
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      onClick={togglePasswordVisibility}
-                      className="w-6 h-6 text-gray-800 cursor-pointer"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                      />
-                    </svg>
+                  {errorsVerifyOtp.otp && (
+                    <p className="text-red-600 text-sm">
+                      {errorsVerifyOtp.otp.message}
+                    </p>
                   )}
                 </div>
-                {errorsResetPassword.password && (
-                  <p className="text-red-600 text-sm">
-                    {errorsResetPassword.password.message}
-                  </p>
-                )}
-              </div>
+                <div className="flex py-2">
+                  <a
+                    className="m-auto hover:text-blue-700"
+                    href="#"
+                    onClick={setInitialStep}
+                  >
+                    Want to resend Otp?
+                  </a>
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-red-500 text-white py-2 rounded"
+                >
+                  Verify OTP
+                </button>
+              </form>
+            </>
+          )}
 
-              <div>
-                <label htmlFor="confirmPassword" className="block mb-2">Confirm Password</label>
-                <div id="confirmPassword" className="flex items-center border border-gray-500 py-2 rounded-md mb-4 px-4">
-                  <input
-                    {...resetPasswordRegister('confirmPassword')}
-                    className="w-full outline-none"
-                    type={confirmPasswordVisible ? "text" : "password"}
-                    placeholder="Confirm new password"
-                    required
-                  />
-                  {confirmPasswordVisible ? (
-                    <svg
-                      onClick={toggleConfirmPasswordVisibility}
-                      className="w-6 h-6 text-gray-800 cursor-pointer"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
+          {step === "reset" && (
+            <>
+              <form className="font-bold" onSubmit={handleResetPasswordSubmit(resetPassword, onError)}>
+                <div>
+                  <label htmlFor="password" className="block mb-2">New Password</label>
+                  <div id="password" className="flex items-center border border-gray-500 py-2 rounded-md mb-4 px-4">
+                    <input
+                      {...resetPasswordRegister('password')}
+                      className="w-full outline-none"
+                      type={passwordVisible ? "text" : "password"}
+                      placeholder="Enter new password"
+                      required
+                    />
+                    {passwordVisible ? (
+                      <Eye
+                        onClick={togglePasswordVisibility}
+                        className="w-6 h-6 text-gray-800 cursor-pointer"
                       />
-                      <path
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    ) : (
+                      <EyeOff
+                        onClick={togglePasswordVisibility}
+                        className="w-6 h-6 text-gray-800 cursor-pointer"
                       />
-                    </svg>
-                  ) : (
-                    <svg
-                      onClick={toggleConfirmPasswordVisibility}
-                      className="w-6 h-6 text-gray-800 cursor-pointer"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                      />
-                    </svg>
+                    )}
+                  </div>
+                  {errorsResetPassword.password && (
+                    <p className="text-red-600 text-sm">
+                      {errorsResetPassword.password.message}
+                    </p>
                   )}
                 </div>
-                {errorsResetPassword.confirmPassword && (
-                  <p className="text-red-600 text-sm">
-                    {errorsResetPassword.confirmPassword.message}
-                  </p>
-                )}
-              </div>
 
-              <button
-                type="submit"
-                className="w-full bg-black text-white py-2 rounded mt-4"
-              >
-                Reset Password
-              </button>
-            </form>
-          </>
-        )}
+                <div>
+                  <label htmlFor="confirmPassword" className="block mb-2">Confirm Password</label>
+                  <div id="confirmPassword" className="flex items-center border border-gray-500 py-2 rounded-md mb-4 px-4">
+                    <input
+                      {...resetPasswordRegister('confirmPassword')}
+                      className="w-full outline-none"
+                      type={confirmPasswordVisible ? "text" : "password"}
+                      placeholder="Confirm new password"
+                      required
+                    />
+                    {confirmPasswordVisible ? (
+                      <Eye
+                        onClick={toggleConfirmPasswordVisibility}
+                        className="w-6 h-6 text-gray-800 cursor-pointer"
+                      />
+                    ) : (
+                     <EyeOff
+                        onClick={toggleConfirmPasswordVisibility}
+                        className="w-6 h-6 text-gray-800 cursor-pointer"
+                      />
+                    )}
+                  </div>
+                  {errorsResetPassword.confirmPassword && (
+                    <p className="text-red-600 text-sm">
+                      {errorsResetPassword.confirmPassword.message}
+                    </p>
+                  )}
+                </div>
 
-        {step === "done" && (
-          <div className="text-center text-green-700">
-            Your password has been reset. Redirecting to login...
-          </div>
-        )}
-      </div>    
-    </div>
+                <button
+                  type="submit"
+                  className="w-full bg-black text-white py-2 rounded mt-4"
+                >
+                  Reset Password
+                </button>
+              </form>
+            </>
+          )}
+
+          {step === "done" && (
+            <div className="text-center text-green-700">
+              Your password has been reset. Redirecting to login...
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
