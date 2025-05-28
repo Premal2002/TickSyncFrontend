@@ -70,6 +70,15 @@ export const getRelatedMovies = async (movieId : any) => {
   }
 };
 
+export const getSearchMovieResult = async (query : any) => {
+  try {
+    const response = await axios.get(`${API_URL}/api/Movies/searchMovie/${query}`);
+    return response;
+  } catch (error: any) {
+    handleError(error);
+  }
+};
+
 // Reusable error handler
 const handleError = (error: any) => {
   if (error.response) {
