@@ -15,7 +15,7 @@ function Card(props: any) {
           {/* Movie Poster */}
           <div className="relative h-90 w-full bg-center">
             <div className="flex justify-between items-center text-white text-md p-2 bg-gray-800/40">
-              <span className="flex items-center">❤ {props.data.rating}</span>
+              <span className="flex items-center">⭐ {props.data.rating.toFixed(1)}</span>
               <span>{props.data.language.toUpperCase()}</span>
             </div>
           </div>

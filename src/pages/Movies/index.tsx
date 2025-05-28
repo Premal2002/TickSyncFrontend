@@ -85,6 +85,7 @@ function Movies(props: any) {
   }
 
   function clearLanguageFilter() {
+    if(filters.languages.length == 0) return;
     const cleared = Languages.map((lang) => ({
       ...lang,
       filterApplied: false,
@@ -94,6 +95,7 @@ function Movies(props: any) {
   }
 
   function clearGenreFilter() {
+    if(filters.genres.length == 0) return;
     const cleared = Genres.map((genre) => ({ ...genre, filterApplied: false }));
     setGenreFilter(cleared);
     setFilters((prev) => ({ ...prev, genres: [] }));

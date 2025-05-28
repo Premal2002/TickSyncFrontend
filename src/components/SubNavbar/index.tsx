@@ -8,7 +8,7 @@ const SubNavbar = () => {
                     <div className="relative flex h-12 items-center justify-center sm:justify-between">
                         <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                             <div className="hidden sm:ml-6 sm:block">
-                                <div className="flex text-black text-md space-x-4">
+                                <div className="flex text-black text-md space-x-4 font-semibold">
                                     <Link href="/Movies" className="rounded-md px-3 py-2 hover:text-red-500" aria-current="page">Movies</Link>
                                     <a href="#" className="rounded-md px-3 py-2  hover:text-red-500">Shows</a>
                                     <a href="#" className="rounded-md px-3 py-2 hover:text-red-500">Matches</a>
@@ -16,16 +16,6 @@ const SubNavbar = () => {
                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div className="sm:hidden" id="mobile-menu">
-                    <div className="space-y-1 px-2 pt-2 pb-3">
-                        <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-white" aria-current="page">Movies</a>
-                        <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
-                        <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
-                        <a href="#" className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
-                        <button className="rounded-sm bg-black text-white px-4 py-2 m-auto w-25 ">Login</button>
                     </div>
                 </div>
             </nav>

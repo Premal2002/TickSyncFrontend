@@ -10,11 +10,11 @@ const HeroSection = () => {
             <input
               type="text"
               className="outline-0 text-gray-800 w-full"
-              placeholder="search your tickets"
+              placeholder="search any movie"
             />
             <a href="#" className="ml-auto">
               <Search 
-              className="text-gray-800"
+              className="text-gray-800 hover:text-gray-900"
               />
             </a>
           </div>

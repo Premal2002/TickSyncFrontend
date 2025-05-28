@@ -3,7 +3,7 @@ import React from 'react'
 
 function Footer() {
     return (
-        <div className='p-6 sm:p-10 lg:p-15 pb-0 bg-black text-white'>
+        <div className='px-15 pt-10 bg-black text-white'>
             <div className='flex'>
                 <span className='text-3xl'>TickSync</span>
                 <ul className='flex gap-3 ml-auto'>

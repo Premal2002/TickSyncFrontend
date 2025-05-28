@@ -44,13 +44,13 @@ const TicketBookedDetail = ({ bookingId }: Props) => {
             <div className="py-15 bg-white/5 backdrop-blur-[1px] font-bold w-full h-full">
                 <div className="flex justify-center items-center px-4">
                     {bookingData && (
-                        <div className="bg-gray-200 rounded-xl shadow-md w-full max-w-4xl p-6 relative flex flex-col">
+                        <div className="bg-gray-200 rounded-xl shadow-md w-full max-w-4xl p-8 relative flex flex-col">
                             {/* Close Button */}
                             <div className="absolute top-4 right-4">
-                                <Link href={`/BookingHistory/${userDetails.id}`} className="cursor-pointer  text-sm text-gray-500 hover:text-blue-700">
+                                <Link href={`/BookingHistory/${userDetails.id}`} className="cursor-pointer  text-sm text-gray-700 hover:text-blue-700">
                                     See your Booking History
                                 </Link><br />
-                                <Link href="/Movies" className="cursor-pointer text-sm text-gray-500 hover:text-blue-700">
+                                <Link href="/Movies" className="cursor-pointer text-sm text-gray-700 hover:text-blue-700">
                                     Explore other Movies
                                 </Link>
                             </div>

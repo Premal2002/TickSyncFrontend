@@ -8,8 +8,7 @@ const Navbar = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { isLoggedIn, logout, userDetails } = useAuth();
-  const [isOnlyAdmin, setIsOnlyAdmin]= useState(false);
-  
+
   useEffect(() => {
     // if(userDetails.roles.length == 1 && userDetails.roles.includes("admin")){
     //   setIsOnlyAdmin(true);
@@ -24,21 +23,39 @@ const Navbar = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  },[]);
+  }, []);
 
   return (
     <nav className="bg-red-500 py-2 font-serif w-full">
       <div className="mx-auto max-w-8xl px-2 sm:px-14 lg:px-16">
         <div className="relative flex h-16 items-center justify-center sm:justify-between">
-          <Link href="/" className="text-xl font-bold text-white">
+          <Link href="/" className="ms-4 text-2xl font-bold text-gray-100">
             TickSync
           </Link>
-          {!isOnlyAdmin && (
-          <div className="flex space-x-4 items-center">
-            <Link href="/" className="text-black hover:text-gray-200">Dashboard</Link>
-            <a href="#" className="text-black hover:text-gray-200">Team</a>
-            <a href="#" className="text-black hover:text-gray-200">About</a>
-            <a href="#" className="text-black hover:text-gray-200">Contact</a>
+          <div className="flex space-x-4 items-center gap-2 font-semibold">
+            {(userDetails.id != '' && (userDetails.roles && userDetails.roles.includes("admin"))) &&
+            <Link href="/AdminDashboard" className="relative group inline-block text-gray-50">
+              <span className="transition duration-300 ease-in-out">AdminDashboard</span>
+              <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-100 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+            </Link>
+            }
+            <Link href="/" className="relative group inline-block text-gray-50">
+              <span className="transition duration-300 ease-in-out">Dashboard</span>
+              <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-100 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+            </Link>
+
+            <a href="#" className="relative group inline-block text-gray-50 hover:text-gray-200 transition duration-300 ease-in-out">
+              <span>Team</span>
+              <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+            </a>
+            <a href="#" className="relative group inline-block text-gray-50 hover:text-gray-200 transition duration-300 ease-in-out">
+              <span>About</span>
+              <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+            </a>
+            <a href="#" className="relative group inline-block text-gray-50 hover:text-gray-200 transition duration-300 ease-in-out">
+              <span>Contact</span>
+              <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+            </a>
 
             {isLoggedIn ? (
               <div className="relative" ref={dropdownRef}>
@@ -77,7 +94,6 @@ const Navbar = () => {
               </Link>
             )}
           </div>
-          )}
         </div>
       </div>
     </nav>
