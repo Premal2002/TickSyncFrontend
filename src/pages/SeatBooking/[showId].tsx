@@ -30,7 +30,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         userId = parsedUser.userId || 0;
       } catch (error) {
         console.error("Error parsing authenticatedUser cookie:", error);
-        // optionally handle error, e.g., redirect or set a flag
       }
     }
   }
@@ -51,9 +50,7 @@ export default function SeatBooking({ showId, userId }: Props) {
     SeatIds: [] as number[],
   });
   const [seatLayout, setSeatLayout] = useState<ShowSeatLayout>();
-  //state used to count ticket/seats
   const [ticketCount, setTicketCount] = useState<number>(0);
-  const [resetKey, setResetKey] = useState(0);
   const ticketSelectRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,11 +61,7 @@ export default function SeatBooking({ showId, userId }: Props) {
       }
     };
     fetchSeatLayout();
-  }, [resetKey]);
-
-  const refetchSeatsData = () => {
-    setResetKey((prevKey) => prevKey + 1); // Increment key to trigger remount
-  };
+  }, []);
 
   const updateSeatStatuses = (seatIds: number[], newStatus: string) => {
     setSeatLayout((prevLayout) => {
@@ -127,9 +120,7 @@ export default function SeatBooking({ showId, userId }: Props) {
       // Scroll into view smoothly
       div.scrollIntoView({ behavior: "smooth", block: "center" });
 
-      // Optional: focus the select inside for accessibility
       const select = div.querySelector("select");
-      // if (select) (select as HTMLSelectElement).focus();
       if (select) {
         select.classList.add("ring-2", "ring-black", "rounded");
         (select as HTMLSelectElement).focus();
@@ -196,12 +187,10 @@ export default function SeatBooking({ showId, userId }: Props) {
         <div className="p-4 px-8 flex justify-center">
           {seatLayout ? (
             <SeatLayout
-              key={resetKey}
               selectedSeats={selectedSeats}
               setSelectedSeats={setSelectedSeats}
               seatLockRequest={seatLockRequest}
               setSeatLockRequest={setSeatLockRequest}
-              setRefetchSeats={refetchSeatsData}
               onInvalidSeatSelect={highlightTicketSelect}
               data={seatLayout}
               showId={showId}

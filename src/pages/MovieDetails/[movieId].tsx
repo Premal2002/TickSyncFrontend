@@ -20,7 +20,7 @@ interface Props {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const movieId = context.query.movieId;
 
-  // Handle case where it's an array
+  // case where it's an array
   const id = Array.isArray(movieId) ? movieId[0] : movieId;
 
   return {
@@ -80,7 +80,7 @@ function MovieDetails({ movieId }: Props) {
           <div className="absolute inset-0 bg-black opacity-50 rounded-xl"></div>
           <div className="z-10 flex flex-col md:flex-row items-start gap-4">
             <img
-              src={movie?.posterUrl} // replace with your image path
+              src={movie?.posterUrl} 
               alt="Movie Poster"
               className="w-32 md:w-60 rounded-lg"
             />
@@ -202,6 +202,7 @@ function MovieDetails({ movieId }: Props) {
             ))}
         </div>
 
+        {/* You may like section  */}
         {movies && movies.length > 0 && (
           <div className="px-2 ">
             <h3 className="text-black py-5">You May Like : </h3>

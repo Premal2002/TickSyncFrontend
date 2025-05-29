@@ -12,7 +12,7 @@ interface Props {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const userId = context.query.userId;
 
-  // Handle case where it's an array
+  // case where it is an array
   const id = Array.isArray(userId) ? userId[0] : userId;
 
   return {
@@ -36,8 +36,8 @@ const BookingHistory = ({ userId }: Props) => {
   }, []);
 
   return (
-    <div className="bg-[url('/homePageBgImage.jpg')] bg-cover px-4">
-      <div className="bg-white/5 backdrop-blur-[1px] font-bold w-full h-full py-10">
+    <div className="bg-[url('/homePageBgImage.jpg')] bg-cover">
+      <div className="bg-white/5 backdrop-blur-[3px] font-bold w-full h-full py-10 px-4">
         <div className="w-full max-w-6xl bg-gray-200/65 p-8 rounded-2xl shadow-xl mx-auto">
           <h1 className="text-3xl font-bold text-center mb-10 text-black">
             Your Booking History
@@ -47,7 +47,6 @@ const BookingHistory = ({ userId }: Props) => {
             {bookingHistory ? (
               bookingHistory.length > 0 ? (
                 bookingHistory.map((booking: any) => (
-                  // <div className="flex flex-col md:flex-row items-center md:items-start gap-4 w-full">
                   <Link className="bg-white rounded-2xl shadow-xl hover:bg-gray-100 flex flex-col gap-4" key={booking.bookingId} href={`/UserBooking/${booking.bookingId}`}>
                   <div
                     className="p-4 flex"
@@ -119,7 +118,6 @@ const BookingHistory = ({ userId }: Props) => {
                     </div>
                   </div>
                   </Link>
-                  // </div>
                 ))
               ) : (
                 <div className="text-center">
@@ -139,7 +137,6 @@ const BookingHistory = ({ userId }: Props) => {
                 </Link>
               </div>
             )}
-            {/* need to add a design to display a msg for NO BOOKINGS. can add recommended movies component */}
           </div>
         </div>
       </div>

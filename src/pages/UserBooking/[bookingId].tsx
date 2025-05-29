@@ -41,7 +41,7 @@ const TicketBookedDetail = ({ bookingId }: Props) => {
 
     return (
         <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover">
-            <div className="py-15 bg-white/5 backdrop-blur-[1px] font-bold w-full h-full">
+            <div className="py-15 bg-white/5 backdrop-blur-[3px] font-bold w-full h-full">
                 <div className="flex justify-center items-center px-4">
                     {bookingData && (
                         <div className="bg-gray-200 rounded-xl shadow-md w-full max-w-4xl p-8 relative flex flex-col">

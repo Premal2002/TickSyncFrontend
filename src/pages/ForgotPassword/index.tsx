@@ -1,29 +1,16 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { successful, responseError } from "@/HelperFunctions/SwalFunctions";
+import { successful } from "@/HelperFunctions/SwalFunctions";
 
 import { baseURL } from "@/HelperData/datavariables";
-import {
-  forgotPassword,
-  resetPasswordApi,
-  verifyOtpApi,
-} from "@/services/userService";
+import {forgotPassword, resetPasswordApi, verifyOtpApi} from "@/services/userService";
 import { useForm } from "react-hook-form";
-import {
-  forgotpasswordSchema,
-  ForgotPasswordSchemaType,
-  resetPasswordSchema,
-  ResetPasswordSchemaType,
-  verifyOtpSchema,
-  VerifyOtpSchemaType,
-} from "@/schemas/forgotpassword";
+import {forgotpasswordSchema, ForgotPasswordSchemaType, resetPasswordSchema, ResetPasswordSchemaType, verifyOtpSchema, VerifyOtpSchemaType} from "@/schemas/forgotpassword";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
-const API_URL = baseURL;
 
 function ForgotPassword() {
   const router = useRouter();
-  const { email: emailQuery } = router.query;
 
   const [step, setStep] = useState<"email" | "otp" | "reset" | "done">("email");
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -115,7 +102,7 @@ function ForgotPassword() {
       className="flex items-center justify-center bg-cover bg-center bg-no-repeat text-black"
       style={{ backgroundImage: "url('/homePageBgImage.jpg')" }}
     >
-      <div className="bg-white/5 backdrop-blur-[1px] font-bold w-full h-full py-20">
+      <div className="bg-white/5 backdrop-blur-[3px] font-bold w-full h-full py-20">
         <div className="mx-110 bg-white/8 px-14 py-12 rounded-3xl"
           style={{
             boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
