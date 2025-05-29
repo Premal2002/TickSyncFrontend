@@ -173,7 +173,7 @@ function ForgotPassword() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full cursor-pointer w-full bg-red-600 hover:bg-red-500 text-white py-2 rounded"
+                  className="cursor-pointer w-full bg-red-600 hover:bg-red-500 text-white py-2 rounded"
                 >
                   Verify OTP
                 </button>
@@ -244,7 +244,7 @@ function ForgotPassword() {
 
                 <button
                   type="submit"
-                  className="w-full cursor-pointer w-full bg-red-600 hover:bg-red-500 text-white py-2 rounded mt-4"
+                  className="cursor-pointer w-full bg-red-600 hover:bg-red-500 text-white py-2 rounded mt-4"
                 >
                   Reset Password
                 </button>
