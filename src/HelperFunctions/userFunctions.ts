@@ -12,7 +12,6 @@ export interface JwtPayload {
   name: string
   exp: number
   roles : []
-  // add more fields if needed
 }
 
 export function getUserFromToken(): JwtPayload | null {
