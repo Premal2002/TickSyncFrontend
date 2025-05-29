@@ -1,5 +1,3 @@
-// components/AdminLogin.tsx
-
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
@@ -30,11 +28,11 @@ function AdminLogin() {
     loginUser(data).then((response: any) => {
       if (response) {
         const authUser = response.data;
-        // ✅ Set token in a cookie (accessible by middleware)
+        // Setting token in a cookie 
         Cookies.set("authenticatedUser", JSON.stringify(authUser), {
           path: "/",
           expires: 1,
-        }); // expires in 1 day
+        });
         login();
         router.push({
           pathname: "/AdminDashboard",
@@ -51,7 +49,7 @@ function AdminLogin() {
   return (
     <div>
       <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover">
-        <div className="bg-white/5 backdrop-blur-[1px] font-bold w-full h-full py-20">
+        <div className="bg-white/5 backdrop-blur-[3px] font-bold w-full h-full py-20">
           <div className="text-black w-full max-w-md bg-white/20 px-12 py-16 rounded-2xl shadow-xl mx-auto">
             <h1 className="text-2xl font-bold text-center mb-6">Admin Login</h1>
             <form onSubmit={handleSubmit(onSubmit, onError)}>

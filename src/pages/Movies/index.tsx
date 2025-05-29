@@ -7,7 +7,7 @@ import { getMovies } from "@/services/movieService";
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 
-function Movies(props: any) {
+function Movies() {
 
   const [load, setLoad] = useState(true);
   const [filters, setFilters] = useState<{

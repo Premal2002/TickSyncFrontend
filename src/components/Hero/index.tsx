@@ -8,7 +8,7 @@ import { useState } from "react";
 const HeroSection = () => {
   return (
     <div className="flex items-center justify-center bg-[url('../../public/homePageBgImage.jpg')] bg-cover h-150">
-      <div className="py-18 bg-white/5 backdrop-blur-[1px] font-bold w-full h-full">
+      <div className="py-18 bg-white/5 backdrop-blur-[3px] font-bold w-full h-full">
         <div className="flex justify-center">
           <MovieSearchForm />
         </div>

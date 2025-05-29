@@ -14,7 +14,7 @@ function Login() {
   let router = useRouter();
   const { email } = router.query;
   const { fromMiddleware } = router.query;
-  const { login, logout } = useAuth();
+  const { login } = useAuth();
 
   if (fromMiddleware) {
     responseError(fromMiddleware);
@@ -39,11 +39,11 @@ function Login() {
     loginUser(data).then((response: any) => {
       if (response) {
         const authUser = response.data;
-        // ✅ Set token in a cookie (accessible by middleware)
+        // Setting token in a cookie
         Cookies.set("authenticatedUser", JSON.stringify(authUser), {
           path: "/",
           expires: 1,
-        }); // expires in 1 day
+        }); 
         login();
         router.push({
           pathname: "/",
@@ -59,7 +59,7 @@ function Login() {
   return (
     <div>
       <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover">
-      <div className="bg-white/5 backdrop-blur-[1px] font-bold w-full h-full py-15">
+      <div className="bg-white/5 backdrop-blur-[3px] font-bold w-full h-full py-15">
         <div className="mx-110 text-black px-30 py-20 rounded-3xl bg-white/8"
         style={{
           boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',

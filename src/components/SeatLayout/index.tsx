@@ -125,7 +125,7 @@ export default function SeatLayout(props: any) {
   const cancelBookingfn = (cancelBookingreq: any) => {
     cancelBooking(cancelBookingreq).then((res: any) => {
       if (res && res.data) {
-        //props.setRefetchSeats();
+        //Booking cancelled at backend
       }
     });
   }

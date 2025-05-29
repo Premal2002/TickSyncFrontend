@@ -17,35 +17,9 @@ import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-const mockData = {
-  Users: [
-    { id: 1, name: 'Alice Johnson', email: 'alice@example.com' },
-    { id: 2, name: 'Bob Martin', email: 'bob@example.com' },
-  ],
-  Movies: [
-    { id: 1, title: 'Inception', genre: 'Sci-Fi', duration: '148 mins' },
-    { id: 2, title: 'Avengers: Endgame', genre: 'Action', duration: '181 mins' },
-  ],
-  Venues: [
-    { id: 1, name: 'PVR Cinemas', location: 'Downtown', capacity: 120 },
-    { id: 2, name: 'Inox Theater', location: 'Uptown', capacity: 80 },
-  ],
-  Shows: [
-    { id: 1, movie: 'Inception', venue: 'PVR Cinemas', time: '7:00 PM' },
-    { id: 2, movie: 'Avengers: Endgame', venue: 'Inox Theater', time: '9:30 PM' },
-  ],
-  Seats: [
-    { id: 1, seatNo: 'A1', status: 'Booked', bookedBy: 'Alice Johnson' },
-    { id: 2, seatNo: 'A2', status: 'Available', bookedBy: '-' },
-    { id: 3, seatNo: 'A3', status: 'Booked', bookedBy: 'Bob Martin' },
-  ],
-};
-
-type Section = keyof typeof mockData;
 
 const AdminDashboard: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<Section>('Users');
   const [allCounts, setAllCounts] = useState({users : 0, movies : 0, venues : 0, shows : 0, seats : 0})
   const [tableData, setTableData] = useState({title : "", entityData : []})
   const [selectedData, setSelectedData] = useState("users");

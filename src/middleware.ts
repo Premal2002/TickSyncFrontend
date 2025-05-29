@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { responseError } from './HelperFunctions/SwalFunctions';
+import { logOutUser } from './HelperFunctions/userFunctions'; 
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
