@@ -19,13 +19,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const storedLogin = getUserFromToken();
        
-    if (storedLogin) {
+    if (storedLogin) {      
       setIsLoggedIn(true);
       const user1 = {
       id: storedLogin?.id ?? "",
       name: storedLogin?.name ?? "",
       email: storedLogin?.email ?? "",
-      roles: storedLogin?.roles ?? []
+      roles: storedLogin?.roles ?? [],
+      exp: storedLogin?.exp ?? "",
     };
     setUserDetails(user1);
     }

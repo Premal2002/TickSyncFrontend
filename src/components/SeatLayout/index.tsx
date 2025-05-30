@@ -141,7 +141,7 @@ export default function SeatLayout(props: any) {
               <SeatRow
                 key={rowIndex}
                 row={rowData}
-                ticketCount={props.ticketCount}
+                // ticketCount={props.ticketCount}
                 selectedSeats={props.selectedSeats}
                 setSelectedSeats={props.setSelectedSeats}
                 setSeatLockRequest={props.setSeatLockRequest}
@@ -155,7 +155,8 @@ export default function SeatLayout(props: any) {
       )}
 
       {/* Payment Button */}
-      {props.ticketCount > 0 && props.selectedSeats.length === props.ticketCount && (
+      {/* {props.ticketCount > 0 && props.selectedSeats.length === props.ticketCount && ( */}
+      {props.selectedSeats.length > 0 && (
         <div className="flex justify-center mt-6">
           <button onClick={initiateBookingFlow} disabled={disablePaymentButton} className="bg-red-600 w-2/3 text-white px-6 py-3 rounded-lg shadow-lg cursor-pointer hover:bg-red-700">
             Proceed to Pay ₹{totalPrice}

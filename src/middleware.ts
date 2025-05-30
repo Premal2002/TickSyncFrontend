@@ -1,8 +1,6 @@
 // middleware.ts
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { responseError } from './HelperFunctions/SwalFunctions';
-import { logOutUser } from './HelperFunctions/userFunctions'; 
+import type { NextRequest } from 'next/server'; 
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
@@ -17,12 +15,12 @@ export function middleware(request: NextRequest) {
   }
 
   //checking if user already logged in
-  if (pathname.startsWith('/Login')) {
-    if(token)
-    return NextResponse.redirect(new URL('/', request.url));
-    else
-    return;
-  }
+  // if (pathname.startsWith('/Login')) {
+  //   if(token)
+  //   return NextResponse.redirect(new URL('/', request.url));
+  //   else
+  //   return;
+  // }
 
   if (pathname.startsWith('/AdminLogin')) {
     if(token)
@@ -67,5 +65,5 @@ export function middleware(request: NextRequest) {
 }
   
 export const config = {
-  matcher: ['/Login/:path*', '/AdminLogin/:path*', '/SeatBooking/:path*','/BookingHistory/:path*', '/AdminDashboard/:path*','/UserBooking/:path*'],
+  matcher: ['/AdminLogin/:path*', '/SeatBooking/:path*','/BookingHistory/:path*', '/AdminDashboard/:path*','/UserBooking/:path*'],
 };

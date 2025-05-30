@@ -50,7 +50,7 @@ export default function SeatBooking({ showId, userId }: Props) {
     SeatIds: [] as number[],
   });
   const [seatLayout, setSeatLayout] = useState<ShowSeatLayout>();
-  const [ticketCount, setTicketCount] = useState<number>(0);
+  // const [ticketCount, setTicketCount] = useState<number>(0);
   const ticketSelectRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -156,7 +156,7 @@ export default function SeatBooking({ showId, userId }: Props) {
               | {seatLayout?.showTime.slice(0, 5)}
             </p>
           </div>
-          <div
+          {/* <div
             ref={ticketSelectRef}
             id="ticket-select-wrapper"
             className="bg-white flex align-middle rounded border p-2"
@@ -177,7 +177,7 @@ export default function SeatBooking({ showId, userId }: Props) {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
         </div>
 
         {/* Seat layout section */}
@@ -195,7 +195,7 @@ export default function SeatBooking({ showId, userId }: Props) {
               data={seatLayout}
               showId={showId}
               userId={userId}
-              ticketCount={ticketCount}
+              // ticketCount={ticketCount}
             />
           ) : null}
         </div>
