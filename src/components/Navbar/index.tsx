@@ -10,9 +10,6 @@ const Navbar = () => {
   const { isLoggedIn, logout, userDetails } = useAuth();
 
   useEffect(() => {
-    // if(userDetails.roles.length == 1 && userDetails.roles.includes("admin")){
-    //   setIsOnlyAdmin(true);
-    // }
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownOpen(false);

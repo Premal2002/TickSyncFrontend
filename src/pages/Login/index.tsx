@@ -6,19 +6,26 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginSchemaType } from "@/schemas/login";
 import { useRouter } from "next/router";
 import { loginUser } from "@/services/userService";
-import { responseError, successful } from "@/HelperFunctions/SwalFunctions";
+import { infoMsg, responseError, responseErrorReload, successful } from "@/HelperFunctions/SwalFunctions";
 import { useAuth } from "@/HelperFunctions/AuthContext";
 import { Eye, EyeOff } from "lucide-react";
+import { logOutUser } from "@/HelperFunctions/userFunctions";
 
 function Login() {
   let router = useRouter();
   const { email } = router.query;
   const { fromMiddleware } = router.query;
-  const { login } = useAuth();
+  const { login, isLoggedIn } = useAuth();
 
   if (fromMiddleware) {
-    responseError(fromMiddleware);
-    router.push("/Login");
+    if(fromMiddleware.includes("Token expired")){
+      logOutUser();
+      router.replace("/Login");
+      responseErrorReload(fromMiddleware);      
+    }else{
+      responseError(fromMiddleware);
+      router.push("/Login");
+    }
   }
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -36,21 +43,27 @@ function Login() {
   });
 
   const onSubmit = (data: LoginSchemaType) => {
-    loginUser(data).then((response: any) => {
-      if (response) {
-        const authUser = response.data;
-        // Setting token in a cookie
-        Cookies.set("authenticatedUser", JSON.stringify(authUser), {
-          path: "/",
-          expires: 1,
-        }); 
-        login();
-        router.push({
-          pathname: "/",
-        });
-        successful("Login Successful");
-      }
-    });
+    if(isLoggedIn){
+      infoMsg("Already Logged in. Log out first to log in with different account!")
+      router.replace("/")
+    }else{
+      loginUser(data).then((response: any) => {
+        if (response) {
+          const authUser = response.data;
+          // Setting token in a cookie
+          Cookies.set("authenticatedUser", JSON.stringify(authUser), {
+            path: "/",
+            expires: 1,
+          }); 
+          login();
+          router.push({
+            pathname: "/",
+          });
+          successful("Login Successful");
+        }
+      });
+    }
+    
   };
 
   const onError = (formErrors: any) => {
