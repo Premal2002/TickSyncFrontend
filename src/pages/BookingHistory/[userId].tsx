@@ -36,9 +36,12 @@ const BookingHistory = ({ userId }: Props) => {
   }, []);
 
   return (
-    <div className="bg-[url('/homePageBgImage.jpg')] bg-cover">
+    <div className="bg-gradient-to-r from-slate-200 to-slate-400">
       <div className="bg-white/5 backdrop-blur-[3px] font-bold w-full h-full py-10 px-4">
-        <div className="w-full max-w-6xl bg-gray-200/65 p-8 rounded-2xl shadow-xl mx-auto">
+        <div className="w-full max-w-6xl bg-gray-200/65 p-8 rounded-2xl shadow-xl mx-auto"
+        style={{
+          boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
+        }}>
           <h1 className="text-3xl font-bold text-center mb-10 text-black">
             Your Booking History
           </h1>

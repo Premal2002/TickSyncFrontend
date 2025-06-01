@@ -71,9 +71,9 @@ function Login() {
   };
   return (
     <div>
-      <div className="bg-[url('../../public/homePageBgImage.jpg')] bg-cover">
+      <div className="bg-gradient-to-r from-slate-200 to-slate-400">
       <div className="bg-white/5 backdrop-blur-[3px] font-bold w-full h-full py-15">
-        <div className="mx-110 text-black px-30 py-20 rounded-3xl bg-white/8"
+        <div className="mx-110 text-black px-30 py-20 rounded-3xl bg-white/15"
         style={{
           boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
         }}>
@@ -136,7 +136,7 @@ function Login() {
             <div className="flex">
               <button
                 type="submit"
-                className="bg-red-600 hover:bg-red-500 rounded-md px-8 py-2 m-auto cursor-pointer"
+                className="bg-red-600 hover:bg-red-500 text-white rounded-md px-8 py-2 m-auto cursor-pointer"
               >
                 Login
               </button>

@@ -29,27 +29,27 @@ const Navbar = () => {
           <Link href="/" className="ms-4 text-2xl font-bold text-gray-100">
             TickSync
           </Link>
-          <div className="flex space-x-4 items-center gap-2 font-semibold">
+          <div className="flex space-x-4 items-center gap-3 font-semibold text-md">
             {(userDetails.id != '' && (userDetails.roles && userDetails.roles.includes("admin"))) &&
-            <Link href="/AdminDashboard" className="relative group inline-block text-gray-50">
+            <Link href="/AdminDashboard" className="relative group inline-block text-white">
               <span className="transition duration-300 ease-in-out">AdminDashboard</span>
               <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-100 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </Link>
             }
-            <Link href="/" className="relative group inline-block text-gray-50">
+            <Link href="/" className="relative group inline-block text-white">
               <span className="transition duration-300 ease-in-out">Dashboard</span>
               <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-100 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </Link>
 
-            <a href="#" className="relative group inline-block text-gray-50 hover:text-gray-200 transition duration-300 ease-in-out">
+            <a href="#" className="relative group inline-block text-white transition duration-300 ease-in-out">
               <span>Team</span>
               <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </a>
-            <a href="#" className="relative group inline-block text-gray-50 hover:text-gray-200 transition duration-300 ease-in-out">
+            <a href="#" className="relative group inline-block text-white transition duration-300 ease-in-out">
               <span>About</span>
               <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </a>
-            <a href="#" className="relative group inline-block text-gray-50 hover:text-gray-200 transition duration-300 ease-in-out">
+            <a href="#" className="relative group inline-block text-white transition duration-300 ease-in-out">
               <span>Contact</span>
               <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </a>
