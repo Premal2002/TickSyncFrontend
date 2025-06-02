@@ -51,32 +51,31 @@ const TicketBookedDetail = ({ bookingId }: Props) => {
                   "rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset",
               }}
             >
-              {/* Close Button */}
+           
               <div className="absolute top-4 right-4">
                 <Link
                   href={`/BookingHistory/${userDetails.id}`}
-                  className="cursor-pointer  text-sm text-gray-700 hover:text-blue-700"
+                  className="cursor-pointer  text-xs xs:text-sm text-gray-700 hover:text-blue-700"
                 >
                   See your Booking History
                 </Link>
                 <br />
                 <Link
                   href="/Movies"
-                  className="cursor-pointer text-sm text-gray-700 hover:text-blue-700"
+                  className="cursor-pointer text-xs xs:text-sm text-gray-700 hover:text-blue-700"
                 >
                   Explore other Movies
                 </Link>
               </div>
 
-              {/* Heading */}
-              <h2 className="text-center text-2xl font-semibold mb-6 text-black">
+              <h2 className="text-center text-xl xs:text-2xl font-semibold mb-6 text-black mt-10 sm:mt-0">
                 Your Ticket
               </h2>
 
               {/* Ticket Card Horizontal Layout */}
-              <div className="flex flex-row gap-6">
+              <div className="flex flex-row gap-6 justify-center sm:justify-start">
                 {/* Movie Poster */}
-                <div className="w-1/3">
+                <div className="hidden sm:block w-1/3">
                   <img
                     src={bookingData.moviePosterUrl}
                     alt="Movie Poster"
@@ -84,14 +83,13 @@ const TicketBookedDetail = ({ bookingId }: Props) => {
                   />
                 </div>
 
-                {/* Details */}
-                <div className="w-2/3 flex flex-col justify-between">
+                <div className="w-full sm:w-2/3 flex flex-col justify-between">
                   {/* Movie Info */}
                   <div className="mb-4">
-                    <h3 className="font-bold text-xl text-black">
+                    <h3 className="font-bold text-lg xs:text-xl text-black">
                       {bookingData.movieName}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-xs  text-gray-600">
                       {bookingData.showDate &&
                         formatDate(bookingData.showDate, {
                           year: "numeric",
@@ -100,13 +98,13 @@ const TicketBookedDetail = ({ bookingId }: Props) => {
                         }).toString()}{" "}
                       | {bookingData.showTime.slice(0, 5)}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-xs xs:text-sm text-gray-600">
                       {bookingData.venueName} | {bookingData.venueLocation}
                     </p>
                   </div>
 
-                  {/* Ticket Info + QR */}
-                  <div className="bg-white p-4 rounded-lg shadow-inner flex justify-between items-center">
+                  {/* Ticket Info and QR */}
+                  <div className="bg-white p-4 rounded-lg shadow-inner sm:flex justify-between items-center">
                     <div>
                       <p className="text-xs text-black">1 Ticket(s)</p>
                       <p className="font-medium text-sm text-black">SCREEN 1</p>
@@ -135,7 +133,7 @@ const TicketBookedDetail = ({ bookingId }: Props) => {
                         minutes of booking.
                       </p>
                     </div>
-                    <div>
+                    <div className="flex justify-center sm:block sm:justify-start">
                       <Canvas
                         text={`Booking Id : ${bookingData.bookingId}, VenueName : ${bookingData.venueName}, UserId : ${userDetails.id}, TotalAmount : ${bookingData.totalAmount}`}
                         options={{

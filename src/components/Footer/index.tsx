@@ -3,9 +3,9 @@ import React from 'react'
 
 function Footer() {
     return (
-        <div className='px-15 pt-10 bg-black text-white'>
+        <div className='px-6 sm:px-15 pt-10 bg-black text-white'>
             <div className='flex'>
-                <span className='text-3xl'>TickSync</span>
+                <span className='text-2xl sm-text-3xl'>TickSync</span>
                 <ul className='flex gap-3 ml-auto'>
                     <li>
                         <a href="#">
@@ -42,7 +42,7 @@ function Footer() {
             <div className='flex mt-5 gap-2 md:gap-5 flex-wrap'>
                 <div className='w-[55%] pr-20 hidden lg:inline'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro, aut. Voluptatibus, nulla quam! Vitae ipsam hic impedit similique recusandae accusantium, velit beatae, harum sequi numquam officia culpa magni. At harum a sunt vitae odio iure possimus ullam nisi, magni dignissimos obcaecati expedita omnis? Impedit doloribus ipsum velit vitae vel eveniet, quam magnam, perspiciatis ipsam qui dolores quasi ratione voluptatem atque fugiat, nam magni beatae ex? Quas a dolore minima id, laborum quae molestias assumenda laudantium possimus est rem quisquam soluta.</div>
                 <div className='px-4'>
-                    <ul className='text-lg'>
+                    <ul className='text-sm sm:text-lg'>
                         <a href="#" className='hover:text-rose-500'><li>HOME</li></a>
                         <a href="#" className='hover:text-rose-500'><li>ABOUT</li></a>
                         <a href="#" className='hover:text-rose-500'><li>SERVICES</li></a>
@@ -50,7 +50,7 @@ function Footer() {
                     </ul>
                 </div>
                 <div className='px-4'>
-                <ul className='text-lg'>
+                <ul className='text-sm sm:text-lg'>
                     <a href="#" className='hover:text-rose-500'><li>MOVIES</li></a>
                     <a href="#" className='hover:text-rose-500'><li>BUS</li></a>
                     <a href="#" className='hover:text-rose-500'><li>TRAINS</li></a>

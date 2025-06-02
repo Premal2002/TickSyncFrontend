@@ -51,7 +51,7 @@ function Register() {
     <div>
       <div className="bg-gradient-to-r from-slate-200 to-slate-400">
         <div className="bg-white/5 backdrop-blur-[3px] font-bold w-full h-full py-15">
-          <div className="mx-92 text-black px-30 py-10 rounded-3xl bg-white/15"
+        <div className="mx-4 sm:mx-15 md:mx-30 lg:mx-50 xl:mx-60 2xl:mx-80 text-black px-8 py-10 xs:py-15 xs:px-15 lg:py-20 lg:px-30 rounded-3xl bg-white/15"
             style={{
               boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
             }}>

@@ -184,26 +184,29 @@ export default function SeatBooking({ showId, userId }: Props) {
         <h1 className="text-2xl mt-6 text-center font-semibold mb-4">
           Select Your Seats
         </h1>
-        <div className="p-4 px-8 flex justify-center">
-          {seatLayout ? (
-            <SeatLayout
-              selectedSeats={selectedSeats}
-              setSelectedSeats={setSelectedSeats}
-              seatLockRequest={seatLockRequest}
-              setSeatLockRequest={setSeatLockRequest}
-              onInvalidSeatSelect={highlightTicketSelect}
-              data={seatLayout}
-              showId={showId}
-              userId={userId}
-              // ticketCount={ticketCount}
-            />
-          ) : null}
+        <div className="p-4 px-2 sm:px-8">
+          <div className="overflow-x-auto">
+            <div className="w-max mx-auto">
+              {seatLayout ? (
+                <SeatLayout
+                  selectedSeats={selectedSeats}
+                  setSelectedSeats={setSelectedSeats}
+                  seatLockRequest={seatLockRequest}
+                  setSeatLockRequest={setSeatLockRequest}
+                  onInvalidSeatSelect={highlightTicketSelect}
+                  data={seatLayout}
+                  showId={showId}
+                  userId={userId}
+                />
+              ) : null}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Status legend */}
-      <div className="w-full text-black p-2 mt-4 rounded">
-        <div className="flex justify-center gap-6 text-sm">
+      <div className="w-full text-black p-0 xs:p-2 mt-4 rounded">
+        <div className="flex justify-center gap-2 sm:gap-6 text-xs xs:text-sm">
           <span className="flex items-center gap-1">
             <span className="w-5 h-5 rounded bg-white border"></span>Available
           </span>

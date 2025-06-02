@@ -78,29 +78,39 @@ function MovieDetails({ movieId }: Props) {
           className="relative bg-cover h-100 rounded-xl shadow-md p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
         >
           <div className="absolute inset-0 bg-black opacity-50 rounded-xl"></div>
-          <div className="z-10 flex flex-col md:flex-row items-start gap-4">
+          <div className="z-10 flex flex-col md:flex-row items-start gap-4 overflow-y-auto hiddenScrollbar">
+            <div className="flex gap-3">
             <img
-              src={movie?.posterUrl} 
+              src={movie?.posterUrl}
               alt="Movie Poster"
               className="w-32 md:w-60 rounded-lg"
             />
-            <div className="pl-4 w-6xl">
-              <h2 className="text-2xl text-white md:text-4xl font-bold">
-                {movie?.title}
-              </h2>
-              <p className="text-md text-gray-100 mt-1">{movie?.description}</p>
+            <div className="block md:hidden">
+                <h2 className="text-xl text-white md:text-4xl font-bold">
+                  {movie?.title} | {movie?.rating?.toFixed(1)} ⭐
+                </h2>
+                <p className="text-xs sm:text-sm text-gray-100 mt-1">{movie?.description}</p>
+              </div>
+            </div>
+            <div className="pl-4 w-full">
+              <div className="hidden md:block">
+                <h2 className="text-2xl text-white md:text-4xl font-bold">
+                  {movie?.title}
+                </h2>
+                <p className="text-md text-gray-100 mt-1">{movie?.description}</p>
+              </div>
               <p className="my-4 flex text-md gap-2">
                 {genres &&
                   genres?.map((genre: string, index) => (
                     <span
                       key={index}
-                      className="text-xl rounded-lg border-2 p-2 hover:border-red-500 hover:text-red-500"
+                      className="text-xs md:text-xl rounded-lg border-2 p-2 hover:border-red-500 hover:text-red-500"
                     >
                       {genre}
                     </span>
                   ))}
               </p>
-              <p className="mt-2 text-gray-200 text-md">
+              <p className="mt-2 text-gray-200 text-xs md:text-sm">
                 Release Date:{" "}
                 {movie?.releaseDate &&
                   formatDate(movie?.releaseDate, {
@@ -109,20 +119,20 @@ function MovieDetails({ movieId }: Props) {
                     day: "numeric",
                   }).toString()}
               </p>
-              <p className="mt-2 text-gray-300 text-md">
+              <p className="mt-2 text-gray-300 text-xs md:text-sm">
                 Language:{" "}
                 {
                   Languages.find((l) => l.languageIsoCode == movie?.language)
                     ?.languageName
                 }
               </p>
-              <p className="mt-2 text-gray-300 text-md">Duration: 2h 19m</p>
-              <p className="mt-2 text-gray-300 text-md">
+              <p className="mt-2 text-gray-300 text-xs md:text-sm">Duration: 2h 19m</p>
+              <p className="mt-2 text-gray-300 text-xs md:text-sm">
                 Popularity: {movie?.popularity}
               </p>
             </div>
           </div>
-          <div className="z-10 mt-4 md:mt-0">
+          <div className="hidden md:block z-10 mt-4 md:mt-0">
             <div className="text-center">
               <p className="text-yellow-500 font-bold text-2xl">
                 {movie?.rating?.toFixed(1)} ⭐
@@ -147,22 +157,19 @@ function MovieDetails({ movieId }: Props) {
             ].map(({ day, date, month, isActive }) => (
               <div
                 key={date}
-                className={`text-center px-3 py-2 rounded-lg ${
-                  isActive ? "bg-rose-500 text-white" : ""
-                }`}
+                className={`text-center px-3 py-2 rounded-lg ${isActive ? "bg-rose-500 text-white" : ""
+                  }`}
               >
                 <div
-                  className={`text-sm ${
-                    isActive ? "text-white" : "text-black"
-                  }`}
+                  className={`text-sm ${isActive ? "text-white" : "text-black"
+                    }`}
                 >
                   {day}
                 </div>
                 <div className="text-xl font-bold">{date}</div>
                 <div
-                  className={`text-sm ${
-                    isActive ? "text-white" : "text-black"
-                  }`}
+                  className={`text-sm ${isActive ? "text-white" : "text-black"
+                    }`}
                 >
                   {month}
                 </div>
@@ -211,7 +218,7 @@ function MovieDetails({ movieId }: Props) {
                 {movies &&
                   movies &&
                   movies.map((item: Movie) => (
-                    <Card width="w-[15%]" data={item} key={item.movieId} />
+                    <Card width="w-[95%] xs:w-[45%] sm:w-[40%] md:w-[30%] lg:w-[22%] xl:w-[16%]" data={item} key={item.movieId} />
                   ))}
               </div>
             </div>

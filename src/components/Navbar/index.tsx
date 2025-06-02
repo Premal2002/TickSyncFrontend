@@ -1,18 +1,32 @@
 import { useAuth } from "@/HelperFunctions/AuthContext";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { FaUserCircle } from "react-icons/fa"; // Profile icon
+import { FaUserCircle } from "react-icons/fa";
+import { HiOutlineMenu, HiX } from "react-icons/hi";
 
 const Navbar = () => {
-  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const mobileDropdownRef = useRef<HTMLDivElement>(null);
 
   const { isLoggedIn, logout, userDetails } = useAuth();
 
+  // Close dropdown if clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (event: MouseEvent) => {      
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {        
         setDropdownOpen(false);
+      }
+      if (
+        mobileDropdownRef.current &&
+        !mobileDropdownRef.current.contains(event.target as Node)
+      ) {
+        setMobileDropdownOpen(false);
       }
     };
 
@@ -23,13 +37,15 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-red-500 py-2 font-serif w-full">
-      <div className="mx-auto max-w-8xl px-2 sm:px-14 lg:px-16">
-        <div className="relative flex h-16 items-center justify-center sm:justify-between">
-          <Link href="/" className="ms-4 text-2xl font-bold text-gray-100">
+    <header className="w-full bg-red-500 font-serif">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-10">
+        <div className="flex justify-between items-center h-16">
+          <Link href="/" className="text-2xl font-bold text-white">
             TickSync
           </Link>
-          <div className="flex space-x-4 items-center gap-3 font-semibold text-md">
+
+          {/* Desktop Menu */}
+          <nav className="hidden md:flex items-center gap-6 font-semibold text-md text-white">
             {(userDetails.id != '' && (userDetails.roles && userDetails.roles.includes("admin"))) &&
             <Link href="/AdminDashboard" className="relative group inline-block text-white">
               <span className="transition duration-300 ease-in-out">AdminDashboard</span>
@@ -54,16 +70,17 @@ const Navbar = () => {
               <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gray-200 transition-all duration-300 ease-in-out group-hover:w-full"></span>
             </a>
 
-            {isLoggedIn ? (
-              <div className="relative" ref={dropdownRef}>
+             <div className="relative" ref={dropdownRef}>
+              {isLoggedIn ? (
+              <div className="relative flex align-middle" >
                 <button
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="cursor-pointer text-black hover:text-white align-middle text-4xl"
+                  onClick={() => setDropdownOpen(prev => !prev)}
+                  className="text-white hover:text-gray-800 text-3xl cursor-pointer"
                 >
                   <FaUserCircle />
                 </button>
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg z-20 p-4">
+                  <div className="absolute right-0 mt-8 w-64 bg-white rounded-md shadow-lg z-20 p-4">
                     <div className="mb-3">
                       <p className="font-semibold text-gray-800">{userDetails.name}</p>
                       <p className="text-sm text-gray-600">{userDetails.email}</p>
@@ -85,15 +102,78 @@ const Navbar = () => {
               </div>
             ) : (
               <Link href="/Login">
-                <button className="bg-black cursor-pointer text-white px-4 py-2 rounded hover:drop-shadow-xl">
+                <button className="bg-black text-white px-4 py-2 rounded hover:shadow cursor-pointer">
                   Login
                 </button>
               </Link>
             )}
+            </div>
+          </nav>
+
+          {/* Mobile Area: Menu + Profile/Login */}
+          <div className="md:hidden flex items-center gap-4">
+            <div className="relative" ref={mobileDropdownRef}>
+              {isLoggedIn ? (
+              <div className="relative flex align-middle">
+                <button
+                  onClick={() => setMobileDropdownOpen(prev => !prev)}
+                  className="text-white hover:text-gray-800 text-3xl cursor-pointer"
+                >
+                  <FaUserCircle />
+                </button>
+                {mobileDropdownOpen && (
+                  <div className="absolute right-0 mt-8 w-64 bg-white rounded-md shadow-lg z-20 p-4">
+                    <div className="mb-3">
+                      <p className="font-semibold text-gray-800">{userDetails.name}</p>
+                      <p className="text-sm text-gray-600">{userDetails.email}</p>
+                    </div>
+                    <hr className="my-2" />
+                    <Link href={`/BookingHistory/${userDetails.id}`}>
+                      <div className="block px-4 py-2 text-black hover:bg-gray-100 cursor-pointer rounded-md">
+                        Booking History
+                      </div>
+                    </Link>
+                    <div
+                      onClick={logout}
+                      className="block px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer rounded-md"
+                    >
+                      Logout
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link href="/Login">
+                <button className="bg-black text-white px-4 py-2 rounded hover:shadow cursor-pointer">
+                  Login
+                </button>
+              </Link>
+            )}
+            </div>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-white text-3xl"
+            >
+              {mobileMenuOpen ? <HiX /> : <HiOutlineMenu />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Nav */}
+        {mobileMenuOpen && (
+          <nav className="flex flex-col gap-4 py-4 text-white font-semibold text-md md:hidden">
+            {(userDetails.id && userDetails.roles?.includes("admin")) && (
+              <Link href="/AdminDashboard" className="hover:underline">AdminDashboard</Link>
+            )}
+            <Link href="/" className="hover:underline">Dashboard</Link>
+            <Link href="#" className="hover:underline">Team</Link>
+            <Link href="#" className="hover:underline">About</Link>
+            <Link href="#" className="hover:underline">Contact</Link>
+          </nav>
+        )}
       </div>
-    </nav>
+    </header>
   );
 };
 
