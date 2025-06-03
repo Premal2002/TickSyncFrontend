@@ -42,7 +42,7 @@ const BookingHistory = ({ userId }: Props) => {
         style={{
           boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset',
         }}>
-          <h1 className="text-3xl font-bold text-center mb-10 text-black">
+          <h1 className="text-2xl sm:text-3xl font-bold text-center mb-10 text-black">
             Your Booking History
           </h1>
 
@@ -55,7 +55,7 @@ const BookingHistory = ({ userId }: Props) => {
                     className="p-4 flex"
                   >
                     {/* Image section */}
-                    <div className="w-full md:w-1/3">
+                    <div className="hidden sm:block w-full md:w-1/3">
                       <img
                         src={booking.moviePosterUrl}
                         className="w-full h-48 object-contain bg-none rounded-xl p-2"
@@ -64,11 +64,11 @@ const BookingHistory = ({ userId }: Props) => {
 
                     {/* Info section */}
                     <div className="w-full md:w-2/3 flex flex-col justify-between">
-                      <h2 className="text-xl font-bold text-black mb-2 text-center md:text-left">
+                      <h2 className="text-lg sm:text-xl font-bold text-black mb-2 text-center md:text-left">
                         {booking.movieName}
                       </h2>
 
-                      <div className="grid grid-cols-2 gap-2 text-sm font-medium text-black">
+                      <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm font-medium text-black">
                         <div className="flex justify-between">
                           <span>
                             Date :{" "}

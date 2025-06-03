@@ -7,14 +7,14 @@ import { useState } from "react";
 
 const HeroSection = () => {
   return (
-    <div className="flex items-center justify-center bg-[url('../../public/bgImage2.jpg')] bg-cover h-155">
-      <div className="py-18 bg-white/5 backdrop-blur-[1px] font-bold w-full h-full">
+    <div className="flex items-center justify-center bg-[url('../../public/bgImage2.jpg')] bg-cover h-130 sm:h-155 backdrop-blur-[1px]">
+      <div className="py-0 sm-py-10  font-bold w-full">
         <div className="flex justify-center">
           <MovieSearchForm />
         </div>
         <div className="text-center mt-20">
-          <p className="text-7xl text-white pb-6 text-shadow-gray-950 text-shadow-lg">BOOK YOUR TICKETS NOW!!!</p>
-          <p className="py-6 text-2xl text-amber-100 text-shadow-gray-950 text-shadow-md">
+          <p className="px-4 xs:px-0 text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white pb-6 text-shadow-gray-950 text-shadow-lg">BOOK YOUR TICKETS NOW!!!</p>
+          <p className="px-4 xs:px-0 py-6 text-xs xs-text-sm sm:text-md md:text-lg lg:text-xl xl:text-2xl text-amber-100 text-shadow-gray-950 text-shadow-md">
             BOOK MOVIES, TRAIN, BUS, FLIGHTS AND MANY MORE!
           </p>
           <Link href="/Movies">
@@ -46,12 +46,12 @@ const MovieSearchForm = () => {
 
   return (
     <form
-      className="flex border-white border-2 rounded-2xl px-8 py-4 w-1/2 shadow-lg"
+      className="flex border-white border-2 rounded-2xl px-8 py-4 w-[70%] lg:w-[50%] shadow-lg"
       onSubmit={searchBook}
     >
       <input
         type="text"
-        className="outline-0 text-gray-900 text-xl w-full  "
+        className="outline-0 text-gray-900 text-sm sm:text-lg w-full  "
         placeholder="search any movie"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
