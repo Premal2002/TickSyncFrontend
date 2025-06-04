@@ -14,21 +14,6 @@ export function middleware(request: NextRequest) {
     console.error('Invalid cookie format');
   }
 
-  //checking if user already logged in
-  // if (pathname.startsWith('/Login')) {
-  //   if(token)
-  //   return NextResponse.redirect(new URL('/', request.url));
-  //   else
-  //   return;
-  // }
-
-  if (pathname.startsWith('/AdminLogin')) {
-    if(token)
-    return NextResponse.redirect(new URL('/AdminDashboard', request.url));
-    else
-    return;
-  }
-
   if (!token) {
     return NextResponse.redirect(new URL('/Login?fromMiddleware=Login Required', request.url));
   }
@@ -65,5 +50,5 @@ export function middleware(request: NextRequest) {
 }
   
 export const config = {
-  matcher: ['/AdminLogin/:path*', '/SeatBooking/:path*','/BookingHistory/:path*', '/AdminDashboard/:path*','/UserBooking/:path*'],
+  matcher: ['/SeatBooking/:path*','/BookingHistory/:path*', '/AdminDashboard/:path*','/UserBooking/:path*'],
 };
