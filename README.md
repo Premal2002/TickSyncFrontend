@@ -80,51 +80,65 @@ Implemented features based strictly on the codebase:
 git clone <repository-url>
 cd <project-folder>
 npm install
-5. Configuration
-API Base URL
+```
+
+---
+
+## 5. Configuration
+
+### API Base URL
 Defined in:
 
-ts
-Copy code
+```typescript
 src/HelperData/datavariables.ts
-ts
-Copy code
+```
+
+```typescript
 export const baseURL = "https://localhost:7028";
-Environment Variables
+```
+
+### Environment Variables
 The following variable is required for payments:
 
-env
-Copy code
+```env
 NEXT_PUBLIC_RAZORPAY_KEY=<your_razorpay_key>
+```
+
 No other environment variables are explicitly defined in the repository.
 
-6. Usage
-Development Server
-bash
-Copy code
+---
+
+## 6. Usage
+
+### Development Server
+```bash
 npm run dev
+```
+
 Runs the app at:
 
-arduino
-Copy code
+```
 http://localhost:3000
-Production Build
-bash
-Copy code
+```
+
+### Production Build
+```bash
 npm run build
 npm start
-CI
+```
+
+### CI
 A GitHub Actions workflow is configured to:
 
-Install dependencies
+- Install dependencies
+- Run lint checks
+- Build the application on pull requests to main
 
-Run lint checks
+---
 
-Build the application on pull requests to main
+## 7. Project Structure
 
-7. Project Structure
-graphql
-Copy code
+```
 src/
 ├── components/        # Reusable UI components
 ├── pages/             # Next.js routes (Pages Router)
@@ -135,43 +149,36 @@ src/
 ├── HelperFunctions/   # Shared utility functions
 ├── HelperData/        # Static constants
 ├── styles/            # Global and SCSS styles
-Notable Pages
-/ – Landing page
+```
 
-/Movies – Movie listing with filters
+### Notable Pages
+- `/` – Landing page
+- `/Movies` – Movie listing with filters
+- `/MovieDetails/[movieId]` – Movie details and shows
+- `/SeatBooking/[showId]` – Seat selection and booking
+- `/UserBooking/[bookingId]` – Ticket confirmation
+- `/BookingHistory/[userId]` – User booking history
+- `/AdminDashboard` – Admin view (counts and tables)
 
-/MovieDetails/[movieId] – Movie details and shows
+---
 
-/SeatBooking/[showId] – Seat selection and booking
+## 8. Development Notes
 
-/UserBooking/[bookingId] – Ticket confirmation
+- Uses Next.js Pages Router, not the App Router
+- WebSocket connection auto-reconnects on disconnect
+- Seat status updates are applied granularly to avoid full re-renders
+- Razorpay SDK is loaded dynamically at runtime
+- Authentication context (AuthProvider) wraps the app
+- Admin access is role-based (admin role expected)
+- Error handling is centralized via SweetAlert2 dialogs
 
-/BookingHistory/[userId] – User booking history
+### Known assumptions from code
+- Backend supports all referenced REST and WebSocket endpoints
+- WebSocket server runs at `wss://localhost:7028/ws`
+- Authentication data is stored in cookies
 
-/AdminDashboard – Admin view (counts and tables)
+---
 
-8. Development Notes
-Uses Next.js Pages Router, not the App Router
+## 9. License
 
-WebSocket connection auto-reconnects on disconnect
-
-Seat status updates are applied granularly to avoid full re-renders
-
-Razorpay SDK is loaded dynamically at runtime
-
-Authentication context (AuthProvider) wraps the app
-
-Admin access is role-based (admin role expected)
-
-Error handling is centralized via SweetAlert2 dialogs
-
-Known assumptions from code
-
-Backend supports all referenced REST and WebSocket endpoints
-
-WebSocket server runs at wss://localhost:7028/ws
-
-Authentication data is stored in cookies
-
-9. License
 Not specified.
