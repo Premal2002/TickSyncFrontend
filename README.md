@@ -26,13 +26,6 @@ Implemented features based strictly on the codebase:
 - Responsive UI with mobile navigation
 - Custom error and success alerts using SweetAlert2
 
-**Not specified / not implemented**
-- Backend implementation
-- Authentication mechanism details
-- Role management logic on the backend
-- Deployment configuration
-- Tests
-
 ---
 
 ## 3. Tech Stack
